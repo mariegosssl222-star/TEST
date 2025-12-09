@@ -594,6 +594,9 @@ RunService.Heartbeat:Connect(function()
 	if human.Sit then
 		human.Sit = false;
 	end
+	if hrp.Anchored then
+		hrp.Anchored = false;
+	end
 	if (not currentTarget or not currentTarget.Parent or (currentTarget:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\141\229\69\197\171\255\65\192", "\164\197\144\40")) and (currentTarget.Humanoid.Health <= 0))) then
 		local closest, dist = nil, 8999999488;
 		for _, f in pairs({Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\174\255\169\128\243\134\160", "\214\227\144\202\235\189")),Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\200\171\130\118\25\182\64", "\92\141\197\231\27\112\211\51"))}) do
@@ -617,6 +620,10 @@ RunService.Heartbeat:Connect(function()
 			currentTarget = nil;
 			return;
 		end
+		if ((tHrp.Position.Y < -50) or (tHrp.Velocity.Y < -40)) then
+			currentTarget = nil;
+			return;
+		end
 		local mode, dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\234\155\79\48\49", "\70\190\235\31\95\66")], Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\142\242\62\239\246\174", "\133\218\130\122\134")];
 		local targetCFrame;
 		if (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\30\254\224\207", "\88\92\159\131\164\188\195")) then
@@ -630,6 +637,7 @@ RunService.Heartbeat:Connect(function()
 		end
 		hrp.CFrame = targetCFrame;
 		hrp.Velocity = Vector3.zero;
+		hrp.RotVelocity = Vector3.zero;
 		if (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\222\8\92\112", "\136\156\105\63\27")) then
 			local lookVector = (tHrp.Position - hrp.Position).Unit;
 			local rot = CFrame.new(hrp.Position, hrp.Position + Vector3.new(lookVector.X, 0, lookVector.Z));
@@ -679,6 +687,7 @@ task.spawn(function()
 				if (targetPart and targetPart.Parent) then
 					local tpPos = targetPart.Position + Vector3.new(0, 3, 0);
 					hrp.CFrame = CFrame.new(tpPos);
+					hrp.Velocity = Vector3.zero;
 					local collected = false;
 					for i = 1, 5 do
 						task.wait(0.05);
@@ -696,6 +705,7 @@ task.spawn(function()
 			end
 			if savedCFrame then
 				hrp.CFrame = savedCFrame;
+				hrp.Velocity = Vector3.zero;
 			end
 			isCollecting = false;
 		end
