@@ -589,6 +589,8 @@ task.spawn(function()
 				task.wait(0.2);
 				pcall(function()
 					teleportEvent:FireServer(targetPortal, 1, selectedDiff);
+					teleportEvent:FireServer(targetPortal, 2, selectedDiff);
+					teleportEvent:FireServer(targetPortal, 3, selectedDiff);
 				end);
 				task.wait(8);
 				_G_isAutoJoining = false;
