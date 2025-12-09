@@ -143,12 +143,24 @@ local function SendEndGameReport(actionName, overrideColor, forcePing)
 	if (not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\36\208\128\243\229\200\24\224\176\215", "\167\115\181\226\155\138")] or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\213\39\229\84\116\126\205\215\16\203", "\166\130\66\135\60\27\17")] == "")) then
 		return;
 	end
-	local sessionItems = _G_SessionLoot;
+	local currentInventoryCounts = {};
+	local pGui = lp:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\116\70\207\108\53\86\109\219\124", "\80\36\42\174\21"), 5);
+	if pGui then
+		local inv = pGui:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\103\30\33\127\64\4\56\104\87", "\26\46\112\87"), 5);
+		local container = inv and inv:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\154\34\165\98\190\172", "\212\217\67\203\20\223\223\37"), 5) and inv.Canvas:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\151\140\161\220", "\178\218\237\200"), 5) and inv.Canvas.Main:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\149\186\232\196\183\188\232\213\164\138\207\196\179\184", "\176\214\213\134"), 5);
+		if container then
+			for _, child in ipairs(container:GetChildren()) do
+				if (not IGNORE_LIST[child.Name] and (child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\221\160\183\211\173\116\76\224\185\185\218", "\57\148\205\214\180\200\54")) or child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\53\232\60\22\99\6\233\58\58", "\22\114\157\85\84")) or child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\226\217\18\201\88", "\200\164\171\115\164\61\150")))) then
+					currentInventoryCounts[child.Name] = (currentInventoryCounts[child.Name] or 0) + 1;
+				end
+			end
+		end
+	end
 	local pingMsg = "";
 	if forcePing then
-		local userId = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\96\67\221\118\63\86\78\231\81", "\80\36\42\174\21")];
+		local userId = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\154\253\16\70\140\172\240\42\97", "\227\222\148\99\37")];
 		if (userId and (userId ~= "")) then
-			pingMsg = LUAOBFUSACTOR_DECRYPT_STR_0("\18\48", "\26\46\112\87") .. userId .. ">";
+			pingMsg = LUAOBFUSACTOR_DECRYPT_STR_0("\111\114", "\153\83\50\50\150") .. userId .. ">";
 		end
 	end
 	local finalColor = overrideColor or 65280;
@@ -156,60 +168,21 @@ local function SendEndGameReport(actionName, overrideColor, forcePing)
 	for i = #GameConfig.RarityOrder, 1, -1 do
 		local rarity = GameConfig.RarityOrder[i];
 		local itemsInRarity = {};
-		for name, count in pairs(sessionItems) do
+		for name, count in pairs(currentInventoryCounts) do
 			if (getWeaponRarity(name) == rarity) then
-				table.insert(itemsInRarity, string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\252\48\235\60\167\250\65\253", "\212\217\67\203\20\223\223\37"), NameToDisplay[name] or formatName(name), count));
+				table.insert(itemsInRarity, string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\24\101\51\84\107\238\73\20", "\45\61\22\19\124\19\203"), NameToDisplay[name] or formatName(name), count));
 			end
 		end
 		if (#itemsInRarity > 0) then
-			weaponListText = weaponListText .. LUAOBFUSACTOR_DECRYPT_STR_0("\240\199\147", "\178\218\237\200") .. rarity .. "]**\n" .. table.concat(itemsInRarity, LUAOBFUSACTOR_DECRYPT_STR_0("\250\245", "\176\214\213\134")) .. "\n\n";
+			weaponListText = weaponListText .. LUAOBFUSACTOR_DECRYPT_STR_0("\139\88\54", "\217\161\114\109\149\98\16") .. rarity .. "]**\n" .. table.concat(itemsInRarity, LUAOBFUSACTOR_DECRYPT_STR_0("\94\96", "\20\114\64\88\28\220")) .. "\n\n";
 		end
 	end
 	if (weaponListText == "") then
-		weaponListText = LUAOBFUSACTOR_DECRYPT_STR_0("\218\162\246\221\188\83\84\231\237\185\214\188\87\80\250\168\178\148\161\88\25\224\165\191\199\232\68\76\250\227", "\57\148\205\214\180\200\54");
+		weaponListText = LUAOBFUSACTOR_DECRYPT_STR_0("\24\15\196\177\246\196\178\35\24\146\181\232\192\184\48\19\193\244\253\221\173\37\24\156", "\221\81\97\178\212\152\176");
 	end
-	local fields = {{[LUAOBFUSACTOR_DECRYPT_STR_0("\28\252\56\49", "\22\114\157\85\84")]=LUAOBFUSACTOR_DECRYPT_STR_0("\233\202\7\199\85\182\154\193\216\6\200\73", "\200\164\171\115\164\61\150"),[LUAOBFUSACTOR_DECRYPT_STR_0("\168\245\15\80\134", "\227\222\148\99\37")]=actionName,[LUAOBFUSACTOR_DECRYPT_STR_0("\58\92\94\255\247\54", "\153\83\50\50\150")]=false},{[LUAOBFUSACTOR_DECRYPT_STR_0("\83\119\126\25", "\45\61\22\19\124\19\203")]=LUAOBFUSACTOR_DECRYPT_STR_0("\245\29\25\244\14\48\154\206\27\3\230", "\217\161\114\109\149\98\16"),[LUAOBFUSACTOR_DECRYPT_STR_0("\4\33\52\105\185", "\20\114\64\88\28\220")]=string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\49\68\214\180", "\221\81\97\178\212\152\176"), _G_TotalCoins),[LUAOBFUSACTOR_DECRYPT_STR_0("\196\233\17\242\20\200", "\122\173\135\125\155")]=true},{[LUAOBFUSACTOR_DECRYPT_STR_0("\138\192\13\188", "\168\228\161\96\217\95\81")]="🎒 SESSION LOOT",[LUAOBFUSACTOR_DECRYPT_STR_0("\205\208\34\73\42", "\55\187\177\78\60\79")]=weaponListText,[LUAOBFUSACTOR_DECRYPT_STR_0("\36\192\83\226\72\202", "\224\77\174\63\139\38\175")]=false}};
-	SendWebhookInternal(LUAOBFUSACTOR_DECRYPT_STR_0("\166\77\89\42\129\1\96\110\190\78\85\44\141\68\24\99\196\115\77\32\196\115\93\62\139\83\76", "\78\228\33\56"), LUAOBFUSACTOR_DECRYPT_STR_0("\227\127\166\0\141\142\91\188\7\128\202\48", "\229\174\30\210\99"), finalColor, fields, pingMsg);
+	local fields = {{[LUAOBFUSACTOR_DECRYPT_STR_0("\195\230\16\254", "\122\173\135\125\155")]=LUAOBFUSACTOR_DECRYPT_STR_0("\169\192\20\186\55\113\250\129\210\21\181\43", "\168\228\161\96\217\95\81"),[LUAOBFUSACTOR_DECRYPT_STR_0("\205\208\34\73\42", "\55\187\177\78\60\79")]=actionName,[LUAOBFUSACTOR_DECRYPT_STR_0("\36\192\83\226\72\202", "\224\77\174\63\139\38\175")]=false},{[LUAOBFUSACTOR_DECRYPT_STR_0("\138\64\85\43", "\78\228\33\56")]=LUAOBFUSACTOR_DECRYPT_STR_0("\250\113\166\2\137\142\93\189\10\139\221", "\229\174\30\210\99"),[LUAOBFUSACTOR_DECRYPT_STR_0("\13\236\138\68\232", "\89\123\141\230\49\141\93")]=string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\243\52\242\12", "\42\147\17\150\108\112"), _G_TotalCoins),[LUAOBFUSACTOR_DECRYPT_STR_0("\6\168\33\118\233\237", "\136\111\198\77\31\135")]=true},{[LUAOBFUSACTOR_DECRYPT_STR_0("\12\8\170\83", "\201\98\105\199\54\221\132\119")]="🎒 FULL INVENTORY",[LUAOBFUSACTOR_DECRYPT_STR_0("\175\13\143\52\7", "\204\217\108\227\65\98\85")]=weaponListText,[LUAOBFUSACTOR_DECRYPT_STR_0("\87\205\249\236\34\197", "\160\62\163\149\133\76")]=false}};
+	SendWebhookInternal(LUAOBFUSACTOR_DECRYPT_STR_0("\244\172\12\43\198\150\152\77\21\204\219\162\4\42\131\155\224\40\33\199\150\135\12\34\198\150\146\8\63\204\196\180", "\163\182\192\109\79"), LUAOBFUSACTOR_DECRYPT_STR_0("\25\39\20\195\253\116\0\9\206\252\39\46\5\196\187", "\149\84\70\96\160"), finalColor, fields, pingMsg);
 end
-local _G_InventoryConn = nil;
-local function setupInventoryListener()
-	local playerGui = lp:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\43\225\135\72\232\47\30\14\228", "\89\123\141\230\49\141\93"), 30);
-	if not playerGui then
-		return;
-	end
-	local inventory = playerGui:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\218\127\224\9\30\94\252\99\239", "\42\147\17\150\108\112"), 30);
-	if not inventory then
-		return;
-	end
-	local canvas = inventory:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\44\167\35\105\230\251", "\136\111\198\77\31\135"), 10);
-	local main = canvas and canvas:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\47\8\174\88", "\201\98\105\199\54\221\132\119"), 10);
-	local container = main and main:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\154\3\141\53\3\60\162\188\30\188\8\22\48\161", "\204\217\108\227\65\98\85"), 10);
-	if not container then
-		return;
-	end
-	if _G_InventoryConn then
-		_G_InventoryConn:Disconnect();
-		_G_InventoryConn = nil;
-	end
-	_G_InventoryConn = container.ChildAdded:Connect(function(child)
-		task.wait(0.3);
-		if IGNORE_LIST[child.Name] then
-			return;
-		end
-		if (child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\119\206\244\226\41\226\75\215\225\234\34", "\160\62\163\149\133\76")) or child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\241\181\4\13\214\194\180\2\33", "\163\182\192\109\79")) or child:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\18\52\1\205\240", "\149\84\70\96\160"))) then
-			local itemName = child.Name;
-			_G_SessionLoot[itemName] = (_G_SessionLoot[itemName] or 0) + 1;
-			if not isItemTrash(itemName) then
-				SendSingleDropWebhook(itemName);
-			end
-		end
-	end);
-end
-lp.CharacterAdded:Connect(function()
-	task.wait(2);
-	setupInventoryListener();
-end);
-task.spawn(setupInventoryListener);
 local function getChar()
 	return lp.Character or (Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\8\10\12\244\61\20\46\229\57\20\12\238\44\3\31\254", "\141\88\102\109"), true) and Workspace.PlayerCharacters:FindFirstChild(lp.Name));
 end
