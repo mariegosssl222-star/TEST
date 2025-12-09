@@ -538,11 +538,10 @@ task.spawn(function()
 				if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\251\167\247\227\112\177\208", "\215\182\198\135\167\25")] == LUAOBFUSACTOR_DECRYPT_STR_0("\191\72\227\76", "\40\237\41\138")) then
 					task.wait(0.5);
 				else
-					task.wait(5);
+					task.wait(10);
 				end
 				ReplicatedStorage.RemoteGUI.UTeleportEvent:FireServer(true);
 				TeleportService:Teleport(LOBBY_ID);
-				wait(10);
 			end
 		end
 		if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\244\127\243\232\102\200\117\254", "\42\167\20\154\152")] then
