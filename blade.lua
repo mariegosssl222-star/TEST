@@ -495,8 +495,8 @@ task.spawn(function()
 					end
 				end
 				if (chosenPortal and chosenPortal:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\197\240\134\175\216\245\246\133\173", "\177\134\159\234\195"))) then
-					local targetPos = chosenPortal.Collision.Position;
-					while (hrp.Position - targetPos).Magnitude > 2 do
+					local portalPos = chosenPortal.Collision.Position;
+					while (hrp.Position - portalPos).Magnitude > 3 do
 						if tpGui.Enabled then
 							human.WalkSpeed = 0;
 							hrp.Velocity = Vector3.zero;
@@ -506,8 +506,10 @@ task.spawn(function()
 							human.WalkSpeed = DEFAULT_WALKSPEED;
 							break;
 						end
+						local direction = (portalPos - hrp.Position).Unit;
+						local overShootPos = portalPos + (direction * 50);
 						human.WalkSpeed = 40;
-						human:MoveTo(targetPos);
+						human:MoveTo(overShootPos);
 						RunService.Heartbeat:Wait();
 					end
 				end
