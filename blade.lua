@@ -344,7 +344,7 @@ task.spawn(function()
 				if (tpGui.Enabled and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\242\172\59\8\249\182\38\9", "\103\179\217\79")] and teleporter) then
 					local difficulty = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\103\182\12\241\72\138\165", "\195\42\215\124\181\33\236")] or LUAOBFUSACTOR_DECRYPT_STR_0("\35\86\37\51\36\244", "\152\109\57\87\94\69");
 					teleportEvent:FireServer(teleporter, 1, difficulty);
-					task.wait(3);
+					task.wait(10);
 				end
 			else
 				if hrp.Anchored then
@@ -531,7 +531,7 @@ task.spawn(function()
 	end
 end);
 task.spawn(function()
-	while task.wait(2.5) do
+	while task.wait(1) do
 		if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\112\189\16\252\48\24\90\83\177", "\56\49\200\100\147\124\119")] and not isInLobby()) then
 			local endScreen = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\232\59\189\226\197\45\153\255\192\58\186\226", "\144\172\94\223")) and Workspace.DebrisFolder:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\23\12\176\66\33\1\135\73\32", "\39\68\111\194"));
 			if endScreen then
