@@ -260,9 +260,6 @@ local function performInventoryAction(actionType, specificNewItem)
 	if _G_InventoryActionInProgress then
 		return;
 	end
-	if _G_isAutoJoining then
-		return;
-	end
 	_G_InventoryActionInProgress = true;
 	task.spawn(function()
 		local pGui = lp:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\54\19\83\222\169\96\172\19\22", "\235\102\127\50\167\204\18"));
@@ -324,9 +321,6 @@ local function performInventoryAction(actionType, specificNewItem)
 		end
 		local itemsRemaining = true;
 		while inv.Enabled and (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\255\178\209\210\64\244\81\2", "\110\190\199\165\189\19\145\61")] or Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\251\254\99\231\175\206\201\230\126\252\142", "\167\186\139\23\136\235")]) and itemsRemaining do
-			if _G_isAutoJoining then
-				break;
-			end
 			local itemToProcess = nil;
 			itemsRemaining = false;
 			for _, item in ipairs(container:GetChildren()) do
@@ -480,14 +474,14 @@ task.spawn(function()
 	if container then
 		container.ChildAdded:Connect(function(child)
 			task.wait(0.3);
-			if ((Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\255\158\107\48\17\35\210\135", "\70\190\235\31\95\66")] or Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\155\247\14\233\193\179\241\23\239\241\191", "\133\218\130\122\134")]) and not _G_InventoryActionInProgress and not _G_isCaseActive and not _G_WaitingForCase and not _G_isAutoJoining) then
+			if ((Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\255\158\107\48\17\35\210\135", "\70\190\235\31\95\66")] or Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\155\247\14\233\193\179\241\23\239\241\191", "\133\218\130\122\134")]) and not _G_InventoryActionInProgress and not _G_isCaseActive and not _G_WaitingForCase) then
 				local action = (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\29\234\247\203\239\166\52\48", "\88\92\159\131\164\188\195")] and LUAOBFUSACTOR_DECRYPT_STR_0("\179\43\179\71", "\189\224\78\223\43\183\139")) or LUAOBFUSACTOR_DECRYPT_STR_0("\10\245\153\27\200\58\249", "\161\78\156\234\118");
 				performInventoryAction(action, child);
 			end
 		end);
 	end
 	while task.wait(5) do
-		if (not _G_InventoryActionInProgress and not _G_isCaseActive and not _G_WaitingForCase and not _G_isAutoJoining) then
+		if (not _G_InventoryActionInProgress and not _G_isCaseActive and not _G_WaitingForCase) then
 			if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\134\162\221\211\148\178\197\208", "\188\199\215\169")] then
 				performInventoryAction(LUAOBFUSACTOR_DECRYPT_STR_0("\207\12\83\119", "\136\156\105\63\27"));
 			elseif Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\58\153\109\59\63\133\106\57\18\152\124", "\84\123\236\25")] then
@@ -523,9 +517,7 @@ task.spawn(function()
 				end
 				if hrp then
 					hrp.Velocity = Vector3.zero;
-					if hrp.Anchored then
-						hrp.Anchored = false;
-					end
+					hrp.Anchored = false;
 				end
 				if not _G_InventoryActionInProgress then
 					if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\220\222\185\237\154\241\241\199", "\148\157\171\205\130\201")] then
@@ -540,6 +532,9 @@ task.spawn(function()
 					safety = safety + 0.5;
 					if human then
 						human.WalkSpeed = 0;
+					end
+					if hrp then
+						hrp.Velocity = Vector3.zero;
 					end
 				end
 				task.wait(0.5);
@@ -565,16 +560,11 @@ task.spawn(function()
 				if not targetPortal then
 					targetPortal = portals[1];
 				end
-				task.wait(2);
-				local attempts = 0;
-				repeat
-					pcall(function()
-						teleportEvent:FireServer(workspace.Teleports.Teleport, 1, selectedDiff);
-					end);
-					attempts = attempts + 1;
-					task.wait(1.5);
-				until (attempts >= 5) or not tpGui.Enabled 
-				task.wait(5);
+				task.wait(3);
+				pcall(function()
+					teleportEvent:FireServer(targetPortal, 1, selectedDiff);
+				end);
+				task.wait(1);
 				_G_isAutoJoining = false;
 			else
 				if hrp.Anchored then
@@ -593,7 +583,7 @@ task.spawn(function()
 					local portalPos = chosenPortal.Collision.Position;
 					_G_isAutoJoining = true;
 					local moveTimeout = 0;
-					local MAX_TIMEOUT = 1000;
+					local MAX_TIMEOUT = 10000000;
 					while moveTimeout < MAX_TIMEOUT do
 						if tpGui.Enabled then
 							break;
@@ -610,7 +600,7 @@ task.spawn(function()
 						end
 						human.WalkSpeed = 40;
 						human:MoveTo(portalPos);
-						if ((hrp.Position - portalPos).Magnitude < 3) then
+						if ((hrp.Position - portalPos).Magnitude < 30) then
 							local dir = (portalPos - hrp.Position).Unit;
 							human:MoveTo(portalPos + (dir * 5));
 						end
