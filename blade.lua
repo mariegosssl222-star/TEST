@@ -70,7 +70,9 @@ local fastModeRestorationData = {};
 local DEFAULT_WALKSPEED = 16;
 local DEFAULT_JUMPPOWER = 50;
 local _G_TotalCoins = 0;
-local _G_SessionGainedCoins = 0;
+local _G_StartCoins = 0;
+local _G_TotalGems = 0;
+local _G_StartGems = 0;
 local _G_SessionLoot = {};
 local IGNORE_LIST = {[LUAOBFUSACTOR_DECRYPT_STR_0("\109\9\84\238\83\68\116\33\106\243\79\84", "\32\56\64\19\156\58")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\111\225\213\87\94\246\137\84\207", "\224\58\168\133\54\58\146")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\108\127\103\244\102\146\171\10\64\89\94\233", "\107\57\54\43\157\21\230\231")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\232\142\16\231\186\212", "\175\187\235\113\149\217\188")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\15\163\142\88", "\24\92\207\225\44\131\25")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\127\220\183\64\15\116\91", "\29\43\179\216\44\123")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\159\205\46\115\158\213\47\95\184", "\44\221\185\64")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\36\246\93\86\99", "\19\97\135\40\63")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\141\83\63\52\61", "\81\206\60\83\91\79")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\105\167\223\101", "\196\46\203\176\18\79\163\45")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\149\35\119\16", "\143\216\66\30\126\68\155")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\153\192\12\207\202\180", "\129\202\168\109\171\165\195\183")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\0\76\57\231\253\24\227\35\74", "\134\66\56\87\184\190\116")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\9\24\29\190\20", "\85\92\81\105\219\121\139\65")]=true};
 local function getWeaponRarity(wName)
@@ -180,15 +182,19 @@ local function SendEndGameReport(actionName, overrideColor, forcePing)
 	if (weaponListText == "") then
 		weaponListText = LUAOBFUSACTOR_DECRYPT_STR_0("\24\15\196\177\246\196\178\35\24\146\181\232\192\184\48\19\193\244\253\221\173\37\24\156", "\221\81\97\178\212\152\176");
 	end
-	local fields = {{[LUAOBFUSACTOR_DECRYPT_STR_0("\195\230\16\254", "\122\173\135\125\155")]=LUAOBFUSACTOR_DECRYPT_STR_0("\169\192\20\186\55\113\250\129\210\21\181\43", "\168\228\161\96\217\95\81"),[LUAOBFUSACTOR_DECRYPT_STR_0("\205\208\34\73\42", "\55\187\177\78\60\79")]=actionName,[LUAOBFUSACTOR_DECRYPT_STR_0("\36\192\83\226\72\202", "\224\77\174\63\139\38\175")]=false},{[LUAOBFUSACTOR_DECRYPT_STR_0("\138\64\85\43", "\78\228\33\56")]=LUAOBFUSACTOR_DECRYPT_STR_0("\250\113\166\2\137\142\93\189\10\139\221", "\229\174\30\210\99"),[LUAOBFUSACTOR_DECRYPT_STR_0("\13\236\138\68\232", "\89\123\141\230\49\141\93")]=string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\243\52\242\12", "\42\147\17\150\108\112"), _G_TotalCoins),[LUAOBFUSACTOR_DECRYPT_STR_0("\6\168\33\118\233\237", "\136\111\198\77\31\135")]=true},{[LUAOBFUSACTOR_DECRYPT_STR_0("\12\8\170\83", "\201\98\105\199\54\221\132\119")]="🎒 FULL INVENTORY",[LUAOBFUSACTOR_DECRYPT_STR_0("\175\13\143\52\7", "\204\217\108\227\65\98\85")]=weaponListText,[LUAOBFUSACTOR_DECRYPT_STR_0("\87\205\249\236\34\197", "\160\62\163\149\133\76")]=false}};
-	SendWebhookInternal(LUAOBFUSACTOR_DECRYPT_STR_0("\244\172\12\43\198\150\152\77\21\204\219\162\4\42\131\155\224\40\33\199\150\135\12\34\198\150\146\8\63\204\196\180", "\163\182\192\109\79"), LUAOBFUSACTOR_DECRYPT_STR_0("\25\39\20\195\253\116\0\9\206\252\39\46\5\196\187", "\149\84\70\96\160"), finalColor, fields, pingMsg);
+	local coinsGained = _G_TotalCoins - _G_StartCoins;
+	local gemsGained = _G_TotalGems - _G_StartGems;
+	local coinText = string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\205\162\25\251\90\133\172\88\255\83", "\122\173\135\125\155"), _G_TotalCoins, coinsGained);
+	local gemText = string.format(LUAOBFUSACTOR_DECRYPT_STR_0("\132\132\4\185\127\121\131\193\197\73", "\168\228\161\96\217\95\81"), _G_TotalGems, gemsGained);
+	local fields = {{[LUAOBFUSACTOR_DECRYPT_STR_0("\213\208\35\89", "\55\187\177\78\60\79")]=LUAOBFUSACTOR_DECRYPT_STR_0("\0\207\75\232\78\143\178\40\221\74\231\82", "\224\77\174\63\139\38\175"),[LUAOBFUSACTOR_DECRYPT_STR_0("\146\64\84\59\129", "\78\228\33\56")]=actionName,[LUAOBFUSACTOR_DECRYPT_STR_0("\199\112\190\10\139\203", "\229\174\30\210\99")]=false},{[LUAOBFUSACTOR_DECRYPT_STR_0("\21\236\139\84", "\89\123\141\230\49\141\93")]="💰 Total Coins",[LUAOBFUSACTOR_DECRYPT_STR_0("\229\112\250\25\21", "\42\147\17\150\108\112")]=coinText,[LUAOBFUSACTOR_DECRYPT_STR_0("\6\168\33\118\233\237", "\136\111\198\77\31\135")]=true},{[LUAOBFUSACTOR_DECRYPT_STR_0("\12\8\170\83", "\201\98\105\199\54\221\132\119")]="💎 Total Gems",[LUAOBFUSACTOR_DECRYPT_STR_0("\175\13\143\52\7", "\204\217\108\227\65\98\85")]=gemText,[LUAOBFUSACTOR_DECRYPT_STR_0("\87\205\249\236\34\197", "\160\62\163\149\133\76")]=true},{[LUAOBFUSACTOR_DECRYPT_STR_0("\216\161\0\42", "\163\182\192\109\79")]="🎒 FULL INVENTORY",[LUAOBFUSACTOR_DECRYPT_STR_0("\34\39\12\213\240", "\149\84\70\96\160")]=weaponListText,[LUAOBFUSACTOR_DECRYPT_STR_0("\49\8\1\228\54\3", "\141\88\102\109")]=false}};
+	SendWebhookInternal(LUAOBFUSACTOR_DECRYPT_STR_0("\145\95\203\116\31\125\109\129\137\92\199\114\19\56\21\140\243\118\196\116\90\26\84\204\182\19\248\117\10\50\71\213", "\161\211\51\170\16\122\93\53"), LUAOBFUSACTOR_DECRYPT_STR_0("\214\175\166\43\243\238\148\33\245\167\161\32\254\170\252", "\72\155\206\210"), finalColor, fields, pingMsg);
 end
 local function getChar()
-	return lp.Character or (Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\8\10\12\244\61\20\46\229\57\20\12\238\44\3\31\254", "\141\88\102\109"), true) and Workspace.PlayerCharacters:FindFirstChild(lp.Name));
+	return lp.Character or (Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\118\118\85\23\54\84\89\92\15\33\71\121\64\11\33\85", "\83\38\26\52\110"), true) and Workspace.PlayerCharacters:FindFirstChild(lp.Name));
 end
 local function getHRP()
 	local c = getChar();
-	return c and c:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\155\70\199\113\20\50\92\197\129\92\197\100\42\60\71\213", "\161\211\51\170\16\122\93\53"));
+	return c and c:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\112\2\42\71\86\24\46\66\106\24\40\82\104\22\53\82", "\38\56\119\71"));
 end
 local function isInLobby()
 	return game.PlaceId == GameConfig.LobbyID;
@@ -206,7 +212,7 @@ local function areOtherPlayersPresent()
 	return playersInGame > 0;
 end
 local function checkAntiPlayerAndPause()
-	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\218\160\166\33\203\162\179\49\254\188", "\72\155\206\210")] and areOtherPlayersPresent() and not isInLobby()) then
+	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\210\225\76\223\21\90\242\246\93\196", "\54\147\143\56\182\69")] and areOtherPlayersPresent() and not isInLobby()) then
 		if not _G_TeleportingToLobby then
 			_G_TeleportingToLobby = true;
 			local hrp = getHRP();
@@ -220,10 +226,10 @@ local function checkAntiPlayerAndPause()
 	return false;
 end
 local function areMobsPresent()
-	for _, f in pairs({Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\107\117\87\5\29\118\89", "\83\38\26\52\110")),Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\125\25\34\75\81\18\52", "\38\56\119\71"))}) do
+	for _, f in pairs({Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\251\142\252\66\241\230\162", "\191\182\225\159\41")),Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\14\28\45\88\130\130\209", "\162\75\114\72\53\235\231"))}) do
 		if f then
 			for _, v in ipairs(f:GetChildren()) do
-				if (v:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\219\250\85\215\43\89\250\235", "\54\147\143\56\182\69")) and (v.Humanoid.Health > 0)) then
+				if (v:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\164\41\73\227\93\13\133\56", "\98\236\92\36\130\51")) and (v.Humanoid.Health > 0)) then
 					return true;
 				end
 			end
@@ -232,19 +238,21 @@ local function areMobsPresent()
 	return false;
 end
 local function initCoinTracker()
-	local leaderstats = lp:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\218\132\254\77\218\196\146\235\72\203\197", "\191\182\225\159\41"), 10);
-	if leaderstats then
-		local coins = leaderstats:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\8\29\33\91\152", "\162\75\114\72\53\235\231")) or leaderstats:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\175\61\87\234", "\98\236\92\36\130\51"));
-		if (coins and (coins:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\141\23\24\140\68\164\160\53", "\80\196\121\108\218\37\200\213")) or coins:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\46\102\15\125\78\28\188\1\127\23\122", "\234\96\19\98\31\43\110")))) then
-			_G_TotalCoins = coins.Value;
-			coins.Changed:Connect(function(newValue)
-				local gain = newValue - _G_TotalCoins;
-				if (gain > 0) then
-					_G_SessionGainedCoins = _G_SessionGainedCoins + gain;
-				end
-				_G_TotalCoins = newValue;
-			end);
-		end
+	local moneyVal = lp:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\137\22\2\191\92", "\80\196\121\108\218\37\200\213"), 10);
+	local gemVal = lp:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\39\118\15", "\234\96\19\98\31\43\110"), 10);
+	if moneyVal then
+		_G_TotalCoins = moneyVal.Value;
+		_G_StartCoins = moneyVal.Value;
+		moneyVal.Changed:Connect(function(newValue)
+			_G_TotalCoins = newValue;
+		end);
+	end
+	if gemVal then
+		_G_TotalGems = gemVal.Value;
+		_G_StartGems = gemVal.Value;
+		gemVal.Changed:Connect(function(newValue)
+			_G_TotalGems = newValue;
+		end);
 	end
 end
 task.spawn(initCoinTracker);
