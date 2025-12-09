@@ -542,6 +542,7 @@ task.spawn(function()
 				end
 				ReplicatedStorage.RemoteGUI.UTeleportEvent:FireServer(true);
 				TeleportService:Teleport(LOBBY_ID);
+				wait(10);
 			end
 		end
 		if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\244\127\243\232\102\200\117\254", "\42\167\20\154\152")] then
