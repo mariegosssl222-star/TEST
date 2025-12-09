@@ -461,6 +461,7 @@ task.spawn(function()
 			end
 			if tpGui.Enabled then
 				human.WalkSpeed = 0;
+				hrp.Velocity = Vector3.zero;
 				hrp.Anchored = true;
 				if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\237\43\171\255\230\49\182\254", "\144\172\94\223")] then
 					local portals = (Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\16\10\174\66\52\0\176\83\55", "\39\68\111\194")) and Workspace.Teleports:GetChildren()) or {};
@@ -493,39 +494,21 @@ task.spawn(function()
 						break;
 					end
 				end
-				if chosenPortal then
-					local path = PathfindingService:CreatePath();
-					pcall(function()
-						path:ComputeAsync(hrp.Position, chosenPortal.Collision.Position);
-					end);
-					if (path.Status == Enum.PathStatus.Success) then
-						local waypoints = path:GetWaypoints();
-						for i, waypoint in ipairs(waypoints) do
-							if (i == 1) then
-								continue;
-							end
-							if (tpGui.Enabled or not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\199\234\158\172\251\233\246\132", "\177\134\159\234\195")]) then
-								break;
-							end
-							human:MoveTo(waypoint.Position);
-							human.WalkSpeed = 40;
-							local timeOut = 0;
-							while (hrp.Position - waypoint.Position).Magnitude > 6 do
-								if tpGui.Enabled then
-									human.WalkSpeed = 0;
-									break;
-								end
-								if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\156\254\43\175\227\178\226\49", "\169\221\139\95\192")] then
-									break;
-								end
-								human.WalkSpeed = 40;
-								timeOut = timeOut + 1;
-								if (timeOut > 60) then
-									break;
-								end
-								RunService.Heartbeat:Wait();
-							end
+				if (chosenPortal and chosenPortal:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\197\240\134\175\216\245\246\133\173", "\177\134\159\234\195"))) then
+					local targetPos = chosenPortal.Collision.Position;
+					while (hrp.Position - targetPos).Magnitude > 2 do
+						if tpGui.Enabled then
+							human.WalkSpeed = 0;
+							hrp.Velocity = Vector3.zero;
+							break;
 						end
+						if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\156\254\43\175\227\178\226\49", "\169\221\139\95\192")] then
+							human.WalkSpeed = DEFAULT_WALKSPEED;
+							break;
+						end
+						human.WalkSpeed = 40;
+						human:MoveTo(targetPos);
+						RunService.Heartbeat:Wait();
 					end
 				end
 			end
