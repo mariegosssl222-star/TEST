@@ -560,7 +560,7 @@ task.spawn(function()
 				if not targetPortal then
 					targetPortal = portals[1];
 				end
-				task.wait(3);
+				task.wait(5.2);
 				pcall(function()
 					teleportEvent:FireServer(targetPortal, 1, selectedDiff);
 				end);
