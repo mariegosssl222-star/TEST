@@ -531,14 +531,14 @@ task.spawn(function()
 	end
 end);
 task.spawn(function()
-	while task.wait(1) do
+	while task.wait(6.5) do
 		if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\112\189\16\252\48\24\90\83\177", "\56\49\200\100\147\124\119")] and not isInLobby()) then
 			local endScreen = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\232\59\189\226\197\45\153\255\192\58\186\226", "\144\172\94\223")) and Workspace.DebrisFolder:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\23\12\176\66\33\1\135\73\32", "\39\68\111\194"));
 			if endScreen then
 				if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\251\167\247\227\112\177\208", "\215\182\198\135\167\25")] == LUAOBFUSACTOR_DECRYPT_STR_0("\191\72\227\76", "\40\237\41\138")) then
 					task.wait(0.5);
 				else
-					task.wait(10);
+					task.wait(5);
 				end
 				ReplicatedStorage.RemoteGUI.UTeleportEvent:FireServer(true);
 				TeleportService:Teleport(LOBBY_ID);
