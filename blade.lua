@@ -809,21 +809,31 @@ RunService.Heartbeat:Connect(function()
 			currentTarget = nil;
 			return;
 		end
-		local mode, dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\195\248\233\160\228", "\207\151\136\185")], Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\156\147\12\139\103\108", "\17\200\227\72\226\20\24")];
-		local targetCFrame;
+		local mode = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\195\248\233\160\228", "\207\151\136\185")];
+		local baseDist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\156\147\12\139\103\108", "\17\200\227\72\226\20\24")];
+		local mobSize = Vector3.new(4, 4, 4);
+		if tHrp.Parent then
+			local success, size = pcall(function()
+				return tHrp.Parent:GetExtentsSize();
+			end);
+			if success then
+				mobSize = size;
+			end
+		end
+		local safeDist = math.max(baseDist, (mobSize.Z / 2) + 3);
 		local targetPos;
 		if (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\146\64\24\220", "\159\208\33\123\183\169\145\143")) then
-			targetPos = (tHrp.CFrame * CFrame.new(0, 0, dist)).Position;
+			targetPos = (tHrp.CFrame * CFrame.new(0, 0, safeDist)).Position;
 		elseif (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\212\72\55\56\230", "\86\146\58\88")) then
-			targetPos = (tHrp.CFrame * CFrame.new(0, 0, -dist)).Position;
+			targetPos = (tHrp.CFrame * CFrame.new(0, 0, -safeDist)).Position;
 		elseif (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\121\221\229\214\171", "\154\56\191\138\160\206\137\86")) then
-			targetPos = (tHrp.CFrame * CFrame.new(0, dist, 0)).Position;
+			targetPos = (tHrp.CFrame * CFrame.new(0, safeDist + 5, 0)).Position;
 		elseif (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\164\92\249\136\107", "\172\230\57\149\231\28\90\225")) then
-			targetPos = (tHrp.CFrame * CFrame.new(0, -dist, 0)).Position;
+			targetPos = (tHrp.CFrame * CFrame.new(0, -safeDist, 0)).Position;
 		else
-			targetPos = (tHrp.CFrame * CFrame.new(0, 0, dist)).Position;
+			targetPos = (tHrp.CFrame * CFrame.new(0, 0, safeDist)).Position;
 		end
-		local safeY = math.max(targetPos.Y, tHrp.Position.Y + 3);
+		local safeY = math.max(targetPos.Y, tHrp.Position.Y + 4);
 		local safePos = Vector3.new(targetPos.X, safeY, targetPos.Z);
 		hrp.CFrame = CFrame.new(safePos, tHrp.Position);
 		hrp.Velocity = Vector3.zero;
