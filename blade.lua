@@ -811,25 +811,31 @@ RunService.Heartbeat:Connect(function()
 		end
 		local mode, dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\195\248\233\160\228", "\207\151\136\185")], Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\156\147\12\139\103\108", "\17\200\227\72\226\20\24")];
 		local targetCFrame;
+		local targetPos;
 		if (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\146\64\24\220", "\159\208\33\123\183\169\145\143")) then
-			targetCFrame = tHrp.CFrame * CFrame.new(0, 0, dist);
+			targetPos = (tHrp.CFrame * CFrame.new(0, 0, dist)).Position;
 		elseif (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\212\72\55\56\230", "\86\146\58\88")) then
-			targetCFrame = tHrp.CFrame * CFrame.new(0, 0, -dist);
+			targetPos = (tHrp.CFrame * CFrame.new(0, 0, -dist)).Position;
 		elseif (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\121\221\229\214\171", "\154\56\191\138\160\206\137\86")) then
-			targetCFrame = tHrp.CFrame * CFrame.new(0, dist, 0);
+			targetPos = (tHrp.CFrame * CFrame.new(0, dist, 0)).Position;
 		elseif (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\164\92\249\136\107", "\172\230\57\149\231\28\90\225")) then
-			targetCFrame = tHrp.CFrame * CFrame.new(0, -dist, 0);
+			targetPos = (tHrp.CFrame * CFrame.new(0, -dist, 0)).Position;
+		else
+			targetPos = (tHrp.CFrame * CFrame.new(0, 0, dist)).Position;
 		end
-		hrp.CFrame = targetCFrame;
+		local safeY = math.max(targetPos.Y, tHrp.Position.Y + 3);
+		local safePos = Vector3.new(targetPos.X, safeY, targetPos.Z);
+		hrp.CFrame = CFrame.new(safePos, tHrp.Position);
 		hrp.Velocity = Vector3.zero;
 		hrp.RotVelocity = Vector3.zero;
 		if (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\32\171\133\217", "\187\98\202\230\178\72")) then
 			local lookVector = (tHrp.Position - hrp.Position).Unit;
-			local rot = CFrame.new(hrp.Position, hrp.Position + Vector3.new(lookVector.X, 0, lookVector.Z));
-			hrp.CFrame = CFrame.new(hrp.Position) * rot.Rotation;
+			if (lookVector.Magnitude > 0) then
+				local rot = CFrame.new(hrp.Position, hrp.Position + Vector3.new(lookVector.X, 0, lookVector.Z));
+				hrp.CFrame = CFrame.new(hrp.Position) * rot.Rotation;
+			end
 			human.AutoRotate = true;
 		else
-			hrp.CFrame = CFrame.new(hrp.Position, tHrp.Position);
 			human.AutoRotate = false;
 		end
 	else
