@@ -434,8 +434,8 @@ RunService.Heartbeat:Connect(function()
 	if (not hrp or not hum or (hum.Health <= 0)) then
 		return;
 	end
-	if (hrp.Position.Y < -50) then
-		hrp.CFrame = hrp.CFrame + Vector3.new(0, -75, 0);
+	if (hrp.Position.Y < 50) then
+		hrp.CFrame = hrp.CFrame + Vector3.new(0, 75, 0);
 		hrp.Velocity = Vector3.zero;
 	end
 	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\216\194\30\172\154\221\80\175\252", "\200\153\183\106\195\222\178\52")] then
@@ -530,7 +530,7 @@ RunService.Heartbeat:Connect(function()
 				newCFrame = CFrame.lookAt(pos, mobRoot.Position);
 			elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\118\3\139\185\178", "\228\52\102\231\214\197\208")) then
 				local rayOrigin = mobRoot.Position;
-				local rayDirection = Vector3.new(0, -50, 0);
+				local rayDirection = Vector3.new(0, 50, 0);
 				local raycastParams = RaycastParams.new();
 				raycastParams.FilterDescendantsInstances = {mobRoot.Parent,LocalPlayer.Character};
 				raycastParams.FilterType = Enum.RaycastFilterType.Exclude;
