@@ -547,7 +547,7 @@ RunService.Heartbeat:Connect(function()
 			hasActiveTarget = false;
 			if wasTargetingMob then
 				wasTargetingMob = false;
-				hrp.CFrame = hrp.CFrame + Vector3.new(0, 10, 0);
+				hrp.CFrame = hrp.CFrame + Vector3.new(0, 20, 0);
 				hrp.Velocity = Vector3.zero;
 			end
 		end
