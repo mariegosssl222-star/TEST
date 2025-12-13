@@ -44,6 +44,7 @@ local hasJoinedMatch = false;
 local webhookSent = false;
 local lastHealTime = 0;
 local isCollectingHeal = false;
+local collectionStartTime = 0;
 local function FireRemote(args)
 	Remote:FireServer(unpack(args));
 end
@@ -404,7 +405,10 @@ RunService.Heartbeat:Connect(function()
 	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\216\194\30\172\150\215\85\164", "\200\153\183\106\195\222\178\52")] then
 		local healObj = GetHealObject();
 		if isCollectingHeal then
-			if healObj then
+			if ((tick() - collectionStartTime) > 3) then
+				isCollectingHeal = false;
+				lastHealTime = tick();
+			elseif healObj then
 				local targetCFrame = nil;
 				if healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\16\226\155\56\121\91\32\247", "\58\82\131\232\93\41")) then
 					targetCFrame = healObj.CFrame;
@@ -431,6 +435,7 @@ RunService.Heartbeat:Connect(function()
 			local threshold = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\217\32\76\227\233\244\55\78\234\215\229", "\185\145\69\45\143")] or 95;
 			if (((tick() - lastHealTime) > 10) and (healthPct <= threshold) and healObj) then
 				isCollectingHeal = true;
+				collectionStartTime = tick();
 				healingActive = true;
 			end
 		end
