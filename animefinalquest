@@ -134,16 +134,11 @@ local function GetTargetMob()
 		if (npc:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\250\243\60\179\168\241\2\214\212\62\189\178\206\10\192\242", "\107\178\134\81\210\198\158")) and npc:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\16\27\143\199\164\55\7\134", "\202\88\110\226\166")) and (npc.Humanoid.Health > 0)) then
 			local dist = (hrp.Position - npc.HumanoidRootPart.Position).Magnitude;
 			local name = npc.Name;
-			local priority = 4;
-			if string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\238\14\133\242", "\170\163\111\226\151")) then
+			local priority = 3;
+			if (string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\238\14\133\242", "\170\163\111\226\151")) or string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\35\49\188\63\75\51", "\73\113\80\210\88\46\87")) or string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\160\62\206\26\226\147", "\135\225\76\173\114"))) then
 				priority = 1;
-			elseif string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\35\49\188\63\75\51", "\73\113\80\210\88\46\87")) then
+			elseif (string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\61\226\180\181\161", "\199\122\141\216\208\204\221")) or string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\158\205\25\244\125\228", "\150\205\189\112\144\24")) or string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\1\129\178\67\10\200\58\25\43\131", "\112\69\228\223\44\100\232\113"))) then
 				priority = 2;
-			elseif string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\160\62\206\26\226\147", "\135\225\76\173\114")) then
-				priority = 3;
-			end
-			if (string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\61\226\180\181\161", "\199\122\141\216\208\204\221")) or string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\158\205\25\244\125\228", "\150\205\189\112\144\24")) or string.find(name, LUAOBFUSACTOR_DECRYPT_STR_0("\1\129\178\67\10\200\58\25\43\131", "\112\69\228\223\44\100\232\113"))) then
-				priority = 10;
 			end
 			if (priority < bestPriority) then
 				bestPriority = priority;
@@ -212,7 +207,7 @@ SettingTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\53\236\139\84", "\89\123\141\2
 end});
 SettingTab:Slider({[LUAOBFUSACTOR_DECRYPT_STR_0("\248\161\0\42", "\163\182\192\109\79")]=LUAOBFUSACTOR_DECRYPT_STR_0("\23\41\12\204\240\55\50\64\232\240\53\42\64\133", "\149\84\70\96\160"),[LUAOBFUSACTOR_DECRYPT_STR_0("\30\10\12\234", "\141\88\102\109")]=LUAOBFUSACTOR_DECRYPT_STR_0("\155\86\203\124\42\56\71\194\182\93\222", "\161\211\51\170\16\122\93\53"),[LUAOBFUSACTOR_DECRYPT_STR_0("\214\167\188", "\72\155\206\210")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\107\123\76", "\83\38\26\52\110")]=85,[LUAOBFUSACTOR_DECRYPT_STR_0("\124\18\33\71\77\27\51", "\38\56\119\71")]=70,[LUAOBFUSACTOR_DECRYPT_STR_0("\208\238\84\218\39\87\240\228", "\54\147\143\56\182\69")]=function(val)
 end});
-SettingTab:Slider({[LUAOBFUSACTOR_DECRYPT_STR_0("\248\128\242\76", "\191\182\225\159\41")]=LUAOBFUSACTOR_DECRYPT_STR_0("\31\34\104\113\130\148\214\42\28\43\80", "\162\75\114\72\53\235\231"),[LUAOBFUSACTOR_DECRYPT_STR_0("\170\48\69\229", "\98\236\92\36\130\51")]=LUAOBFUSACTOR_DECRYPT_STR_0("\144\41\40\179\86\188", "\80\196\121\108\218\37\200\213"),[LUAOBFUSACTOR_DECRYPT_STR_0("\45\122\12", "\234\96\19\98\31\43\110")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\43\30\74", "\235\102\127\50\167\204\18")]=50,[LUAOBFUSACTOR_DECRYPT_STR_0("\116\164\243\34\81\34\68", "\78\48\193\149\67\36")]=5,[LUAOBFUSACTOR_DECRYPT_STR_0("\19\31\140\20\67\49\29\139", "\33\80\126\224\120")]=function(val)
+SettingTab:Slider({[LUAOBFUSACTOR_DECRYPT_STR_0("\248\128\242\76", "\191\182\225\159\41")]=LUAOBFUSACTOR_DECRYPT_STR_0("\31\34\104\113\130\148\214\42\28\43\80", "\162\75\114\72\53\235\231"),[LUAOBFUSACTOR_DECRYPT_STR_0("\170\48\69\229", "\98\236\92\36\130\51")]=LUAOBFUSACTOR_DECRYPT_STR_0("\144\41\40\179\86\188", "\80\196\121\108\218\37\200\213"),[LUAOBFUSACTOR_DECRYPT_STR_0("\45\122\12", "\234\96\19\98\31\43\110")]=1,[LUAOBFUSACTOR_DECRYPT_STR_0("\43\30\74", "\235\102\127\50\167\204\18")]=75,[LUAOBFUSACTOR_DECRYPT_STR_0("\116\164\243\34\81\34\68", "\78\48\193\149\67\36")]=10,[LUAOBFUSACTOR_DECRYPT_STR_0("\19\31\140\20\67\49\29\139", "\33\80\126\224\120")]=function(val)
 end});
 SettingTab:Dropdown({[LUAOBFUSACTOR_DECRYPT_STR_0("\194\169\14\193", "\60\140\200\99\164")]=LUAOBFUSACTOR_DECRYPT_STR_0("\179\196\68\11\167\147\252\11\34", "\194\231\148\100\70"),[LUAOBFUSACTOR_DECRYPT_STR_0("\96\64\192\164", "\168\38\44\161\195\150")]=LUAOBFUSACTOR_DECRYPT_STR_0("\180\204\175\115\36\224\185\18", "\118\224\156\226\22\80\136\214"),[LUAOBFUSACTOR_DECRYPT_STR_0("\110\231\74\148", "\224\34\142\57")]={LUAOBFUSACTOR_DECRYPT_STR_0("\252\166\198\214", "\110\190\199\165\189\19\145\61"),LUAOBFUSACTOR_DECRYPT_STR_0("\252\249\120\230\159", "\167\186\139\23\136\235"),LUAOBFUSACTOR_DECRYPT_STR_0("\59\183\135\27\31", "\109\122\213\232"),LUAOBFUSACTOR_DECRYPT_STR_0("\204\242\174\63\249", "\80\142\151\194")},[LUAOBFUSACTOR_DECRYPT_STR_0("\39\195\113\77\22\202\99", "\44\99\166\23")]=LUAOBFUSACTOR_DECRYPT_STR_0("\94\246\42\61", "\196\28\151\73\86\83"),[LUAOBFUSACTOR_DECRYPT_STR_0("\208\2\37\28\128\89\27\125", "\22\147\99\73\112\226\56\120")]=function(val)
 end});
@@ -547,34 +542,36 @@ RunService.Heartbeat:Connect(function()
 		if target then
 			wasTargetingMob = true;
 			hasActiveTarget = true;
-			local mobRoot = target.HumanoidRootPart;
-			local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\158\129\201\238\100\250", "\39\202\209\141\135\23\142")] or 5;
-			local method = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\203\3\36\15\38\240\240\55", "\152\159\83\105\106\82")] or LUAOBFUSACTOR_DECRYPT_STR_0("\163\199\82\249", "\60\225\166\49\146\169");
-			local newCFrame;
-			if (method == LUAOBFUSACTOR_DECRYPT_STR_0("\13\31\44\33", "\103\79\126\79\74\97")) then
-				newCFrame = mobRoot.CFrame * CFrame.new(0, 0, dist);
-				newCFrame = CFrame.lookAt(newCFrame.Position, mobRoot.Position);
-			elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\156\109\220\125\74", "\122\218\31\179\19\62")) then
-				newCFrame = mobRoot.CFrame * CFrame.new(0, 0, -dist);
-				newCFrame = CFrame.lookAt(newCFrame.Position, mobRoot.Position);
-			elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\146\212\194\215\204", "\37\211\182\173\161\169\193")) then
-				local pos = mobRoot.Position + Vector3.new(0, dist, 0);
-				newCFrame = CFrame.lookAt(pos, mobRoot.Position);
-			elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\213\63\65\214\63", "\217\151\90\45\185\72\27")) then
-				local rayOrigin = mobRoot.Position;
-				local rayDirection = Vector3.new(0, 50, 0);
-				local raycastParams = RaycastParams.new();
-				raycastParams.FilterDescendantsInstances = {mobRoot.Parent,LocalPlayer.Character};
-				raycastParams.FilterType = Enum.RaycastFilterType.Exclude;
-				local rayResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams);
-				local floorY = mobRoot.Position.Y;
-				if rayResult then
-					floorY = rayResult.Position.Y;
+			local mobPart = target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\130\180\236\227", "\39\202\209\141\135\23\142")) or target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\215\38\4\11\60\247\246\55\59\5\61\236\207\50\27\30", "\152\159\83\105\106\82"));
+			if mobPart then
+				local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\181\246\117\251\218\72", "\60\225\166\49\146\169")] or 10;
+				local method = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\27\46\2\47\21\15\32\26", "\103\79\126\79\74\97")] or LUAOBFUSACTOR_DECRYPT_STR_0("\152\126\208\120", "\122\218\31\179\19\62");
+				local newCFrame;
+				if (method == LUAOBFUSACTOR_DECRYPT_STR_0("\145\215\206\202", "\37\211\182\173\161\169\193")) then
+					newCFrame = mobPart.CFrame * CFrame.new(0, 0, dist);
+					newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
+				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\209\40\66\215\60", "\217\151\90\45\185\72\27")) then
+					newCFrame = mobPart.CFrame * CFrame.new(0, 0, -dist);
+					newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
+				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\226\126\232\4\83", "\54\163\28\135\114")) then
+					local pos = mobPart.Position + Vector3.new(0, dist, 0);
+					newCFrame = CFrame.lookAt(pos, mobPart.Position);
+				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\10\222\81\141\89", "\31\72\187\61\226\46")) then
+					local rayOrigin = mobPart.Position;
+					local rayDirection = Vector3.new(0, 50, 0);
+					local raycastParams = RaycastParams.new();
+					raycastParams.FilterDescendantsInstances = {target,LocalPlayer.Character};
+					raycastParams.FilterType = Enum.RaycastFilterType.Exclude;
+					local rayResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams);
+					local floorY = mobPart.Position.Y;
+					if rayResult then
+						floorY = rayResult.Position.Y;
+					end
+					local pos = Vector3.new(mobPart.Position.X, floorY - dist, mobPart.Position.Z);
+					newCFrame = CFrame.lookAt(pos, mobPart.Position);
 				end
-				local pos = Vector3.new(mobRoot.Position.X, floorY - dist, mobRoot.Position.Z);
-				newCFrame = CFrame.lookAt(pos, mobRoot.Position);
+				hrp.CFrame = newCFrame;
 			end
-			hrp.CFrame = newCFrame;
 		else
 			hasActiveTarget = false;
 			if wasTargetingMob then
