@@ -470,10 +470,10 @@ task.spawn(function()
 					winCheckTimer = tick();
 				else
 					local duration = tick() - winCheckTimer;
-					if (duration > 2) then
+					if (duration > 1) then
 						isWinPaused = true;
 					end
-					if (duration >= 5) then
+					if (duration >= 1) then
 						webhookSent = true;
 						SendWebhook(LUAOBFUSACTOR_DECRYPT_STR_0("\15\0\242\251\43\78\221\255\32\15\247\182\31\27\254\229\58\78\182\182\28\11\232\227\34\26", "\150\78\110\155"), LUAOBFUSACTOR_DECRYPT_STR_0("\188\202\50\161\147\17\177", "\32\229\165\71\129\196\126\223"), 65280, nil, false);
 						if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\226\156\208\142\179\208\211\133\197\152", "\181\163\233\164\225\225")] then
