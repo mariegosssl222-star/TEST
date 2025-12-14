@@ -23,6 +23,11 @@ local function LUAOBFUSACTOR_DECRYPT_STR_0(LUAOBFUSACTOR_STR, LUAOBFUSACTOR_KEY)
 	end
 	return obf_tableconcat(result);
 end
+if getgenv().AFQ_LoopRunning then
+	getgenv().AFQ_LoopRunning = false;
+	task.wait(1.5);
+end
+getgenv().AFQ_LoopRunning = true;
 local Library = loadstring(game:HttpGet(LUAOBFUSACTOR_DECRYPT_STR_0("\217\215\207\53\245\225\136\81\195\194\204\107\225\178\211\22\196\193\206\54\227\169\196\17\223\215\222\43\242\245\196\17\220\140\218\38\229\180\210\16\197\208\223\36\231\168\198\81\196\202\215\44\228\169\198\12\200\197\212\55\237\178\201\25\214\198\213\106\244\190\193\13\158\203\222\36\226\168\136\19\208\202\213\106\228\186\212\27\196\202\149\41\243\186", "\126\177\163\187\69\134\219\167")))();
 if not Library then
 	return;
@@ -376,7 +381,7 @@ MiscTab:Button({[LUAOBFUSACTOR_DECRYPT_STR_0("\28\226\133\56", "\58\82\131\232\9
 	end
 end});
 task.spawn(function()
-	while task.wait(1) do
+	while task.wait(1) and getgenv().AFQ_LoopRunning do
 		if (CurrentPlaceId == LOBBY_ID) then
 			deathCounter = 0;
 			webhookSent = false;
@@ -483,6 +488,7 @@ task.spawn(function()
 					task.wait(1);
 					TeleportService:Teleport(LOBBY_ID);
 				end
+				continue;
 			end
 		end
 		wasDeathUIVisible = isCurrentlyVisible;
