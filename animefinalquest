@@ -49,6 +49,7 @@ local wasTargetingMob = false;
 local hasActiveTarget = false;
 local isCheckingWin = false;
 local winCheckTimer = 0;
+local isWinPaused = false;
 local isDodging = false;
 local lastDodgeTime = 0;
 local deathCounter = 0;
@@ -308,6 +309,9 @@ MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\131\43\94\73", "\214\205\74\51\44
 	if not IsGame() then
 		return;
 	end
+	if isWinPaused then
+		return;
+	end
 	if not GetTargetMob() then
 		return;
 	end
@@ -321,6 +325,9 @@ MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\131\43\94\73", "\214\205\74\51\44
 end});
 MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\7\173\61\61", "\88\73\204\80")]=LUAOBFUSACTOR_DECRYPT_STR_0("\15\150\4\73\105\233\37\138\28\74", "\186\78\227\112\38\73"),[LUAOBFUSACTOR_DECRYPT_STR_0("\218\91\252\82", "\26\156\55\157\53\51")]=LUAOBFUSACTOR_DECRYPT_STR_0("\173\205\2\214\139\91\133\212\26", "\48\236\184\118\185\216"),[LUAOBFUSACTOR_DECRYPT_STR_0("\193\184\81\49\218\56\241", "\84\133\221\55\80\175")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\153\226\40\167\222", "\60\221\135\68\198\167")]=2,[LUAOBFUSACTOR_DECRYPT_STR_0("\205\188\244\143\64\216\237\182", "\185\142\221\152\227\34")]=function(Value)
 	if (not Value or not IsGame()) then
+		return;
+	end
+	if isWinPaused then
 		return;
 	end
 	VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.G, false, game);
@@ -368,6 +375,7 @@ task.spawn(function()
 			deathCounter = 0;
 			webhookSent = false;
 			isCheckingWin = false;
+			isWinPaused = false;
 			continue;
 		end
 		if not IsGame() then
@@ -460,15 +468,22 @@ task.spawn(function()
 				if not isCheckingWin then
 					isCheckingWin = true;
 					winCheckTimer = tick();
-				elseif ((tick() - winCheckTimer) >= 5) then
-					webhookSent = true;
-					SendWebhook(LUAOBFUSACTOR_DECRYPT_STR_0("\15\0\242\251\43\78\221\255\32\15\247\182\31\27\254\229\58\78\182\182\28\11\232\227\34\26", "\150\78\110\155"), LUAOBFUSACTOR_DECRYPT_STR_0("\188\202\50\161\147\17\177", "\32\229\165\71\129\196\126\223"), 65280, nil, false);
-					if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\226\156\208\142\179\208\211\133\197\152", "\181\163\233\164\225\225")] then
-						FireRemote({{1,"("}});
+				else
+					local duration = tick() - winCheckTimer;
+					if (duration > 2) then
+						isWinPaused = true;
+					end
+					if (duration >= 5) then
+						webhookSent = true;
+						SendWebhook(LUAOBFUSACTOR_DECRYPT_STR_0("\15\0\242\251\43\78\221\255\32\15\247\182\31\27\254\229\58\78\182\182\28\11\232\227\34\26", "\150\78\110\155"), LUAOBFUSACTOR_DECRYPT_STR_0("\188\202\50\161\147\17\177", "\32\229\165\71\129\196\126\223"), 65280, nil, false);
+						if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\226\156\208\142\179\208\211\133\197\152", "\181\163\233\164\225\225")] then
+							FireRemote({{1,"("}});
+						end
 					end
 				end
 			else
 				isCheckingWin = false;
+				isWinPaused = false;
 			end
 		else
 			isCheckingWin = false;
@@ -576,7 +591,7 @@ RunService.Heartbeat:Connect(function()
 			end
 		end
 	end
-	if (not healingActive and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\248\14\146\255\206", "\144\172\94\223")] and not isDodging) then
+	if (not healingActive and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\248\14\146\255\206", "\144\172\94\223")] and not isDodging and not isWinPaused) then
 		local target = GetTargetMob();
 		if target then
 			wasTargetingMob = true;
