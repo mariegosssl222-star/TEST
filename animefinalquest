@@ -344,12 +344,15 @@ MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\170\86\243\95", "\58\228\55\158")
 	end
 	if shouldAwaken then
 		isAwakeningAction = true;
-		task.wait(1);
-		VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.G, false, game);
-		task.wait(0.15);
-		VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.G, false, game);
-		FireRemote({{Enum.KeyCode.G,"\026"}});
-		task.wait(2);
+		task.wait(0.5);
+		for i = 1, 15 do
+			VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.G, false, game);
+			task.wait(0.01);
+			VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.G, false, game);
+			FireRemote({{Enum.KeyCode.G,"\026"}});
+			task.wait(0.05);
+		end
+		task.wait(1.5);
 		isAwakeningAction = false;
 	end
 end});
