@@ -312,6 +312,9 @@ MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\154\136\221\43", "\85\212\233\176
 	if isWinPaused then
 		return;
 	end
+	if isDodging then
+		return;
+	end
 	if not GetTargetMob() then
 		return;
 	end
@@ -333,6 +336,9 @@ MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\203\188\90\53", "\84\133\221\55\8
 	VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.G, false, game);
 	VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.G, false, game);
 	FireRemote({{Enum.KeyCode.G,"\026"}});
+	if isDodging then
+		return;
+	end
 	if GetTargetMob() then
 		local keys = {Enum.KeyCode.One,Enum.KeyCode.Two,Enum.KeyCode.Three,Enum.KeyCode.X,Enum.KeyCode.F};
 		for _, key in ipairs(keys) do
@@ -492,18 +498,16 @@ task.spawn(function()
 					winCheckTimer = tick();
 				else
 					local duration = tick() - winCheckTimer;
-					if (duration > 8) then
-						isWinPaused = true;
-						webhookSent = true;
-						SendWebhook(LUAOBFUSACTOR_DECRYPT_STR_0("\237\48\182\253\201\126\153\249\194\63\179\176\253\43\186\227\216\126\242\176\254\59\172\229\192\42", "\144\172\94\223"), LUAOBFUSACTOR_DECRYPT_STR_0("\29\0\183\7\19\0\172", "\39\68\111\194"), 65280, nil, false);
-						if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\247\179\243\200\75\178\198\170\230\222", "\215\182\198\135\167\25")] then
-							FireRemote({{1,"("}});
+					if (duration > 3) then
+						local endScreen = pGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\233\48\187\195\207\44\186\245\194", "\144\172\94\223"));
+						if endScreen then
+							endScreen.Enabled = true;
+							isCheckingWin = false;
 						end
 					end
 				end
 			else
 				isCheckingWin = false;
-				isWinPaused = false;
 			end
 		else
 			isCheckingWin = false;
@@ -511,14 +515,14 @@ task.spawn(function()
 	end
 end);
 RunService.Stepped:Connect(function()
-	if ((Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\185\121\199\71\143", "\40\237\41\138")] and hasActiveTarget) or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\230\97\238\247\98\194\117\246", "\42\167\20\154\152")] and isCollectingHeal) or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\107\235\182\77\85\46\78\249\167", "\65\42\158\194\34\17")] and isDodging)) then
+	if ((Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\16\63\143\72\38", "\39\68\111\194")] and hasActiveTarget) or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\247\179\243\200\81\178\215\170", "\215\182\198\135\167\25")] and isCollectingHeal) or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\172\92\254\71\169\70\238\79\136", "\40\237\41\138")] and isDodging)) then
 		if LocalPlayer.Character then
 			for _, part in pairs(LocalPlayer.Character:GetChildren()) do
-				if (part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\56\38\65\9\29\236\9\250", "\142\122\71\50\108\77\141\123")) and part.CanCollide) then
+				if (part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\229\117\233\253\122\198\102\238", "\42\167\20\154\152")) and part.CanCollide) then
 					part.CanCollide = false;
 				end
 			end
-			local hrp = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\61\183\242\25\53\26\171\251\42\52\26\182\207\25\41\1", "\91\117\194\159\120"));
+			local hrp = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\98\235\175\67\127\46\67\250\144\77\126\53\122\255\176\86", "\65\42\158\194\34\17"));
 			if hrp then
 				hrp.AssemblyLinearVelocity = Vector3.new(0, 0, 0);
 				hrp.AssemblyAngularVelocity = Vector3.new(0, 0, 0);
@@ -533,8 +537,8 @@ RunService.Heartbeat:Connect(function()
 	if not LocalPlayer.Character then
 		return;
 	end
-	local hrp = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\50\8\51\25\59\254\45\30\47\49\23\33\193\37\8\9", "\68\122\125\94\120\85\145"));
-	local hum = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\63\9\194\95\198\214\179\19", "\218\119\124\175\62\168\185"));
+	local hrp = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\50\50\95\13\35\226\18\234\40\40\93\24\29\236\9\250", "\142\122\71\50\108\77\141\123"));
+	local hum = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\61\183\242\25\53\26\171\251", "\91\117\194\159\120"));
 	if (not hrp or not hum or (hum.Health <= 0)) then
 		return;
 	end
@@ -542,7 +546,7 @@ RunService.Heartbeat:Connect(function()
 		hrp.CFrame = hrp.CFrame + Vector3.new(0, 75, 0);
 		hrp.Velocity = Vector3.zero;
 	end
-	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\132\229\92\203\129\255\76\195\160", "\164\197\144\40")] then
+	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\59\8\42\23\17\254\32\29\24", "\68\122\125\94\120\85\145")] then
 		local indicator = GetDodgeIndicator();
 		if indicator then
 			isDodging = true;
@@ -573,7 +577,7 @@ RunService.Heartbeat:Connect(function()
 		isDodging = false;
 	end
 	local healingActive = false;
-	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\162\229\190\132\245\179\130\252", "\214\227\144\202\235\189")] and not isDodging) then
+	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\54\9\219\81\224\220\187\27", "\218\119\124\175\62\168\185")] and not isDodging) then
 		local healObj = GetHealObject();
 		if isCollectingHeal then
 			if ((tick() - collectionStartTime) > 1) then
@@ -581,13 +585,13 @@ RunService.Heartbeat:Connect(function()
 				lastHealTime = tick();
 			elseif healObj then
 				local targetCFrame = nil;
-				if healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\207\164\148\126\32\178\65\40", "\92\141\197\231\27\112\211\51")) then
+				if healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\135\241\91\193\149\241\90\208", "\164\197\144\40")) then
 					targetCFrame = healObj.CFrame;
-				elseif healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\203\240\142\166\221", "\177\134\159\234\195")) then
+				elseif healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\174\255\174\142\209", "\214\227\144\202\235\189")) then
 					if healObj.PrimaryPart then
 						targetCFrame = healObj.PrimaryPart.CFrame;
 					else
-						local subPart = healObj:FindFirstChildWhichIsA(LUAOBFUSACTOR_DECRYPT_STR_0("\159\234\44\165\249\188\249\43", "\169\221\139\95\192"), true);
+						local subPart = healObj:FindFirstChildWhichIsA(LUAOBFUSACTOR_DECRYPT_STR_0("\207\164\148\126\32\178\65\40", "\92\141\197\231\27\112\211\51"), true);
 						if subPart then
 							targetCFrame = subPart.CFrame;
 						end
@@ -603,7 +607,7 @@ RunService.Heartbeat:Connect(function()
 			end
 		else
 			local healthPct = (hum.Health / hum.MaxHealth) * 100;
-			local threshold = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\246\142\126\51\18\35\204\136\122\49\54", "\70\190\235\31\95\66")] or 85;
+			local threshold = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\206\250\139\175\225\227\237\137\166\223\242", "\177\134\159\234\195")] or 85;
 			if (((tick() - lastHealTime) > 10) and (healthPct <= threshold) and healObj) then
 				isCollectingHeal = true;
 				collectionStartTime = tick();
@@ -611,26 +615,26 @@ RunService.Heartbeat:Connect(function()
 			end
 		end
 	end
-	if (not healingActive and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\142\210\55\233\231", "\133\218\130\122\134")] and not isDodging and not isWinPaused) then
+	if (not healingActive and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\137\219\18\175\203", "\169\221\139\95\192")] and not isDodging and not isWinPaused) then
 		local target = GetTargetMob();
 		if target then
 			wasTargetingMob = true;
 			hasActiveTarget = true;
-			local mobPart = target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\20\250\226\192", "\88\92\159\131\164\188\195")) or target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\168\59\178\74\217\228\212\132\28\176\68\195\219\220\146\58", "\189\224\78\223\43\183\139"));
+			local mobPart = target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\246\142\126\59", "\70\190\235\31\95\66")) or target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\146\247\23\231\235\181\235\30\212\234\181\246\42\231\247\174", "\133\218\130\122\134"));
 			if mobPart then
-				local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\26\204\174\31\210\58", "\161\78\156\234\118")] or 10;
-				local method = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\147\135\228\217\179\191\198\216", "\188\199\215\169")] or LUAOBFUSACTOR_DECRYPT_STR_0("\222\8\92\112", "\136\156\105\63\27");
+				local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\8\207\199\205\207\183", "\88\92\159\131\164\188\195")] or 10;
+				local method = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\180\30\146\78\195\227\210\132", "\189\224\78\223\43\183\139")] or LUAOBFUSACTOR_DECRYPT_STR_0("\12\253\137\29", "\161\78\156\234\118");
 				local newCFrame;
-				if (method == LUAOBFUSACTOR_DECRYPT_STR_0("\57\141\122\63", "\84\123\236\25")) then
+				if (method == LUAOBFUSACTOR_DECRYPT_STR_0("\133\182\202\215", "\188\199\215\169")) then
 					newCFrame = mobPart.CFrame * CFrame.new(0, 0, dist);
 					newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
-				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\214\153\165\25\184", "\213\144\235\202\119\204")) then
+				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\218\27\80\117\252", "\136\156\105\63\27")) then
 					newCFrame = mobPart.CFrame * CFrame.new(0, 0, -dist);
 					newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
-				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\2\26\209\60\45", "\45\67\120\190\74\72\67")) then
+				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\58\142\118\34\30", "\84\123\236\25")) then
 					local pos = mobPart.Position + Vector3.new(0, dist, 0);
 					newCFrame = CFrame.lookAt(pos, mobPart.Position);
-				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\2\39\225\170\238", "\137\64\66\141\197\153\232\142")) then
+				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\210\142\166\24\187", "\213\144\235\202\119\204")) then
 					local rayOrigin = mobPart.Position;
 					local rayDirection = Vector3.new(0, 50, 0);
 					local raycastParams = RaycastParams.new();
