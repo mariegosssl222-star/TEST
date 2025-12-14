@@ -344,19 +344,18 @@ MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\170\86\243\95", "\58\228\55\158")
 		isAwakeningAction = true;
 		if (LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\6\150\29\71\39\213\39\135\34\73\38\206\30\130\2\82", "\186\78\227\112\38\73"))) then
 			local hrp = LocalPlayer.Character.HumanoidRootPart;
-			local safePos = Vector3.new(hrp.Position.X, hrp.Position.Y + 300, hrp.Position.Z);
+			local safePos = Vector3.new(hrp.Position.X, hrp.Position.Y + 90, hrp.Position.Z);
 			hrp.CFrame = CFrame.new(safePos);
 			hrp.Velocity = Vector3.zero;
 		end
-		task.wait(0.5);
+		task.wait(0.2);
 		for i = 1, 15 do
 			VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.G, false, game);
 			task.wait(0.01);
 			VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.G, false, game);
 			FireRemote({{Enum.KeyCode.G,"\026"}});
-			task.wait(0.05);
+			task.wait(0.02);
 		end
-		task.wait(2);
 		isAwakeningAction = false;
 	end
 end});
