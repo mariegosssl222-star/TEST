@@ -342,42 +342,36 @@ MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\170\86\243\95", "\58\228\55\158")
 	end
 	if shouldAwaken then
 		isAwakeningAction = true;
-		if (LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\6\150\29\71\39\213\39\135\34\73\38\206\30\130\2\82", "\186\78\227\112\38\73"))) then
-			local hrp = LocalPlayer.Character.HumanoidRootPart;
-			local safePos = Vector3.new(hrp.Position.X, hrp.Position.Y + 90, hrp.Position.Z);
-			hrp.CFrame = CFrame.new(safePos);
-			hrp.Velocity = Vector3.zero;
-		end
-		task.wait(0.2);
-		for i = 1, 15 do
+		task.wait(0.5);
+		for i = 1, 5 do
 			VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.G, false, game);
-			task.wait(0.01);
+			task.wait(0.15);
 			VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.G, false, game);
 			FireRemote({{Enum.KeyCode.G,"\026"}});
-			task.wait(0.02);
+			task.wait(0.1);
 		end
 		isAwakeningAction = false;
 	end
 end});
-MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\210\86\240\80", "\26\156\55\157\53\51")]=LUAOBFUSACTOR_DECRYPT_STR_0("\168\215\18\222\189\16\173\247\51", "\48\236\184\118\185\216"),[LUAOBFUSACTOR_DECRYPT_STR_0("\195\177\86\55", "\84\133\221\55\80\175")]=LUAOBFUSACTOR_DECRYPT_STR_0("\156\242\48\169\227\83\185\224\33", "\60\221\135\68\198\167"),[LUAOBFUSACTOR_DECRYPT_STR_0("\202\184\254\130\87\213\250", "\185\142\221\152\227\34")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\124\192\91\251\90", "\151\56\165\55\154\35\83")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\131\66\9\226\162\66\6\229", "\142\192\35\101")]=function(Value)
+MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\0\130\29\67", "\186\78\227\112\38\73")]=LUAOBFUSACTOR_DECRYPT_STR_0("\216\88\249\82\86\58\221\120\216", "\26\156\55\157\53\51"),[LUAOBFUSACTOR_DECRYPT_STR_0("\170\212\23\222", "\48\236\184\118\185\216")]=LUAOBFUSACTOR_DECRYPT_STR_0("\196\168\67\63\235\59\225\186\82", "\84\133\221\55\80\175"),[LUAOBFUSACTOR_DECRYPT_STR_0("\153\226\34\167\210\80\169", "\60\221\135\68\198\167")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\202\184\244\130\91", "\185\142\221\152\227\34")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\123\196\91\246\65\50\244\83", "\151\56\165\55\154\35\83")]=function(Value)
 	if not Value then
 		isDodging = false;
 	end
 end});
-MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\248\116\36\166", "\118\182\21\73\195\135\236\204")]=LUAOBFUSACTOR_DECRYPT_STR_0("\43\51\22\76\1\14\233\72\20\31\65\8", "\157\104\92\122\32\100\109"),[LUAOBFUSACTOR_DECRYPT_STR_0("\133\170\206\205", "\203\195\198\175\170\93\71\237")]=LUAOBFUSACTOR_DECRYPT_STR_0("\15\94\42\218\121\20\253\34", "\156\78\43\94\181\49\113"),[LUAOBFUSACTOR_DECRYPT_STR_0("\86\237\194\162\30\79\109", "\25\18\136\164\195\107\35")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\204\40\165\78\107", "\216\136\77\201\47\18\220\161")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\14\237\39\214\10\221\129\38", "\226\77\140\75\186\104\188")]=function(Value)
+MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\142\66\8\235", "\142\192\35\101")]=LUAOBFUSACTOR_DECRYPT_STR_0("\245\122\37\175\226\143\184\86\254\112\40\175", "\118\182\21\73\195\135\236\204"),[LUAOBFUSACTOR_DECRYPT_STR_0("\46\48\27\71", "\157\104\92\122\32\100\109")]=LUAOBFUSACTOR_DECRYPT_STR_0("\130\179\219\197\21\34\140\167", "\203\195\198\175\170\93\71\237"),[LUAOBFUSACTOR_DECRYPT_STR_0("\10\78\56\212\68\29\232", "\156\78\43\94\181\49\113")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\86\237\200\162\18", "\25\18\136\164\195\107\35")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\203\44\165\67\112\189\194\179", "\216\136\77\201\47\18\220\161")]=function(Value)
 	if not Value then
 		isCollectingHeal = false;
 	end
 end});
-MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\151\207\221\58", "\47\217\174\176\95")]=LUAOBFUSACTOR_DECRYPT_STR_0("\140\237\54\54\189\20\85\41\186", "\70\216\189\22\98\210\52\24"),[LUAOBFUSACTOR_DECRYPT_STR_0("\252\211\162\128", "\179\186\191\195\231")]=LUAOBFUSACTOR_DECRYPT_STR_0("\205\15\53\235\251", "\132\153\95\120"),[LUAOBFUSACTOR_DECRYPT_STR_0("\149\183\8\44\226\214\180", "\192\209\210\110\77\151\186")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\196\6\46\232\230", "\164\128\99\66\137\159")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\35\136\229\178\2\136\234\181", "\222\96\233\137")]=function(Value)
+MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\3\237\38\223", "\226\77\140\75\186\104\188")]=LUAOBFUSACTOR_DECRYPT_STR_0("\141\254\144\11\64\249\227\223\61", "\47\217\174\176\95"),[LUAOBFUSACTOR_DECRYPT_STR_0("\158\209\119\5", "\70\216\189\22\98\210\52\24")]=LUAOBFUSACTOR_DECRYPT_STR_0("\238\239\142\136\209", "\179\186\191\195\231"),[LUAOBFUSACTOR_DECRYPT_STR_0("\221\58\30\229\236\51\12", "\132\153\95\120")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\149\183\2\44\238", "\192\209\210\110\77\151\186")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\195\2\46\229\253\197\227\8", "\164\128\99\66\137\159")]=function(Value)
 end});
-MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\151\178\170\26", "\144\217\211\199\127\232\147")]=LUAOBFUSACTOR_DECRYPT_STR_0("\204\31\126\33\211\5\46\75\235\59", "\36\152\79\94\72\181\37\98"),[LUAOBFUSACTOR_DECRYPT_STR_0("\241\212\70\56", "\95\183\184\39")]=LUAOBFUSACTOR_DECRYPT_STR_0("\129\15\203\41\71\148", "\98\213\95\135\70\52\224"),[LUAOBFUSACTOR_DECRYPT_STR_0("\218\166\207\118\65\242\183", "\52\158\195\169\23")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\94\185\62\117\159", "\235\26\220\82\20\230\85\27")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\171\160\229\206\118\137\162\226", "\20\232\193\137\162")]=function(Value)
+MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\46\136\228\187", "\222\96\233\137")]=LUAOBFUSACTOR_DECRYPT_STR_0("\141\131\231\22\142\179\220\182\160\179", "\144\217\211\199\127\232\147"),[LUAOBFUSACTOR_DECRYPT_STR_0("\222\35\63\47", "\36\152\79\94\72\181\37\98")]=LUAOBFUSACTOR_DECRYPT_STR_0("\227\232\107\48\196\204", "\95\183\184\39"),[LUAOBFUSACTOR_DECRYPT_STR_0("\145\58\225\39\65\140\22", "\98\213\95\135\70\52\224")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\218\166\197\118\77", "\52\158\195\169\23")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\89\189\62\120\132\52\120\128", "\235\26\220\82\20\230\85\27")]=function(Value)
 end});
-MiscTab:Button({[LUAOBFUSACTOR_DECRYPT_STR_0("\12\222\200\163", "\17\66\191\165\198\135\236\119")]=LUAOBFUSACTOR_DECRYPT_STR_0("\61\170\170\22\250\229\172\240\3\163\238\48\240\236\233\194", "\177\111\207\206\115\159\136\140"),[LUAOBFUSACTOR_DECRYPT_STR_0("\38\136\28\24\214\78\92\14", "\63\101\233\112\116\180\47")]=function()
+MiscTab:Button({[LUAOBFUSACTOR_DECRYPT_STR_0("\166\160\228\199", "\20\232\193\137\162")]=LUAOBFUSACTOR_DECRYPT_STR_0("\16\218\193\163\226\129\87\80\46\211\133\133\232\136\18\98", "\17\66\191\165\198\135\236\119"),[LUAOBFUSACTOR_DECRYPT_STR_0("\44\174\162\31\253\233\239\218", "\177\111\207\206\115\159\136\140")]=function()
 	if (CurrentPlaceId ~= LOBBY_ID) then
 		return;
 	end
-	local codes = {LUAOBFUSACTOR_DECRYPT_STR_0("\241\30\193\55\217\5\230", "\86\163\91\141\114\152"),LUAOBFUSACTOR_DECRYPT_STR_0("\114\44\70\90\9", "\90\51\107\20\19"),LUAOBFUSACTOR_DECRYPT_STR_0("\172\214\180\223\24\172\219", "\93\237\144\229\143"),LUAOBFUSACTOR_DECRYPT_STR_0("\39\211\220\60\42\117\48\164", "\38\117\150\144\121\107")};
+	local codes = {LUAOBFUSACTOR_DECRYPT_STR_0("\55\172\60\49\245\124\122", "\63\101\233\112\116\180\47"),LUAOBFUSACTOR_DECRYPT_STR_0("\226\28\223\59\203", "\86\163\91\141\114\152"),LUAOBFUSACTOR_DECRYPT_STR_0("\114\45\69\67\31\114\32", "\90\51\107\20\19"),LUAOBFUSACTOR_DECRYPT_STR_0("\191\213\169\202\28\190\213\215", "\93\237\144\229\143")};
 	for _, code in ipairs(codes) do
 		FireRemote({{code,"\n"}});
 		task.wait(0.2);
@@ -394,23 +388,23 @@ task.spawn(function()
 			continue;
 		end
 		if webhookSent then
-			local pGui = LocalPlayer:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\29\183\239\35\40\169\201\47\36", "\90\77\219\142"));
-			if (pGui and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\210\52\13\54\95\19", "\26\134\100\65\89\44\103")]) then
-				local dUI = pGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\213\230\49\55\172\196\202", "\196\145\131\80\67"));
+			local pGui = LocalPlayer:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\37\250\241\0\14\84\50\227\249", "\38\117\150\144\121\107"));
+			if (pGui and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\25\139\194\53\62\175", "\90\77\219\142")]) then
+				local dUI = pGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\194\1\32\45\68\50\83", "\26\134\100\65\89\44\103"));
 				if (dUI and dUI.Enabled) then
 					TeleportService:Teleport(LOBBY_ID);
 				end
 			end
 			continue;
 		end
-		local pGui = LocalPlayer:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\46\188\7\17\29\250\57\165\15", "\136\126\208\102\104\120"));
+		local pGui = LocalPlayer:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\193\239\49\58\161\227\196\37\42", "\196\145\131\80\67"));
 		if not pGui then
 			continue;
 		end
-		local winScreen = pGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\93\132\202\112\172\64\56\84\118", "\49\24\234\174\35\207\50\93"));
+		local winScreen = pGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\59\190\2\59\27\250\27\181\8", "\136\126\208\102\104\120"));
 		if (winScreen and winScreen.Enabled) then
 			webhookSent = true;
-			local stats = {[LUAOBFUSACTOR_DECRYPT_STR_0("\59\243\235\141\98", "\17\108\146\157\232")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\123\207\21\244\59\161\70\198", "\200\43\163\116\141\79")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\146\57\51\134\169", "\131\223\86\93\227\208\148")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\200\76\186\186\14", "\213\131\37\214\214\125")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\3\19\21", "\129\70\75\69\223")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\98\202\254\232\123\234", "\143\38\171\147\137\28")]="?"};
+			local stats = {[LUAOBFUSACTOR_DECRYPT_STR_0("\79\139\216\70\188", "\49\24\234\174\35\207\50\93")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\60\254\252\145\101\5\255\248", "\17\108\146\157\232")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\102\204\26\232\54", "\200\43\163\116\141\79")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\148\63\49\143\163", "\131\223\86\93\227\208\148")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\198\125\134", "\213\131\37\214\214\125")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\2\42\40\190\230\35", "\129\70\75\69\223")]="?"};
 			pcall(function()
 				local frame = winScreen.Screen.Frame.Frame;
 				stats.Waves = frame.Waves.TextLabelVal.Text;
@@ -420,12 +414,12 @@ task.spawn(function()
 				stats.EXP = frame.EXP.TextLabelVal.Text;
 				stats.Damage = frame.DamageGiven.TextLabelVal.Text;
 			end);
-			SendWebhook(LUAOBFUSACTOR_DECRYPT_STR_0("\241\140\176\254\6\163\242\217\140\184\255\67\210\193\213\145\173\179\78\163\230\213\145\172\255\23", "\180\176\226\217\147\99\131"), "Victory! 🏆", 65280, stats, false);
+			SendWebhook(LUAOBFUSACTOR_DECRYPT_STR_0("\103\197\250\228\121\175\96\194\253\232\112\175\119\222\246\250\104\175\11\139\193\236\111\250\74\223", "\143\38\171\147\137\28"), "Victory! 🏆", 65280, stats, false);
 		end
-		local loseScreen = pGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\246\183\43\52\208\171\42\2\221\159\46\14\223", "\103\179\217\79"));
+		local loseScreen = pGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\245\140\189\192\0\241\209\213\140\159\242\10\239", "\180\176\226\217\147\99\131"));
 		if (loseScreen and loseScreen.Enabled) then
 			webhookSent = true;
-			local stats = {[LUAOBFUSACTOR_DECRYPT_STR_0("\125\182\10\208\82", "\195\42\215\124\181\33\236")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\61\85\54\39\49\241\0\92", "\152\109\57\87\94\69")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\212\216\4\166\167", "\200\153\183\106\195\222\178\52")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\25\234\132\49\90", "\58\82\131\232\93\41")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\166\111\224", "\95\227\55\176\117\61")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\60\127\46\74\172\29", "\203\120\30\67\43")]="?"};
+			local stats = {[LUAOBFUSACTOR_DECRYPT_STR_0("\228\184\57\2\192", "\103\179\217\79")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\122\187\29\204\85\133\174\79", "\195\42\215\124\181\33\236")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\32\86\57\59\60", "\152\109\57\87\94\69")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\210\222\6\175\173", "\200\153\183\106\195\222\178\52")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\23\219\184", "\58\82\131\232\93\41")]="?",[LUAOBFUSACTOR_DECRYPT_STR_0("\167\86\221\20\90\58", "\95\227\55\176\117\61")]="?"};
 			pcall(function()
 				local frame = loseScreen.Screen.Frame.Frame;
 				stats.Waves = frame.Waves.TextLabelVal.Text;
@@ -435,21 +429,21 @@ task.spawn(function()
 				stats.EXP = frame.EXP.TextLabelVal.Text;
 				stats.Damage = frame.DamageGiven.TextLabelVal.Text;
 			end);
-			SendWebhook(LUAOBFUSACTOR_DECRYPT_STR_0("\208\43\68\226\220\177\3\68\225\216\253\101\124\250\220\226\49\13\162\153\195\32\94\250\213\229", "\185\145\69\45\143"), "Defeat... 💀 (Final)", 16711680, stats, true);
-			if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\190\47\53\169\207\158", "\188\234\127\121\198")] then
+			SendWebhook(LUAOBFUSACTOR_DECRYPT_STR_0("\57\112\42\70\174\88\88\42\69\170\20\62\18\94\174\11\106\99\6\235\42\123\48\94\167\12", "\203\120\30\67\43"), "Defeat... 💀 (Final)", 16711680, stats, true);
+			if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\197\21\97\224\202\229", "\185\145\69\45\143")] then
 				task.wait(2);
 				TeleportService:Teleport(LOBBY_ID);
 			end
 		end
-		local deathUI = pGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\28\55\18\151\48\7\58", "\227\88\82\115"));
+		local deathUI = pGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\174\26\24\178\212\191\54", "\188\234\127\121\198"));
 		local isCurrentlyVisible = deathUI and deathUI.Enabled;
 		if (isCurrentlyVisible and not wasDeathUIVisible) then
 			deathCounter = deathCounter + 1;
 			local maxDeaths = GetMaxDeathsAllowed();
 			if (deathCounter >= maxDeaths) then
 				webhookSent = true;
-				SendWebhook(LUAOBFUSACTOR_DECRYPT_STR_0("\98\17\179\170\7\51\101\22\180\166\14\51\114\10\191\180\22\51\14\95\136\162\17\102\79\11", "\19\35\127\218\199\98"), "Defeat... 💀 (Out of Lives)", 16711680, nil, true);
-				if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\40\203\38\237\15\239", "\130\124\155\106")] then
+				SendWebhook(LUAOBFUSACTOR_DECRYPT_STR_0("\25\60\26\142\61\114\53\138\54\51\31\195\9\39\22\144\44\114\94\195\10\55\0\150\52\38", "\227\88\82\115"), "Defeat... 💀 (Out of Lives)", 16711680, nil, true);
+				if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\119\47\150\168\17\103", "\19\35\127\218\199\98")] then
 					task.wait(1);
 					TeleportService:Teleport(LOBBY_ID);
 				end
@@ -459,14 +453,14 @@ task.spawn(function()
 	end
 end);
 RunService.Stepped:Connect(function()
-	if ((Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\225\251\219\160\161", "\223\181\171\150\207\195\150\28")] and hasActiveTarget) or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\109\47\247\161\33\73\59\239", "\105\44\90\131\206")] and isCollectingHeal) or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\222\245\166\182\44\49\251\231\183", "\94\159\128\210\217\104")] and isDodging) or isAwakeningAction) then
+	if ((Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\40\203\39\237\30", "\130\124\155\106")] and hasActiveTarget) or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\244\222\226\160\139\243\125\179", "\223\181\171\150\207\195\150\28")] and isCollectingHeal) or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\109\47\247\161\45\67\62\228\171", "\105\44\90\131\206")] and isDodging) or isAwakeningAction) then
 		if LocalPlayer.Character then
 			for _, part in pairs(LocalPlayer.Character:GetChildren()) do
-				if (part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\114\248\21\186\111\126\235\110", "\26\48\153\102\223\63\31\153")) and part.CanCollide) then
+				if (part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\221\225\161\188\56\63\237\244", "\94\159\128\210\217\104")) and part.CanCollide) then
 					part.CanCollide = false;
 				end
 			end
-			local hrp = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\42\85\224\242\12\79\228\247\48\79\226\231\50\65\255\231", "\147\98\32\141"));
+			local hrp = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\120\236\11\190\81\112\240\126\98\246\9\171\111\126\235\110", "\26\48\153\102\223\63\31\153"));
 			if hrp then
 				hrp.AssemblyLinearVelocity = Vector3.new(0, 0, 0);
 				hrp.AssemblyAngularVelocity = Vector3.new(0, 0, 0);
@@ -481,12 +475,25 @@ RunService.Heartbeat:Connect(function()
 	if not LocalPlayer.Character then
 		return;
 	end
-	local hrp = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\48\86\238\203\8\89\66\28\113\236\197\18\102\74\10\87", "\43\120\35\131\170\102\54"));
-	local hum = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\124\19\138\183\171\191\141\80", "\228\52\102\231\214\197\208"));
+	local hrp = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\42\85\224\242\12\79\228\247\48\79\226\231\50\65\255\231", "\147\98\32\141"));
+	local hum = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\48\86\238\203\8\89\66\28", "\43\120\35\131\170\102\54"));
 	if (not hrp or not hum or (hum.Health <= 0)) then
 		return;
 	end
 	if isAwakeningAction then
+		local currentPos = hrp.Position;
+		local floorY = currentPos.Y;
+		local rayOrigin = currentPos;
+		local rayDirection = Vector3.new(0, -500, 0);
+		local raycastParams = RaycastParams.new();
+		raycastParams.FilterDescendantsInstances = {LocalPlayer.Character};
+		raycastParams.FilterType = Enum.RaycastFilterType.Exclude;
+		local rayResult = workspace:Raycast(rayOrigin, rayDirection, raycastParams);
+		if rayResult then
+			floorY = rayResult.Position.Y;
+		end
+		local safeY = floorY + 90;
+		hrp.CFrame = CFrame.new(currentPos.X, safeY, currentPos.Z);
 		hrp.Velocity = Vector3.zero;
 		return;
 	end
@@ -494,7 +501,7 @@ RunService.Heartbeat:Connect(function()
 		hrp.CFrame = hrp.CFrame + Vector3.new(0, 75, 0);
 		hrp.Velocity = Vector3.zero;
 	end
-	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\63\245\97\197\206\132\29\209\27", "\182\126\128\21\170\138\235\121")] then
+	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\117\19\147\185\129\191\128\83\3", "\228\52\102\231\214\197\208")] then
 		local indicator = GetDodgeIndicator();
 		if indicator then
 			isDodging = true;
@@ -525,7 +532,7 @@ RunService.Heartbeat:Connect(function()
 		isDodging = false;
 	end
 	local healingActive = false;
-	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\170\207\33\233\174\22\49\10", "\102\235\186\85\134\230\115\80")] and not isDodging) then
+	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\63\245\97\197\194\142\24\218", "\182\126\128\21\170\138\235\121")] and not isDodging) then
 		local healObj = GetHealObject();
 		if isCollectingHeal then
 			if ((tick() - collectionStartTime) > 1) then
@@ -533,13 +540,13 @@ RunService.Heartbeat:Connect(function()
 				lastHealTime = tick();
 			elseif healObj then
 				local targetCFrame = nil;
-				if healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\117\13\45\90\66\213\48\67", "\66\55\108\94\63\18\180")) then
+				if healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\169\219\38\227\182\18\34\18", "\102\235\186\85\134\230\115\80")) then
 					targetCFrame = healObj.CFrame;
-				elseif healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\57\130\129\50\43", "\57\116\237\229\87\71")) then
+				elseif healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\122\3\58\90\126", "\66\55\108\94\63\18\180")) then
 					if healObj.PrimaryPart then
 						targetCFrame = healObj.PrimaryPart.CFrame;
 					else
-						local subPart = healObj:FindFirstChildWhichIsA(LUAOBFUSACTOR_DECRYPT_STR_0("\136\176\254\226\71\239\85\190", "\39\202\209\141\135\23\142"), true);
+						local subPart = healObj:FindFirstChildWhichIsA(LUAOBFUSACTOR_DECRYPT_STR_0("\54\140\150\50\23\88\6\153", "\57\116\237\229\87\71"), true);
 						if subPart then
 							targetCFrame = subPart.CFrame;
 						end
@@ -555,7 +562,7 @@ RunService.Heartbeat:Connect(function()
 			end
 		else
 			local healthPct = (hum.Health / hum.MaxHealth) * 100;
-			local threshold = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\215\54\8\6\2\253\237\48\12\4\38", "\152\159\83\105\106\82")] or 85;
+			local threshold = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\130\180\236\235\71\235\85\169\180\227\243", "\39\202\209\141\135\23\142")] or 85;
 			if (((tick() - lastHealTime) > 10) and (healthPct <= threshold) and healObj) then
 				isCollectingHeal = true;
 				collectionStartTime = tick();
@@ -563,26 +570,26 @@ RunService.Heartbeat:Connect(function()
 			end
 		end
 	end
-	if (not healingActive and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\181\246\124\253\203", "\60\225\166\49\146\169")] and not isDodging) then
+	if (not healingActive and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\203\3\36\5\48", "\152\159\83\105\106\82")] and not isDodging) then
 		local target = GetTargetMob();
 		if target then
 			wasTargetingMob = true;
 			hasActiveTarget = true;
-			local mobPart = target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\7\27\46\46", "\103\79\126\79\74\97")) or target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\146\106\222\114\80\21\179\123\225\124\81\14\138\126\193\103", "\122\218\31\179\19\62"));
+			local mobPart = target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\169\195\80\246", "\60\225\166\49\146\169")) or target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\7\11\34\43\15\8\38\26\29\37\14\19\31\31\61\62", "\103\79\126\79\74\97"));
 			if mobPart then
-				local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\135\230\233\200\218\181", "\37\211\182\173\161\169\193")] or 10;
-				local method = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\195\10\96\220\60\115\182\243", "\217\151\90\45\185\72\27")] or LUAOBFUSACTOR_DECRYPT_STR_0("\225\125\228\25", "\54\163\28\135\114");
+				local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\142\79\247\122\77\14", "\122\218\31\179\19\62")] or 10;
+				local method = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\135\230\224\196\221\169\74\183", "\37\211\182\173\161\169\193")] or LUAOBFUSACTOR_DECRYPT_STR_0("\213\59\78\210", "\217\151\90\45\185\72\27");
 				local newCFrame;
-				if (method == LUAOBFUSACTOR_DECRYPT_STR_0("\10\218\94\137", "\31\72\187\61\226\46")) then
+				if (method == LUAOBFUSACTOR_DECRYPT_STR_0("\225\125\228\25", "\54\163\28\135\114")) then
 					newCFrame = mobPart.CFrame * CFrame.new(0, 0, dist);
 					newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
-				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\229\20\76\220\83", "\68\163\102\35\178\39\30")) then
+				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\14\201\82\140\90", "\31\72\187\61\226\46")) then
 					newCFrame = mobPart.CFrame * CFrame.new(0, 0, -dist);
 					newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
-				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\159\114\213\209\6", "\113\222\16\186\167\99\213\227")) then
+				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\226\4\76\196\66", "\68\163\102\35\178\39\30")) then
 					local pos = mobPart.Position + Vector3.new(0, dist, 0);
 					newCFrame = CFrame.lookAt(pos, mobPart.Position);
-				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\12\11\247\249\57", "\150\78\110\155")) then
+				elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\156\117\214\200\20", "\113\222\16\186\167\99\213\227")) then
 					local rayOrigin = mobPart.Position;
 					local rayDirection = Vector3.new(0, 50, 0);
 					local raycastParams = RaycastParams.new();
