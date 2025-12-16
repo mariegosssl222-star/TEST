@@ -41,7 +41,7 @@ local Library = loadstring(game:HttpGet(LUAOBFUSACTOR_DECRYPT_STR_0("\65\86\20\5
 if not Library then
 	return;
 end
-local Window = Library:Window({[LUAOBFUSACTOR_DECRYPT_STR_0("\159\204\217\12\11\44\146\194\218\15", "\75\220\163\183\106\98")]=LUAOBFUSACTOR_DECRYPT_STR_0("\0\182\138\51\220\26\160\132\58\219\11\191\197\61\202\13\180", "\185\98\218\235\87")});
+local Window = Library:Window({[LUAOBFUSACTOR_DECRYPT_STR_0("\159\204\217\12\11\44\146\194\218\15", "\75\220\163\183\106\98")]=LUAOBFUSACTOR_DECRYPT_STR_0("\0\182\138\51\220\26\160\132\58\219\11\191\180\49\208\26\244\129\36\214\12", "\185\98\218\235\87")});
 local GameConfig = {[LUAOBFUSACTOR_DECRYPT_STR_0("\249\61\53\239\202\179\230\61\55", "\202\171\92\71\134\190")]={[LUAOBFUSACTOR_DECRYPT_STR_0("\10\206\33\133\38\207", "\232\73\161\76")]={LUAOBFUSACTOR_DECRYPT_STR_0("\144\216\86\92\16\186", "\126\219\185\34\61")},[LUAOBFUSACTOR_DECRYPT_STR_0("\62\207\76\119", "\135\108\174\62\18\30\23\147")]={LUAOBFUSACTOR_DECRYPT_STR_0("\146\251\43\204\23\160\12\244\186\232\51\206\10", "\167\214\137\74\171\120\206\83"),LUAOBFUSACTOR_DECRYPT_STR_0("\191\226\59\77\244\162\180\210\62\92\252\162", "\199\235\144\82\61\152")},[LUAOBFUSACTOR_DECRYPT_STR_0("\34\6\176\40", "\75\103\118\217")]={LUAOBFUSACTOR_DECRYPT_STR_0("\240\85\100\17\171\33\229\88\113\16\188", "\126\167\52\16\116\217")},[LUAOBFUSACTOR_DECRYPT_STR_0("\228\43\39\133\186\29\253\218\55", "\156\168\78\64\224\212\121")]={LUAOBFUSACTOR_DECRYPT_STR_0("\35\239\183\197\56\204\169\207\3\235", "\174\103\142\197"),LUAOBFUSACTOR_DECRYPT_STR_0("\115\48\92\57\41\87\250\67\58", "\152\54\72\63\88\69\62")},[LUAOBFUSACTOR_DECRYPT_STR_0("\249\221\250\84\221\199", "\60\180\164\142")]={LUAOBFUSACTOR_DECRYPT_STR_0("\97\95\8\40\51\226", "\114\56\62\101\73\71\141"),LUAOBFUSACTOR_DECRYPT_STR_0("\139\225\218\192\183\254\228\230\180\232\223\193", "\164\216\137\187"),LUAOBFUSACTOR_DECRYPT_STR_0("\247\232\36\191\167\193\46\222\239\34\186", "\107\178\134\81\210\198\158"),LUAOBFUSACTOR_DECRYPT_STR_0("\19\27\145\199\164\57\9\139", "\202\88\110\226\166"),LUAOBFUSACTOR_DECRYPT_STR_0("\232\26\140\246\195", "\170\163\111\226\151")},[LUAOBFUSACTOR_DECRYPT_STR_0("\52\40\177\52\91\36\32\7\53", "\73\113\80\210\88\46\87")]={LUAOBFUSACTOR_DECRYPT_STR_0("\178\56\194\0\234\190\14\223\23\230\138\41\223", "\135\225\76\173\114"),LUAOBFUSACTOR_DECRYPT_STR_0("\50\236\180\188\163\170\152\41\238\161\164\164\184", "\199\122\141\216\208\204\221")}},[LUAOBFUSACTOR_DECRYPT_STR_0("\159\220\2\249\108\239\130\207\20\245\106", "\150\205\189\112\144\24")]={LUAOBFUSACTOR_DECRYPT_STR_0("\6\139\178\65\11\134", "\112\69\228\223\44\100\232\113"),LUAOBFUSACTOR_DECRYPT_STR_0("\230\30\21\214", "\230\180\127\103\179\214\28"),LUAOBFUSACTOR_DECRYPT_STR_0("\169\21\86\69", "\128\236\101\63\38\132\33"),LUAOBFUSACTOR_DECRYPT_STR_0("\128\172\22\65\184\239\206\190\176", "\175\204\201\113\36\214\139"),LUAOBFUSACTOR_DECRYPT_STR_0("\106\213\33\212\13\68", "\100\39\172\85\188"),LUAOBFUSACTOR_DECRYPT_STR_0("\136\96\186\140\38\190\113\175\133", "\83\205\24\217\224")},[LUAOBFUSACTOR_DECRYPT_STR_0("\195\221\217\47\231\230\194\49\234\192\206\41\239\199\193\56\245", "\93\134\165\173")]={LUAOBFUSACTOR_DECRYPT_STR_0("\159\255\204\205", "\30\222\146\161\162\90\174\210")},[LUAOBFUSACTOR_DECRYPT_STR_0("\201\65\114\8\252\103\84", "\106\133\46\16")]=110866861848433};
 local NameToReal = {};
 local NameToDisplay = {};
@@ -669,7 +669,7 @@ task.spawn(function()
 	local lastDodgeTime = 0;
 	local lastHealth = 100;
 	local DODGE_GRACE_PERIOD = 3;
-	local MAX_AIRBORNE_TIME = 8;
+	local MAX_AIRBORNE_TIME = 4;
 	local debrisFolder = Workspace:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\121\178\241\207\78\13\123\184\255\217\66\12", "\126\61\215\147\189\39"), 10);
 	local function isDangerPresent()
 		if not debrisFolder then
@@ -692,6 +692,7 @@ task.spawn(function()
 			return;
 		end
 		lastHealth = human.Health;
+		human.PlatformStand = false;
 		human.HealthChanged:Connect(function(newHealth)
 			if (newHealth < lastHealth) then
 				if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\217\29\209\82\230\247\12\194\88", "\162\152\104\165\61")] and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\233\32\182\122\117\202\195\11\191\122", "\133\173\79\210\29\16")] and not _G_isAirborneDodge) then
@@ -739,8 +740,19 @@ task.spawn(function()
 		end
 	end);
 	while task.wait(0.2) do
+		local hrp = getHRP();
+		if (hrp and (hrp.Position.Y > 50) and not _G_isAirborneDodge and not isInLobby()) then
+			pcall(function()
+				local Ray = Ray.new(hrp.Position, Vector3.new(0, -500, 0));
+				local Hit, Pos = workspace:FindPartOnRay(Ray, getChar());
+				if Pos then
+					hrp.CFrame = CFrame.new(Pos + Vector3.new(0, 3, 0));
+				end
+			end);
+		end
 		if _G_isAirborneDodge then
-			local shouldLand = (((tick() - lastDodgeTime) > DODGE_GRACE_PERIOD) and not isDangerPresent()) or ((tick() - lastDodgeTime) > MAX_AIRBORNE_TIME);
+			local noMobsLeft = not areMobsPresent();
+			local shouldLand = (((tick() - lastDodgeTime) > DODGE_GRACE_PERIOD) and not isDangerPresent()) or ((tick() - lastDodgeTime) > MAX_AIRBORNE_TIME) or noMobsLeft;
 			local char = getChar();
 			if (not char or not char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\102\14\5\238\160\62\196\74", "\173\46\123\104\143\206\81")) or (char.Humanoid.Health <= 0)) then
 				shouldLand = true;
@@ -988,33 +1000,51 @@ task.spawn(function()
 	end
 end);
 task.spawn(function()
+	while task.wait(1) do
+		if ((Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\1\0\204\23\120\42\7", "\17\76\97\188\83")] == LUAOBFUSACTOR_DECRYPT_STR_0("\171\46\215\61\49\195\121\162\140\35", "\195\229\71\185\87\80\227\43")) and not isInLobby()) then
+			local enemies = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\197\242\5\93\230\229\239", "\143\128\156\96\48"));
+			local mobCount = (enemies and #enemies:GetChildren()) or 0;
+			if (mobCount == 0) then
+				task.wait(2);
+				mobCount = (enemies and #enemies:GetChildren()) or 0;
+				if (mobCount == 0) then
+					pcall(function()
+						ReplicatedStorage:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\138\212\253\29\3\189\246\197\59", "\119\216\177\144\114")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\252\26\242\75\217\8\250\86\192\63\252\103\223\44\247\86", "\34\169\73\153")):FireServer(true);
+					end);
+					task.wait(2);
+				end
+			end
+		end
+	end
+end);
+task.spawn(function()
 	while task.wait(0.5) do
 		if checkAntiPlayerAndPause() then
 			_G_isCaseActive = false;
 			_G_WaitingForCase = false;
 			continue;
 		end
-		local diff = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\1\0\204\23\120\42\7", "\17\76\97\188\83")];
-		local isRaid = (diff == LUAOBFUSACTOR_DECRYPT_STR_0("\183\38\208\51", "\195\229\71\185\87\80\227\43")) or (diff == LUAOBFUSACTOR_DECRYPT_STR_0("\206\245\14\90\238\160\206\1\89\235", "\143\128\156\96\48"));
+		local diff = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\135\237\27\175\163\234\13", "\235\202\140\107")];
+		local isRaid = (diff == LUAOBFUSACTOR_DECRYPT_STR_0("\62\117\61\172", "\165\108\20\84\200\137\71\151")) or (diff == LUAOBFUSACTOR_DECRYPT_STR_0("\84\189\37\130\123\244\25\137\115\176", "\232\26\212\75"));
 		if (isInLobby() or isRaid) then
 			_G_isCaseActive = false;
 			_G_WaitingForCase = false;
 			continue;
 		end
-		local endScreen = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\156\212\242\0\30\171\247\255\30\19\189\195", "\119\216\177\144\114")) and Workspace.DebrisFolder:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\250\42\235\71\204\39\220\76\205", "\34\169\73\153"));
-		local case = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\137\237\24\142", "\235\202\140\107"));
+		local endScreen = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\19\76\112\250\254\36\111\125\228\243\50\91", "\151\87\41\18\136")) and Workspace.DebrisFolder:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\104\172\216\213\251\85\138\196\212", "\158\59\207\170\176"));
+		local case = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\108\95\32\76", "\236\47\62\83\41"));
 		if (endScreen and not case) then
 			_G_WaitingForCase = true;
 			local timeout = 50;
 			while (timeout > 0) and not case do
 				task.wait(0.1);
 				timeout = timeout - 1;
-				case = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\47\117\39\173", "\165\108\20\84\200\137\71\151"));
+				case = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\217\168\51\62", "\226\154\201\64\91\202"));
 			end
 			if not case then
 				_G_WaitingForCase = false;
 				pcall(function()
-					ReplicatedStorage:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\72\177\38\135\110\177\12\189\83", "\232\26\212\75")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\2\122\121\225\231\22\74\102\225\225\50\108\100\237\249\35", "\151\87\41\18\136")):FireServer(true);
+					ReplicatedStorage:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\243\76\16\23\94\185\230\124\52", "\220\161\41\125\120\42")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\137\66\171\7\172\80\163\26\181\103\165\43\170\116\174\26", "\110\220\17\192")):FireServer(true);
 				end);
 				continue;
 			end
@@ -1029,12 +1059,12 @@ task.spawn(function()
 		local function isInventoryFull()
 			local full = false;
 			pcall(function()
-				local playerGui = lp:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\107\163\203\201\251\73\136\223\217", "\158\59\207\170\176"));
-				local inventoryFrame = playerGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\102\80\37\76\130\91\81\33\80", "\236\47\62\83\41"));
+				local playerGui = lp:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\68\117\53\3\238\37\214\178\125", "\199\20\25\84\122\139\87\145"));
+				local inventoryFrame = playerGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\110\7\203\171\21\254\72\27\196", "\138\39\105\189\206\123"));
 				if inventoryFrame then
 					local slotLabel = inventoryFrame.Canvas.Main.Slot.Txt_Slot;
 					if (slotLabel and slotLabel.Text and slotLabel.Text:find("/")) then
-						local current, max = slotLabel.Text:match(LUAOBFUSACTOR_DECRYPT_STR_0("\201\165\47\47\185\216\186\225\101\63\225\203\181\225\101\63\225\203", "\226\154\201\64\91\202"));
+						local current, max = slotLabel.Text:match(LUAOBFUSACTOR_DECRYPT_STR_0("\44\11\134\57\224\163\143\183\90\3\194\100\188\177\138\251\84\78", "\159\127\103\233\77\147\153\175"));
 						if (tonumber(current) and tonumber(max) and (tonumber(current) >= tonumber(max))) then
 							full = true;
 						end
@@ -1044,10 +1074,10 @@ task.spawn(function()
 			return full;
 		end
 		if isInventoryFull() then
-			if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\224\92\9\23\121\185\205\69", "\220\161\41\125\120\42")] then
-				performInventoryAction(LUAOBFUSACTOR_DECRYPT_STR_0("\143\116\172\2", "\110\220\17\192"));
-			elseif Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\85\108\32\21\207\62\226\170\125\109\49", "\199\20\25\84\122\139\87\145")] then
-				performInventoryAction(LUAOBFUSACTOR_DECRYPT_STR_0("\99\0\206\163\18\254\66", "\138\39\105\189\206\123"));
+			if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\38\229\240\165\115\206\11\252", "\171\103\144\132\202\32")] then
+				performInventoryAction(LUAOBFUSACTOR_DECRYPT_STR_0("\35\42\229\0", "\108\112\79\137"));
+			elseif Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\30\215\96\39\137\8\250\56\54\214\113", "\85\95\162\20\72\205\97\137")] then
+				performInventoryAction(LUAOBFUSACTOR_DECRYPT_STR_0("\211\244\57\209\4\236\200", "\173\151\157\74\188\109\152"));
 			end
 			local maxWait = 10;
 			while _G_InventoryActionInProgress and (maxWait > 0) do
@@ -1061,7 +1091,7 @@ task.spawn(function()
 			continue;
 		end
 		local hrp = getHRP();
-		local caseTarget = case:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\43\8\153", "\159\127\103\233\77\147\153\175")) or case:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\42\241\237\164", "\171\103\144\132\202\32")) or case.PrimaryPart or case:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\50\46\250\9\32\46\251\24", "\108\112\79\137"));
+		local caseTarget = case:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\16\7\40", "\147\68\104\88\189\188\52\181")) or case:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\55\137\130\222", "\176\122\232\235")) or case.PrimaryPart or case:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\162\116\41\74\222\129\103\46", "\142\224\21\90\47"));
 		if not caseTarget then
 			_G_isCaseActive = false;
 			continue;
@@ -1071,7 +1101,7 @@ task.spawn(function()
 			hrp.Velocity = Vector3.zero;
 			task.wait(0.05);
 		end
-		local prompt = case:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\15\208\123\48\164\12\224\33\38\242\102\39\160\17\253", "\85\95\162\20\72\205\97\137"));
+		local prompt = case:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\68\198\40\78\173\134\140\96\205\23\68\171\134\149\96", "\229\20\180\71\54\196\235"));
 		if prompt then
 			prompt.HoldDuration = 0;
 			prompt.RequiresLineOfSight = false;
@@ -1081,7 +1111,7 @@ task.spawn(function()
 			prompt:InputHoldEnd();
 		end
 		task.wait(0.5);
-		local dropFolder = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\211\239\37\204\43\247\193\243\248\56", "\173\151\157\74\188\109\152"));
+		local dropFolder = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\13\108\206\243\211\165\140\45\123\211", "\224\73\30\161\131\149\202"));
 		if dropFolder then
 			local collectionAttempts = 0;
 			while (#dropFolder:GetChildren() > 0) and (collectionAttempts < 40) do
@@ -1089,7 +1119,7 @@ task.spawn(function()
 					break;
 				end
 				for _, item in ipairs(dropFolder:GetChildren()) do
-					if item:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\6\9\43\216\236\85\199\231", "\147\68\104\88\189\188\52\181")) then
+					if item:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\211\228\226\85\193\228\227\68", "\48\145\133\145")) then
 						hrp.CFrame = CFrame.new(item.Position + Vector3.new(0, 3, 0));
 						task.wait();
 					end
@@ -1099,7 +1129,7 @@ task.spawn(function()
 		end
 		task.wait(0.5);
 		pcall(function()
-			ReplicatedStorage:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\40\141\134\223\14\141\172\229\51", "\176\122\232\235")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\181\70\49\70\254\161\118\46\70\248\133\80\44\74\224\148", "\142\224\21\90\47")):FireServer(true);
+			ReplicatedStorage:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\104\73\184\225\197\41\125\121\156", "\76\58\44\213\142\177")):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\254\23\25\36\104\234\39\6\36\110\206\1\4\40\118\223", "\24\171\68\114\77")):FireServer(true);
 		end);
 		task.wait(1);
 		_G_isCaseActive = false;
@@ -1110,22 +1140,22 @@ end);
 task.spawn(function()
 	local UpgradeWeaponFunc = nil;
 	pcall(function()
-		UpgradeWeaponFunc = ReplicatedStorage:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\82\193\41\85\176\130\138\122\199", "\229\20\180\71\54\196\235"), 5):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\28\110\198\241\244\174\133\30\123\192\243\250\164\166\60\112\194", "\224\73\30\161\131\149\202"), 5);
+		UpgradeWeaponFunc = ReplicatedStorage:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\201\8\94\81\147\215\11\163\252", "\205\143\125\48\50\231\190\100"), 5):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\244\183\19\23\224\231\218\149\196\166\4\10\239\197\202\172\194", "\194\161\199\116\101\129\131\191"), 5);
 	end);
 	while task.wait(0.5) do
-		if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\208\240\229\95\196\245\246\66\240\225\244", "\48\145\133\145")] and isInLobby() and UpgradeWeaponFunc) then
+		if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\205\49\220\167\194\178\235\54\201\172\242", "\194\140\68\168\200\151")] and isInLobby() and UpgradeWeaponFunc) then
 			pcall(function()
 				UpgradeWeaponFunc:InvokeServer();
 			end);
-			task.wait(1 / (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\111\92\178\221\193\41\95\72", "\76\58\44\213\142\177")] or 3));
+			task.wait(1 / (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\119\235\210\22\229\71\254\209", "\149\34\155\181\69")] or 3));
 		end
 	end
 end);
 local forceLobbyTimer = 0;
 task.spawn(function()
 	while task.wait(1) do
-		if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\234\49\6\34\84\196\38\16\52", "\24\171\68\114\77")] and not isInLobby()) then
-			local endScreen = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\203\24\82\64\142\205\34\162\227\25\85\64", "\205\143\125\48\50\231\190\100")) and Workspace.DebrisFolder:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\242\164\6\0\228\237\250\172\197", "\194\161\199\116\101\129\131\191"));
+		if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\34\232\193\245\47\242\215\248\26", "\154\99\157\181")] and not isInLobby()) then
+			local endScreen = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\169\10\238\178\229\158\41\227\172\232\136\29", "\140\237\111\140\192")) and Workspace.DebrisFolder:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\53\26\111\29\3\23\88\22\2", "\120\102\121\29"));
 			if endScreen then
 				forceLobbyTimer = forceLobbyTimer + 1;
 			else
@@ -1133,19 +1163,19 @@ task.spawn(function()
 			end
 			local shouldLeave = (not _G_isCaseActive and not _G_WaitingForCase and endScreen) or (forceLobbyTimer > 8);
 			if shouldLeave then
-				if ((Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\193\37\216\140\254\164\234", "\194\140\68\168\200\151")] == LUAOBFUSACTOR_DECRYPT_STR_0("\108\242\219\47\244\2\201\212\44\241", "\149\34\155\181\69")) or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\46\252\197\222\10\251\211", "\154\99\157\181")] == LUAOBFUSACTOR_DECRYPT_STR_0("\191\14\229\164", "\140\237\111\140\192"))) then
+				if ((Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\129\226\169\31\165\229\191", "\91\204\131\217")] == LUAOBFUSACTOR_DECRYPT_STR_0("\224\246\91\222\178\157\204\207\246\81", "\158\174\159\53\180\211\189")) or (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\127\252\253\249\126\179\84", "\213\50\157\141\189\23")] == LUAOBFUSACTOR_DECRYPT_STR_0("\204\39\141\164", "\196\158\70\228\192\18"))) then
 					task.wait(0.5);
 				else
 					task.wait(5);
 				end
-				local endingGui = lp.PlayerGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\35\23\121\17\8\30", "\120\102\121\29"));
-				local winStatus = LUAOBFUSACTOR_DECRYPT_STR_0("\129\226\173\56\164\163\159\50\162\234\170\51\169\231", "\91\204\131\217");
+				local endingGui = lp.PlayerGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\111\81\21\71\215\77", "\185\42\63\113\46"));
+				local winStatus = LUAOBFUSACTOR_DECRYPT_STR_0("\249\220\53\58\19\148\251\40\55\18\199\213\36\61", "\123\180\189\65\89");
 				local webhookColor = 65280;
 				local doPing = false;
-				if (endingGui and endingGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\237\254\91\194\178\206", "\158\174\159\53\180\211\189")) and endingGui.Canvas:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\102\229\249\226\67\188\70\241\232", "\213\50\157\141\189\23"))) then
+				if (endingGui and endingGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\225\141\254\242\136\209", "\233\162\236\144\132")) and endingGui.Canvas:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\134\220\234\37\141\255\75\190\193", "\63\210\164\158\122\217\150"))) then
 					local txt = endingGui.Canvas.Txt_Title.Text;
 					winStatus = txt;
-					if ((txt == LUAOBFUSACTOR_DECRYPT_STR_0("\199\41\145\224\69\173\240", "\196\158\70\228\192\18")) or txt:find(LUAOBFUSACTOR_DECRYPT_STR_0("\125\86\31", "\185\42\63\113\46")) or txt:find(LUAOBFUSACTOR_DECRYPT_STR_0("\226\212\34\45\20\198\196", "\123\180\189\65\89"))) then
+					if ((txt == LUAOBFUSACTOR_DECRYPT_STR_0("\10\196\227\172\126\241\61", "\152\83\171\150\140\41")) or txt:find(LUAOBFUSACTOR_DECRYPT_STR_0("\181\236\141", "\104\226\133\227\83\180\123")) or txt:find(LUAOBFUSACTOR_DECRYPT_STR_0("\53\2\32\68\12\25\58", "\48\99\107\67"))) then
 						webhookColor = 65280;
 						doPing = false;
 					else
@@ -1166,10 +1196,10 @@ task.spawn(function()
 				TeleportService:Teleport(GameConfig.LobbyID);
 			end
 		end
-		if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\241\135\249\244\165\205\141\244", "\233\162\236\144\132")] then
-			local ls = lp.PlayerGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\158\203\255\30\176\248\88\129\199\236\31\188\248", "\63\210\164\158\122\217\150"));
+		if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\237\173\116\192\1\116\223\162", "\27\190\198\29\176\77")] then
+			local ls = lp.PlayerGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\195\68\252\48\160\64\232\120\254\38\172\75\225", "\46\143\43\157\84\201"));
 			if (ls and ls.Enabled) then
-				local btn = ls:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\17\223\248\211\122\243\58\219", "\152\83\171\150\140\41"), true);
+				local btn = ls:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\117\108\88\253\108\24\193\71", "\168\55\24\54\162\63\115"), true);
 				if btn then
 					btn.Selectable = true;
 					btn.Active = true;
@@ -1178,7 +1208,7 @@ task.spawn(function()
 					VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Return, false, game);
 					task.wait(0.01);
 					VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Return, false, game);
-					if btn:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\165\240\138\17\193\15\28\141\235", "\104\226\133\227\83\180\123")) then
+					if btn:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\48\239\41\162\199\218\3\245\46", "\174\119\154\64\224\178")) then
 						pcall(function()
 							btn:FireTouchEnded();
 						end);
@@ -1191,20 +1221,20 @@ task.spawn(function()
 	end
 end);
 task.spawn(function()
-	local debrisFolder = Workspace:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\39\14\33\66\10\24\5\95\15\15\38\66", "\48\99\107\67"));
+	local debrisFolder = Workspace:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\14\123\199\105\12\180\60\235\38\122\192\105", "\132\74\30\165\27\101\199\122"));
 	local searchStartTime = 0;
 	local HOP_TIMEOUT = 12;
 	while task.wait(1) do
-		if (not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\251\168\124\210\33\126\248\175\115\212\40\105", "\27\190\198\29\176\77")] or not isInLobby()) then
+		if (not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\10\233\254\165\171\176\146\38\233\251\162\181", "\212\79\135\159\199\199\213")] or not isInLobby()) then
 			searchStartTime = 0;
 			continue;
 		end
 		if (searchStartTime == 0) then
 			searchStartTime = tick();
 		end
-		local minRarity = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\201\66\243\48\155\79\253\66\233\45", "\46\143\43\157\84\201")];
-		local displayWeapon = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\113\113\88\198\104\22\201\71\119\88\230\86\0\216\91\121\79", "\168\55\24\54\162\63\115")];
-		local realWeapon = NameToReal[displayWeapon] or LUAOBFUSACTOR_DECRYPT_STR_0("\54\246\44\192\229\203\22\234\47\142\193", "\174\119\154\64\224\178");
+		local minRarity = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\95\169\187\67\110\214\10\112\180\172", "\120\25\192\213\39\60\183")];
+		local displayWeapon = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\62\73\49\76\47\69\62\88\23\78\27\65\11\80\51\73\1", "\40\120\32\95")];
+		local realWeapon = NameToReal[displayWeapon] or LUAOBFUSACTOR_DECRYPT_STR_0("\27\167\53\58\152\26\59\187\54\116\188", "\127\90\203\89\26\207");
 		local minIdx = 1;
 		for i, r in ipairs(GameConfig.RarityOrder) do
 			if (r == minRarity) then
@@ -1214,10 +1244,10 @@ task.spawn(function()
 		end
 		local foundWeapons = {};
 		for _, dropContainer in ipairs(debrisFolder:GetChildren()) do
-			if (dropContainer.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\14\108\202\107\58\133\27\247\47", "\132\74\30\165\27\101\199\122")) then
+			if (dropContainer.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\249\39\160\219\54\223\220\38\170", "\157\189\85\207\171\105")) then
 				for _, weaponModel in ipairs(dropContainer:GetChildren()) do
 					local wName = weaponModel.Name;
-					local wRarity = LUAOBFUSACTOR_DECRYPT_STR_0("\12\232\242\170\168\187", "\212\79\135\159\199\199\213");
+					local wRarity = LUAOBFUSACTOR_DECRYPT_STR_0("\229\174\213\184\12\200", "\99\166\193\184\213");
 					for r, list in pairs(GameConfig.RarityMap) do
 						for _, n in ipairs(list) do
 							if (n == wName) then
@@ -1235,8 +1265,8 @@ task.spawn(function()
 					end
 					local isRarityMatch = wRarityIdx >= minIdx;
 					local isSpecificMatch = realWeapon == wName;
-					if (((realWeapon ~= LUAOBFUSACTOR_DECRYPT_STR_0("\88\172\185\7\107\210\25\105\175\187\84", "\120\25\192\213\39\60\183")) and isSpecificMatch) or ((realWeapon == LUAOBFUSACTOR_DECRYPT_STR_0("\57\76\51\8\47\69\62\88\23\78\44", "\40\120\32\95")) and isRarityMatch)) then
-						table.insert(foundWeapons, {[LUAOBFUSACTOR_DECRYPT_STR_0("\55\164\61\127\163", "\127\90\203\89\26\207")]=weaponModel});
+					if (((realWeapon ~= LUAOBFUSACTOR_DECRYPT_STR_0("\247\187\140\251\59\143\215\167\143\181\31", "\234\182\215\224\219\108")) and isSpecificMatch) or ((realWeapon == LUAOBFUSACTOR_DECRYPT_STR_0("\225\141\183\117\247\132\186\37\207\143\168", "\85\160\225\219")) and isRarityMatch)) then
+						table.insert(foundWeapons, {[LUAOBFUSACTOR_DECRYPT_STR_0("\81\10\135\204\58", "\43\60\101\227\169\86\188")]=weaponModel});
 					end
 				end
 			end
@@ -1245,7 +1275,7 @@ task.spawn(function()
 		if ((#foundWeapons > 0) and hrp) then
 			for _, w in ipairs(foundWeapons) do
 				if (w.model and w.model.Parent) then
-					local handle = w.model:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\245\52\161\207\5\248", "\157\189\85\207\171\105"));
+					local handle = w.model:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\88\201\223\187\86\201", "\87\16\168\177\223\58\172\217"));
 					if handle then
 						hrp.CFrame = CFrame.new(handle.Position + Vector3.new(0, 3, 0));
 						task.wait(0.2);
@@ -1259,17 +1289,17 @@ task.spawn(function()
 			end
 			searchStartTime = tick();
 		elseif ((tick() - searchStartTime) > HOP_TIMEOUT) then
-			SendEndGameReport(LUAOBFUSACTOR_DECRYPT_STR_0("\245\164\202\163\6\212\225\240\186\19\156\225\241\161\6\203\225\214\186\23\134\167\215\160\13\194\237\152\182\11\199\175\223\188\13\193\225\203\176\17\208\164\202\251", "\99\166\193\184\213"), 16711680, false);
+			SendEndGameReport(LUAOBFUSACTOR_DECRYPT_STR_0("\7\200\75\203\62\38\141\113\210\43\110\141\112\201\62\57\141\87\210\47\116\203\86\200\53\48\129\25\222\51\53\195\94\212\53\51\141\74\216\41\34\200\75\147", "\91\84\173\57\189"), 16711680, false);
 			local PlaceID = game.PlaceId;
 			local foundAnything = "";
 			local function TPReturner()
 				local Site;
 				if (foundAnything == "") then
-					Site = HttpService:JSONDecode(game:HttpGet(LUAOBFUSACTOR_DECRYPT_STR_0("\222\163\148\171\31\208\153\248\135\186\1\143\197\249\146\180\14\134\217\175\206\184\3\135\153\161\209\244\11\139\219\178\147\244", "\234\182\215\224\219\108") .. PlaceID .. LUAOBFUSACTOR_DECRYPT_STR_0("\143\146\190\39\214\132\169\38\143\177\174\55\204\136\184\106\211\142\169\33\239\147\191\48\210\220\159\48\211\130\253\57\201\140\178\33\157\208\235\101", "\85\160\225\219")));
+					Site = HttpService:JSONDecode(game:HttpGet(LUAOBFUSACTOR_DECRYPT_STR_0("\24\173\24\236\179\140\95\246\11\253\173\211\3\247\30\243\162\218\31\161\66\255\175\219\95\175\93\179\167\215\29\188\31\179", "\182\112\217\108\156\192") .. PlaceID .. LUAOBFUSACTOR_DECRYPT_STR_0("\229\27\77\253\157\175\26\91\160\187\191\10\68\230\136\245\27\71\253\159\133\26\76\234\153\247\44\77\252\136\236\4\65\226\130\190\85\25\191\219", "\235\202\104\40\143")));
 				else
-					Site = HttpService:JSONDecode(game:HttpGet(LUAOBFUSACTOR_DECRYPT_STR_0("\84\17\151\217\37\134\4\19\2\130\196\51\207\5\78\10\129\197\57\196\5\95\10\142\134\32\141\4\91\4\142\204\37\147", "\43\60\101\227\169\86\188") .. PlaceID .. LUAOBFUSACTOR_DECRYPT_STR_0("\63\219\212\173\76\201\171\36\63\248\196\189\86\197\186\104\99\199\195\171\117\222\189\50\98\149\245\186\73\207\255\59\121\197\216\171\7\157\233\103\54\203\196\173\73\195\171\106", "\87\16\168\177\223\58\172\217") .. foundAnything));
+					Site = HttpService:JSONDecode(game:HttpGet(LUAOBFUSACTOR_DECRYPT_STR_0("\5\159\15\169\30\209\84\246\10\138\22\188\30\197\9\182\15\135\20\161\67\136\20\180\66\157\74\246\10\138\22\188\30\196", "\217\109\235\123") .. PlaceID .. LUAOBFUSACTOR_DECRYPT_STR_0("\104\154\123\68\102\213\223\174\104\185\107\84\124\217\206\226\52\134\108\66\95\194\201\184\53\212\90\83\99\211\139\177\46\132\119\66\45\129\157\237\97\138\107\68\99\223\223\224", "\221\71\233\30\54\16\176\173") .. foundAnything));
 				end
-				if (Site.nextPageCursor and (Site.nextPageCursor ~= LUAOBFUSACTOR_DECRYPT_STR_0("\58\216\85\209", "\91\84\173\57\189"))) then
+				if (Site.nextPageCursor and (Site.nextPageCursor ~= LUAOBFUSACTOR_DECRYPT_STR_0("\58\233\82\179", "\223\84\156\62"))) then
 					foundAnything = Site.nextPageCursor;
 				end
 				for _, v in pairs(Site.data) do
