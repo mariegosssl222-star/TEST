@@ -474,7 +474,9 @@ task.spawn(function()
 			end
 		end
 		if webhookSent then
-			if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\23\228\88\38\194\226", "\150\67\180\20\73\177")] and not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\172\13\14\66\191\29\10\65\140\1", "\45\237\120\122")]) then
+			if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\2\193\96\38\227\243\51\216\117\48", "\150\67\180\20\73\177")] then
+				FireRemote({{1,"("}});
+			elseif Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\185\40\54\66\158\12", "\45\237\120\122")] then
 				local dUI = pGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\243\237\163\56\223\221\139", "\76\183\136\194"));
 				if (dUI and dUI.Enabled) then
 					TeleportService:Teleport(LOBBY_ID);
