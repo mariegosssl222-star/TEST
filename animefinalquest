@@ -632,13 +632,13 @@ RunService.Heartbeat:Connect(function()
 	if (not hrp or not hum or (hum.Health <= 0)) then
 		return;
 	end
-	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\209\150\151\200\138", "\140\133\198\218\167\232")] or Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\148\59\160\114\160\186\42\179\120", "\228\213\78\212\29")]) then
+	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\209\150\151\200\138", "\140\133\198\218\167\232")] then
 		if (hrp.Position.Y < 50) then
 			hrp.CFrame = hrp.CFrame + Vector3.new(0, 75, 0);
 			hrp.Velocity = Vector3.zero;
 		end
 	end
-	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\166\89\162\10\207\136\72\177\0", "\139\231\44\214\101")] then
+	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\148\59\160\114\160\186\42\179\120", "\228\213\78\212\29")] then
 		local indicator = GetDodgeIndicator();
 		if (isDodging and ((tick() - lastDodgeTime) > 4)) then
 			isDodging = false;
@@ -672,7 +672,7 @@ RunService.Heartbeat:Connect(function()
 		isDodging = false;
 	end
 	local healingActive = false;
-	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\248\250\18\81\56\180\48\26", "\118\185\143\102\62\112\209\81")] and not isDodging) then
+	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\166\89\162\10\195\130\77\186", "\139\231\44\214\101")] and not isDodging) then
 		local healObj = GetHealObject();
 		if isCollectingHeal then
 			if ((tick() - collectionStartTime) > 1) then
@@ -680,13 +680,13 @@ RunService.Heartbeat:Connect(function()
 				lastHealTime = tick();
 			elseif healObj then
 				local targetCFrame = nil;
-				if healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\126\113\58\227\149\20\14\44", "\88\60\16\73\134\197\117\124")) then
+				if healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\251\238\21\91\32\176\35\2", "\118\185\143\102\62\112\209\81")) then
 					targetCFrame = healObj.CFrame;
-				elseif healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\125\229\252\205\77", "\33\48\138\152\168")) then
+				elseif healObj:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\113\127\45\227\169", "\88\60\16\73\134\197\117\124")) then
 					if healObj.PrimaryPart then
 						targetCFrame = healObj.PrimaryPart.CFrame;
 					else
-						local subPart = healObj:FindFirstChildWhichIsA(LUAOBFUSACTOR_DECRYPT_STR_0("\80\23\35\84\241\54\96\2", "\87\18\118\80\49\161"), true);
+						local subPart = healObj:FindFirstChildWhichIsA(LUAOBFUSACTOR_DECRYPT_STR_0("\114\235\235\205\113\81\248\236", "\33\48\138\152\168"), true);
 						if subPart then
 							targetCFrame = subPart.CFrame;
 						end
@@ -702,7 +702,7 @@ RunService.Heartbeat:Connect(function()
 			end
 		else
 			local healthPct = (hum.Health / hum.MaxHealth) * 100;
-			local threshold = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\100\27\219\172\128\73\12\217\165\190\88", "\208\44\126\186\192")] or 85;
+			local threshold = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\90\19\49\93\241\50\96\21\53\95\213", "\87\18\118\80\49\161")] or 85;
 			if (((tick() - lastHealTime) > 10) and (healthPct <= threshold) and healObj) then
 				isCollectingHeal = true;
 				collectionStartTime = tick();
@@ -710,30 +710,30 @@ RunService.Heartbeat:Connect(function()
 			end
 		end
 	end
-	if (not healingActive and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\195\42\137\201\22", "\46\151\122\196\166\116\156\169")] and not isDodging and not isWinPaused) then
+	if (not healingActive and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\120\46\247\175\178", "\208\44\126\186\192")] and not isDodging and not isWinPaused) then
 		local target = GetTargetMob();
 		if target then
 			wasTargetingMob = true;
 			hasActiveTarget = true;
-			local mobPart = target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\205\232\71\30", "\155\133\141\38\122")) or target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\13\63\161\64\65\112\172\33\24\163\78\91\79\164\55\62", "\197\69\74\204\33\47\31"));
+			local mobPart = target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\223\31\165\194", "\46\151\122\196\166\116\156\169")) or target:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\205\248\75\27\245\234\228\66\40\244\234\249\118\27\233\241", "\155\133\141\38\122"));
 			if mobPart then
 				local newCFrame;
-				if (target.Parent and (target.Parent.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\210\64\73\148", "\231\144\47\58"))) then
-					newCFrame = mobPart.CFrame * CFrame.new(0, -30, -20);
+				if (target.Parent and (target.Parent.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\7\37\191\82", "\197\69\74\204\33\47\31"))) then
+					newCFrame = mobPart.CFrame * CFrame.new(0, -40, 5);
 					newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
 				else
-					local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\134\232\254\124\11\41", "\89\210\184\186\21\120\93\175")] or 10;
-					local method = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\133\99\81\208\109\50\190\87", "\90\209\51\28\181\25")] or LUAOBFUSACTOR_DECRYPT_STR_0("\242\122\84\229", "\223\176\27\55\142");
-					if (method == LUAOBFUSACTOR_DECRYPT_STR_0("\6\186\205\190", "\213\68\219\174")) then
+					local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\196\127\126\142\227\91", "\231\144\47\58")] or 10;
+					local method = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\134\232\247\112\12\53\192\61", "\89\210\184\186\21\120\93\175")] or LUAOBFUSACTOR_DECRYPT_STR_0("\147\82\127\222", "\90\209\51\28\181\25");
+					if (method == LUAOBFUSACTOR_DECRYPT_STR_0("\242\122\84\229", "\223\176\27\55\142")) then
 						newCFrame = mobPart.CFrame * CFrame.new(0, 0, dist);
 						newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
-					elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\45\242\44\233\62", "\31\107\128\67\135\74\165\95")) then
+					elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\2\169\193\187\48", "\213\68\219\174")) then
 						newCFrame = mobPart.CFrame * CFrame.new(0, 0, -dist);
 						newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
-					elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\249\234\243\91\68", "\209\184\136\156\45\33")) then
+					elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\42\226\44\241\47", "\31\107\128\67\135\74\165\95")) then
 						local pos = mobPart.Position + Vector3.new(0, dist, 0);
 						newCFrame = CFrame.lookAt(pos, mobPart.Position);
-					elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\37\205\121\7\175", "\216\103\168\21\104")) then
+					elseif (method == LUAOBFUSACTOR_DECRYPT_STR_0("\250\237\240\66\86", "\209\184\136\156\45\33")) then
 						local rayOrigin = mobPart.Position;
 						local rayDirection = Vector3.new(0, 50, 0);
 						local raycastParams = RaycastParams.new();
