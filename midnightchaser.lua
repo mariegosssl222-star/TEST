@@ -199,9 +199,16 @@ FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\130\168\28\65"
 			p.Color = Color3.fromRGB(99, 95, 98);
 			p.CanCollide = true;
 		end
-		createPart(Vector3.new(100, 20, tunnelLen), startPos + Vector3.new(0, -15, 0));
-		createPart(Vector3.new(100, 20, tunnelLen), startPos + Vector3.new(0, 15, 0));
-		SmartTP(startPos);
+		createPart(Vector3.new(100, 10, tunnelLen), startPos + Vector3.new(0, -10, 0));
+		createPart(Vector3.new(100, 10, tunnelLen), startPos + Vector3.new(0, 20, 0));
+		createPart(Vector3.new(10, 30, tunnelLen), startPos + Vector3.new(50, 5, 0));
+		createPart(Vector3.new(10, 30, tunnelLen), startPos + Vector3.new(-50, 5, 0));
+		if car.PrimaryPart then
+			car.PrimaryPart.Anchored = true;
+			car:SetPrimaryPartCFrame(CFrame.new(startPos + Vector3.new(0, 2, 0)));
+			task.wait(0.5);
+			car.PrimaryPart.Anchored = false;
+		end
 		task.wait(1);
 		VIM:SendKeyEvent(true, Enum.KeyCode.W, false, game);
 		FarmLoop = RunService.Heartbeat:Connect(function()
@@ -209,9 +216,10 @@ FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\130\168\28\65"
 				FarmToggleHandle:Set(false);
 				return;
 			end
-			if ((car.PrimaryPart.Position - startPos).Magnitude > ((tunnelLen / 3) - 200)) then
+			if ((car.PrimaryPart.Position - startPos).Magnitude > ((tunnelLen / 2) - 500)) then
 				car.PrimaryPart.AssemblyLinearVelocity = Vector3.zero;
-				car:SetPrimaryPartCFrame(CFrame.new(startPos));
+				car.PrimaryPart.AssemblyAngularVelocity = Vector3.zero;
+				car:SetPrimaryPartCFrame(CFrame.new(startPos + Vector3.new(0, 2, 0)));
 			end
 		end);
 	else
@@ -226,6 +234,7 @@ FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\130\168\28\65"
 		end
 		if IsFarming then
 			IsFarming = false;
+			task.wait(0.5);
 			FullReset();
 		end
 	end
