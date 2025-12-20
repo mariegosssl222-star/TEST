@@ -962,7 +962,7 @@ task.spawn(function()
 					hrp.Velocity = Vector3.zero;
 					local collected = false;
 					for i = 1, 5 do
-						task.wait(0.5);
+						task.wait(0.1);
 						if not targetPart.Parent then
 							collected = true;
 							break;
