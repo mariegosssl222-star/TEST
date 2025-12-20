@@ -36,7 +36,7 @@ local TunnelFolder = nil;
 local FarmLoop = nil;
 local IsFarming = false;
 local IsChristmasing = false;
-local Window = Library:Window({[LUAOBFUSACTOR_DECRYPT_STR_0("\101\210\56\250\73\127\203\249\75\216", "\152\38\189\86\156\32\24\133")]=LUAOBFUSACTOR_DECRYPT_STR_0("\241\94\163\72\245\80\175\82\255\95\166\85\249\69\180\121\250\94\191\8\246\68\168\72", "\38\156\55\199")});
+local Window = Library:Window({[LUAOBFUSACTOR_DECRYPT_STR_0("\101\210\56\250\73\127\203\249\75\216", "\152\38\189\86\156\32\24\133")]=LUAOBFUSACTOR_DECRYPT_STR_0("\241\94\163\72\245\80\175\82\255\95\166\85\249\69\180\121\232\71\152\64\245\79\233\76\239\88\169", "\38\156\55\199")});
 local FarmTab = Window:Tab(LUAOBFUSACTOR_DECRYPT_STR_0("\142\124\110\37", "\35\200\29\28\72\115\20\154"));
 local FarmToggleHandle = nil;
 local ChristmasToggleHandle = nil;
@@ -45,12 +45,18 @@ local function GetCar()
 	return Workspace:FindFirstChild(carName);
 end
 local function FullReset()
+	VIM:SendKeyEvent(true, Enum.KeyCode.F, false, game);
+	task.wait(0.1);
+	VIM:SendKeyEvent(false, Enum.KeyCode.F, false, game);
+	task.wait(0.5);
 	local car = GetCar();
 	if car then
 		car:Destroy();
 	end
-	if (LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\49\170\220\222\131\35\61\29", "\84\121\223\177\191\237\76"))) then
-		LocalPlayer.Character.Humanoid.Health = 0;
+	task.wait(4);
+	local char = LocalPlayer.Character;
+	if (char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\49\170\220\222\131\35\61\29\141\222\208\153\28\53\11\171", "\84\121\223\177\191\237\76"))) then
+		char.HumanoidRootPart.CFrame = CFrame.new(3313.47, -14.05, 1013.1);
 	end
 end
 local function SmartTP(targetPosition)
@@ -188,7 +194,6 @@ FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\120\41\82\61",
 			end
 		end);
 	else
-		IsFarming = false;
 		if FarmLoop then
 			FarmLoop:Disconnect();
 			FarmLoop = nil;
@@ -198,7 +203,10 @@ FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\120\41\82\61",
 			TunnelFolder:Destroy();
 			TunnelFolder = nil;
 		end
-		FullReset();
+		if IsFarming then
+			IsFarming = false;
+			FullReset();
+		end
 	end
 end});
 ChristmasToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\116\201\232\83", "\224\58\168\133\54\58\146")]=LUAOBFUSACTOR_DECRYPT_STR_0("\120\67\95\242\53\165\143\25\80\69\95\240\116\149", "\107\57\54\43\157\21\230\231"),[LUAOBFUSACTOR_DECRYPT_STR_0("\253\135\16\242", "\175\187\235\113\149\217\188")]=LUAOBFUSACTOR_DECRYPT_STR_0("\29\186\149\67\192\113\106\53\188\149\65\226\106", "\24\92\207\225\44\131\25"),[LUAOBFUSACTOR_DECRYPT_STR_0("\104\210\180\64\25\124\72\216", "\29\43\179\216\44\123")]=function(Value)
@@ -251,7 +259,7 @@ ChristmasToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\116\201\2
 				task.wait(1);
 			end
 		end);
-	else
+	elseif IsChristmasing then
 		IsChristmasing = false;
 		FullReset();
 	end
