@@ -311,7 +311,7 @@ MainTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\38\61\23\69", "\157\104\92\122\32
 		if (LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\200\22\47\232\241\203\233\7\16\230\240\208\208\2\48\253", "\164\128\99\66\137\159"))) then
 			hasJoinedMatch = true;
 			LocalPlayer.Character.HumanoidRootPart.CFrame = TargetPod.Collision.CFrame + Vector3.new(0, 3, 0);
-			task.wait(2);
+			task.wait(5);
 			local mapID = GetMapIDFromSettings(Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\45\136\249\141\5\133\236\189\20", "\222\96\233\137")]);
 			local diffID = GetDifficultyID(Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\157\186\161\25\187\246\252\188\176\179", "\144\217\211\199\127\232\147")]);
 			local potentialKeys = {"\027","\028","\029","\001"};
@@ -320,13 +320,13 @@ MainTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\38\61\23\69", "\157\104\92\122\32
 				FireRemote(args);
 			end
 			task.spawn(function()
-				task.wait(10);
+				task.wait(13);
 				while (CurrentPlaceId == LOBBY_ID) and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\148\42\243\41\126\143\11\187", "\98\213\95\135\70\52\224")] do
 					for _, key in ipairs(potentialKeys) do
 						local args = {{{LUAOBFUSACTOR_DECRYPT_STR_0("\206\175\200\110", "\52\158\195\169\23"),1,LUAOBFUSACTOR_DECRYPT_STR_0("\94\185\52\117\147\57\111", "\235\26\220\82\20\230\85\27"),mapID,diffID,true},key}};
 						FireRemote(args);
 					end
-					task.wait(10);
+					task.wait(13);
 				end
 			end);
 		end
