@@ -660,7 +660,7 @@ RunService.Heartbeat:Connect(function()
 	end
 	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\126\61\186\11\112\94\58\163", "\54\63\72\206\100")] then
 		if (hrp.Position.Y < 50) then
-			hrp.CFrame = hrp.CFrame + Vector3.new(0, 75, 0);
+			hrp.CFrame = hrp.CFrame + Vector3.new(0, 50, 0);
 			hrp.Velocity = Vector3.zero;
 		end
 	end
