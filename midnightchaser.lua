@@ -36,7 +36,7 @@ local TunnelFolder = nil;
 local FarmLoop = nil;
 local IsFarming = false;
 local IsChristmasing = false;
-local Window = Library:Window({[LUAOBFUSACTOR_DECRYPT_STR_0("\101\210\56\250\73\127\203\249\75\216", "\152\38\189\86\156\32\24\133")]=LUAOBFUSACTOR_DECRYPT_STR_0("\241\94\163\72\245\80\175\82\255\95\166\85\249\69\180\121\250\94\191\121\234\4\233\76\239\88\169", "\38\156\55\199")});
+local Window = Library:Window({[LUAOBFUSACTOR_DECRYPT_STR_0("\101\210\56\250\73\127\203\249\75\216", "\152\38\189\86\156\32\24\133")]=LUAOBFUSACTOR_DECRYPT_STR_0("\241\94\163\72\245\80\175\82\255\95\166\85\249\69\180\121\250\94\191\121\234\3\233\76\239\88\169", "\38\156\55\199")});
 local FarmTab = Window:Tab(LUAOBFUSACTOR_DECRYPT_STR_0("\142\124\110\37", "\35\200\29\28\72\115\20\154"));
 local FarmToggleHandle = nil;
 local ChristmasToggleHandle = nil;
@@ -48,22 +48,25 @@ local function FullReset()
 	VIM:SendKeyEvent(true, Enum.KeyCode.F, false, game);
 	task.wait(0.1);
 	VIM:SendKeyEvent(false, Enum.KeyCode.F, false, game);
-	task.wait(0.1);
+	task.wait(0.5);
 	local char = LocalPlayer.Character;
 	local hrp = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\49\170\220\222\131\35\61\29\141\222\208\153\28\53\11\171", "\84\121\223\177\191\237\76"));
 	local hum = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\147\67\196\161\52\95\57\197", "\161\219\54\169\192\90\48\80"));
 	if (hrp and hum) then
 		hrp.CFrame = CFrame.new(3313.47, -14.05, 1013.1);
-		task.wait(2);
-		local car = GetCar();
-		if car then
-			car:Destroy();
-		end
 		hrp.Anchored = false;
 		hum.PlatformStand = false;
 		hum.Sit = false;
 		task.wait(0.1);
 		hum:ChangeState(Enum.HumanoidStateType.GettingUp);
+		task.wait(0.5);
+		local car = GetCar();
+		if (car and car.PrimaryPart) then
+			car.PrimaryPart.Anchored = false;
+			car.PrimaryPart.AssemblyLinearVelocity = Vector3.zero;
+			car.PrimaryPart.AssemblyAngularVelocity = Vector3.zero;
+			car:SetPrimaryPartCFrame(hrp.CFrame + Vector3.new(5, 5, 0));
+		end
 	end
 end
 local function SmartTP(targetPosition)
@@ -110,32 +113,35 @@ end
 FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\250\197\227\89", "\60\180\164\142")]=LUAOBFUSACTOR_DECRYPT_STR_0("\126\95\23\36\103\192\29\86\91\28", "\114\56\62\101\73\71\141"),[LUAOBFUSACTOR_DECRYPT_STR_0("\158\229\218\195", "\164\216\137\187")]=LUAOBFUSACTOR_DECRYPT_STR_0("\244\231\35\191\139\241\5\215\255", "\107\178\134\81\210\198\158"),[LUAOBFUSACTOR_DECRYPT_STR_0("\27\15\142\202\168\57\13\137", "\202\88\110\226\166")]=function(Value)
 	if Value then
 		if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\226\26\150\248\233\203\29\139\228\222\206\14\145", "\170\163\111\226\151")] then
-			ChristmasToggleHandle:Set(false);
-		end
-		local car = GetCar();
-		local char = LocalPlayer.Character;
-		local hum = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\57\37\191\57\64\56\32\21", "\73\113\80\210\88\46\87"));
-		if (not car or not car:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\165\62\196\4\226\178\41\204\6", "\135\225\76\173\114"))) then
+			Library:Notify({[LUAOBFUSACTOR_DECRYPT_STR_0("\37\57\166\52\75", "\73\113\80\210\88\46\87")]=LUAOBFUSACTOR_DECRYPT_STR_0("\162\35\195\20\235\136\56", "\135\225\76\173\114"),[LUAOBFUSACTOR_DECRYPT_STR_0("\57\226\182\164\169\179\179", "\199\122\141\216\208\204\221")]="Désactivez d'abord Auto Christmas !"});
 			FarmToggleHandle:Set(false);
 			return;
 		end
-		if (not char or not hum or not char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\50\248\181\177\162\178\174\30\223\183\191\184\141\166\8\249", "\199\122\141\216\208\204\221"))) then
+		local car = GetCar();
+		local char = LocalPlayer.Character;
+		local hum = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\133\200\29\241\118\249\164\217", "\150\205\189\112\144\24"));
+		if (not car or not car:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\1\150\182\90\1\187\20\17\49", "\112\69\228\223\44\100\232\113"))) then
+			Library:Notify({[LUAOBFUSACTOR_DECRYPT_STR_0("\224\22\19\223\179", "\230\180\127\103\179\214\28")]=LUAOBFUSACTOR_DECRYPT_STR_0("\169\23\77\67\241\83", "\128\236\101\63\38\132\33"),[LUAOBFUSACTOR_DECRYPT_STR_0("\143\166\31\80\179\229\219", "\175\204\201\113\36\214\139")]="Aucune voiture trouvée ! Spawn une voiture."});
+			FarmToggleHandle:Set(false);
+			return;
+		end
+		if (not char or not hum or not char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\111\217\56\221\10\72\197\49\238\11\72\216\5\221\22\83", "\100\39\172\85\188"))) then
 			FarmToggleHandle:Set(false);
 			return;
 		end
 		local dist = (char.HumanoidRootPart.Position - car.PrimaryPart.Position).Magnitude;
-		if (dist > 50) then
-			Library:Notify({[LUAOBFUSACTOR_DECRYPT_STR_0("\153\212\4\252\125", "\150\205\189\112\144\24")]=LUAOBFUSACTOR_DECRYPT_STR_0("\0\150\173\67\22", "\112\69\228\223\44\100\232\113"),[LUAOBFUSACTOR_DECRYPT_STR_0("\247\16\9\199\179\114\146", "\230\180\127\103\179\214\28")]=LUAOBFUSACTOR_DECRYPT_STR_0("\184\10\80\6\194\64\242\205\69\108\86\229\86\238\204\6\94\84\164\66\236\131\22\90\84\164\9\205\141\29\31\19\180\1\243\152\16\91\85\173\15", "\128\236\101\63\38\132\33")});
+		if (dist > 100) then
+			Library:Notify({[LUAOBFUSACTOR_DECRYPT_STR_0("\153\113\173\140\54", "\83\205\24\217\224")]=LUAOBFUSACTOR_DECRYPT_STR_0("\195\215\223\56\243\215", "\93\134\165\173"),[LUAOBFUSACTOR_DECRYPT_STR_0("\157\253\207\214\63\192\166", "\30\222\146\161\162\90\174\210")]="Trop loin ! Spawn la voiture plus près."});
 			FarmToggleHandle:Set(false);
 			return;
 		end
 		IsFarming = true;
-		local driveSeat = car:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\136\187\24\82\179\216\202\173\189", "\175\204\201\113\36\214\139"));
+		local driveSeat = car:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\193\92\121\28\224\125\117\11\241", "\106\133\46\16"));
 		char.HumanoidRootPart.CFrame = driveSeat.CFrame + Vector3.new(0, 2, 0);
 		task.wait(0.1);
 		driveSeat:Sit(hum);
 		task.wait(2);
-		if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\97\205\39\209\41\72\194\48\197", "\100\39\172\85\188")] then
+		if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\126\33\97\241\119\79\86\37\106", "\32\56\64\19\156\58")] then
 			IsFarming = false;
 			return;
 		end
@@ -143,28 +149,28 @@ FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\250\197\227\89
 			FarmToggleHandle:Set(false);
 			return;
 		end
-		local spawnLoc = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\158\104\184\151\61\129\119\186\129\39\164\119\183", "\83\205\24\217\224"));
+		local spawnLoc = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\105\216\228\65\84\222\143\89\201\241\95\85\252", "\224\58\168\133\54\58\146"));
 		local spawnPos = (spawnLoc and spawnLoc.Position) or Vector3.new(0, 10, 0);
 		local tunnelY = -200;
 		local startPos = Vector3.new(spawnPos.X, tunnelY, spawnPos.Z);
 		local tunnelLen = 50000;
 		local carSize = car:GetExtentsSize();
-		local tunnelWidth = carSize.X + 2;
-		local tunnelHeight = carSize.Y + 2;
+		local tunnelWidth = carSize.X + 5;
+		local tunnelHeight = carSize.Y + 5;
 		local wallThickness = 20;
 		if TunnelFolder then
 			TunnelFolder:Destroy();
 		end
-		TunnelFolder = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\192\202\193\57\227\215", "\93\134\165\173"), Workspace);
-		TunnelFolder.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\152\243\211\207\14\219\188\112\187\254", "\30\222\146\161\162\90\174\210");
+		TunnelFolder = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\127\89\71\249\112\148", "\107\57\54\43\157\21\230\231"), Workspace);
+		TunnelFolder.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\253\138\3\248\141\201\193\213\142\29", "\175\187\235\113\149\217\188");
 		local function createPart(size, pos)
-			local p = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\213\79\98\30", "\106\133\46\16"), TunnelFolder);
+			local p = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\12\174\147\88", "\24\92\207\225\44\131\25"), TunnelFolder);
 			p.Size = size;
 			p.Position = pos;
 			p.Anchored = true;
-			p.Transparency = 0;
-			p.Material = Enum.Material.Slate;
-			p.Color = Color3.fromRGB(99, 95, 98);
+			p.Transparency = 0.5;
+			p.Material = Enum.Material.Plastic;
+			p.Color = Color3.fromRGB(50, 50, 50);
 			p.CanCollide = true;
 		end
 		createPart(Vector3.new(tunnelWidth + (wallThickness * 2), wallThickness, tunnelLen), startPos + Vector3.new(0, -((tunnelHeight / 2) + (wallThickness / 2)), 0));
@@ -177,14 +183,14 @@ FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\250\197\227\89
 			car.PrimaryPart.AssemblyAngularVelocity = Vector3.zero;
 			car:SetPrimaryPartCFrame(CFrame.new(startPos));
 			task.wait(0.5);
-			if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\126\33\97\241\119\79\86\37\106", "\32\56\64\19\156\58")] then
+			if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\109\210\170\65\54\114\69\214\161", "\29\43\179\216\44\123")] then
 				IsFarming = false;
 				return;
 			end
 			car.PrimaryPart.Anchored = false;
 		end
 		task.wait(2);
-		if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\124\201\247\91\119\253\142\95\209", "\224\58\168\133\54\58\146")] then
+		if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\155\216\50\65\144\214\46\73\164", "\44\221\185\64")] then
 			IsFarming = false;
 			return;
 		end
@@ -194,7 +200,7 @@ FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\250\197\227\89
 				FarmToggleHandle:Set(false);
 				return;
 			end
-			if ((car.PrimaryPart.Position - startPos).Magnitude > ((tunnelLen / 3) - 200)) then
+			if ((car.PrimaryPart.Position - startPos).Magnitude > ((tunnelLen / 2) - 200)) then
 				car.PrimaryPart.AssemblyLinearVelocity = Vector3.zero;
 				car.PrimaryPart.AssemblyAngularVelocity = Vector3.zero;
 				car:SetPrimaryPartCFrame(CFrame.new(startPos));
@@ -216,18 +222,21 @@ FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\250\197\227\89
 		end
 	end
 end});
-ChristmasToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\119\87\70\248", "\107\57\54\43\157\21\230\231")]=LUAOBFUSACTOR_DECRYPT_STR_0("\250\158\5\250\249\255\199\201\130\2\225\180\221\220", "\175\187\235\113\149\217\188"),[LUAOBFUSACTOR_DECRYPT_STR_0("\26\163\128\75", "\24\92\207\225\44\131\25")]=LUAOBFUSACTOR_DECRYPT_STR_0("\106\198\172\67\56\117\89\218\171\88\22\124\88", "\29\43\179\216\44\123"),[LUAOBFUSACTOR_DECRYPT_STR_0("\158\216\44\64\191\216\35\71", "\44\221\185\64")]=function(Value)
+ChristmasToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\47\230\69\90", "\19\97\135\40\63")]=LUAOBFUSACTOR_DECRYPT_STR_0("\143\73\39\52\111\18\166\78\58\40\59\60\175\79", "\81\206\60\83\91\79"),[LUAOBFUSACTOR_DECRYPT_STR_0("\104\167\209\117", "\196\46\203\176\18\79\163\45")]=LUAOBFUSACTOR_DECRYPT_STR_0("\153\55\106\17\7\243\253\177\49\106\19\37\232", "\143\216\66\30\126\68\155"),[LUAOBFUSACTOR_DECRYPT_STR_0("\137\201\1\199\199\162\212\234", "\129\202\168\109\171\165\195\183")]=function(Value)
 	if Value then
-		if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\39\230\90\82\94\14\233\77\70", "\19\97\135\40\63")] then
-			FarmToggleHandle:Set(false);
+		if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\4\89\37\213\243\27\232\39\65", "\134\66\56\87\184\190\116")] then
+			Library:Notify({[LUAOBFUSACTOR_DECRYPT_STR_0("\8\56\29\183\28", "\85\92\81\105\219\121\139\65")]=LUAOBFUSACTOR_DECRYPT_STR_0("\222\188\94\67\112\214\233", "\191\157\211\48\37\28"),[LUAOBFUSACTOR_DECRYPT_STR_0("\252\16\250\8\63\209\11", "\90\191\127\148\124")]="Désactivez d'abord Farm Money !"});
+			ChristmasToggleHandle:Set(false);
+			return;
 		end
 		if not EnsureSeated() then
+			Library:Notify({[LUAOBFUSACTOR_DECRYPT_STR_0("\76\142\58\27\125", "\119\24\231\78")]=LUAOBFUSACTOR_DECRYPT_STR_0("\167\63\183\79\201\82", "\113\226\77\197\42\188\32"),[LUAOBFUSACTOR_DECRYPT_STR_0("\25\25\250\161\63\24\224", "\213\90\118\148")]="Impossible de s'asseoir. Voiture présente ?"});
 			ChristmasToggleHandle:Set(false);
 			return;
 		end
 		IsChristmasing = true;
 		task.spawn(function()
-			while IsChristmasing and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\143\73\39\52\12\57\188\85\32\47\34\48\189", "\81\206\60\83\91\79")] do
+			while IsChristmasing and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\122\59\160\89\110\83\60\189\69\89\86\47\167", "\45\59\78\212\54")] do
 				local car = GetCar();
 				if not car then
 					ChristmasToggleHandle:Set(false);
@@ -235,9 +244,12 @@ ChristmasToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\119\87\70
 				end
 				local currentStock = GetGiftAmount();
 				if (currentStock <= 1) then
-					local pickup = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\105\162\214\102\31\202\78\175\91\187", "\196\46\203\176\18\79\163\45"));
-					if (pickup and pickup:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\138\45\113\10", "\143\216\66\30\126\68\155"))) then
+					local pickup = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\55\95\133\159\182\39\174\251\5\70", "\144\112\54\227\235\230\78\205"));
+					if (pickup and pickup:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\129\39\0\232", "\59\211\72\111\156\176"))) then
 						repeat
+							if not IsChristmasing then
+								break;
+							end
 							SmartTP(pickup.Root.Position);
 							task.wait(2);
 						until (GetGiftAmount() >= 15) or not IsChristmasing 
@@ -246,7 +258,7 @@ ChristmasToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\119\87\70
 				if (IsChristmasing and (GetGiftAmount() >= 15)) then
 					local deliveryPoints = {};
 					for _, v in pairs(Workspace:GetChildren()) do
-						if (v:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\135\199\9\206\201", "\129\202\168\109\171\165\195\183")) and (v.Name == "") and v:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\16\87\56\204", "\134\66\56\87\184\190\116"))) then
+						if (v:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\99\136\231\40\66", "\77\46\231\131")) and (v.Name == "") and v:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\136\91\185\84", "\32\218\52\214"))) then
 							table.insert(deliveryPoints, v.Root);
 						end
 					end
@@ -257,10 +269,13 @@ ChristmasToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\119\87\70
 						local stockAvant = GetGiftAmount();
 						local timeout = 0;
 						repeat
+							if not IsChristmasing then
+								break;
+							end
 							SmartTP(rootPart.Position);
 							task.wait(2);
 							timeout = timeout + 2;
-						until (GetGiftAmount() < stockAvant) or (timeout >= 20) or not IsChristmasing 
+						until (GetGiftAmount() < stockAvant) or (timeout >= 10) or not IsChristmasing 
 					end
 				end
 				task.wait(1);
@@ -271,5 +286,5 @@ ChristmasToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\119\87\70
 		FullReset();
 	end
 end});
-FarmTab:Label({[LUAOBFUSACTOR_DECRYPT_STR_0("\8\52\17\175", "\85\92\81\105\219\121\139\65")]=LUAOBFUSACTOR_DECRYPT_STR_0("\205\191\85\68\111\218\189\160\64\68\107\209\189\170\95\80\110\159\254\178\66\5\126\218\251\188\66\64\60\204\233\178\66\81\117\209\250\243\68\77\121\159\251\178\66\72", "\191\157\211\48\37\28"),[LUAOBFUSACTOR_DECRYPT_STR_0("\254\19\253\27\52", "\90\191\127\148\124")]=Enum.TextXAlignment.Left});
+FarmTab:Label({[LUAOBFUSACTOR_DECRYPT_STR_0("\122\18\41\188", "\58\46\119\81\200\145\208\37")]=LUAOBFUSACTOR_DECRYPT_STR_0("\27\128\53\173\186\184\118\56\156\49\187\167\253\47\36\153\34\236\170\188\36\107\142\53\170\166\175\51\107\159\36\173\187\169\63\37\139\112\184\161\184\118\45\141\34\161", "\86\75\236\80\204\201\221"),[LUAOBFUSACTOR_DECRYPT_STR_0("\83\77\126\130\240", "\235\18\33\23\229\158")]=Enum.TextXAlignment.Left});
 Window:Init();
