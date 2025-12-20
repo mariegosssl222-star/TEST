@@ -660,7 +660,7 @@ RunService.Heartbeat:Connect(function()
 	end
 	if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\126\61\186\11\112\94\58\163", "\54\63\72\206\100")] then
 		if (hrp.Position.Y < 50) then
-			hrp.CFrame = hrp.CFrame + Vector3.new(0, 50, 0);
+			hrp.CFrame = hrp.CFrame + Vector3.new(0, 150, 0);
 			hrp.Velocity = Vector3.zero;
 		end
 	end
@@ -752,7 +752,7 @@ RunService.Heartbeat:Connect(function()
 			if mobPart then
 				local newCFrame;
 				if (target.Parent and (target.Parent.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\167\236\252\202", "\198\229\131\143\185\99"))) then
-					newCFrame = mobPart.CFrame * CFrame.new(0, 75, 10);
+					newCFrame = mobPart.CFrame * CFrame.new(0, 45, 10);
 					newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
 				else
 					local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\101\188\140\122\66\152", "\19\49\236\200")] or 10;
