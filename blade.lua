@@ -517,7 +517,7 @@ task.spawn(function()
 	end
 end);
 RunService.Stepped:Connect(function()
-	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\201\219\153\237\132\251\255", "\148\157\171\205\130\201")] or _G_isAirborneDodge or isCollecting) then
+	if ((Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\201\219\153\237\132\251\255", "\148\157\171\205\130\201")] or _G_isAirborneDodge or isCollecting) and not _G_isAutoJoining) then
 		local char = getChar();
 		if char then
 			for _, part in pairs(char:GetChildren()) do
