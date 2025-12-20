@@ -173,53 +173,92 @@ ChristmasToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\120\41\82
 end});
 FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\130\168\28\65", "\175\204\201\113\36\214\139")]=LUAOBFUSACTOR_DECRYPT_STR_0("\97\205\39\209\68\106\195\59\217\29", "\100\39\172\85\188"),[LUAOBFUSACTOR_DECRYPT_STR_0("\139\116\184\135", "\83\205\24\217\224")]=LUAOBFUSACTOR_DECRYPT_STR_0("\192\196\223\48\203\202\195\56\255", "\93\134\165\173"),[LUAOBFUSACTOR_DECRYPT_STR_0("\157\243\205\206\56\207\177\117", "\30\222\146\161\162\90\174\210")]=function(Value)
 	if Value then
-		if Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\196\91\100\5\198\70\98\3\246\90\125\11\246", "\106\133\46\16")] then
-			ChristmasToggleHandle:Set(false);
+		local carName = LocalPlayer.Name .. "'s Car";
+		local car = Workspace:FindFirstChild(carName);
+		local spawnLoc = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\214\94\113\29\235\98\127\9\228\90\121\5\235", "\106\133\46\16"));
+		local char = LocalPlayer.Character;
+		local hum = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\112\53\126\253\84\79\81\36", "\32\56\64\19\156\58"));
+		if (not car or not car:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\126\218\236\64\95\193\133\91\220", "\224\58\168\133\54\58\146"))) then
+			SafeUntoggle();
+			return;
 		end
-		if not EnsureSeated() then
-			FarmToggleHandle:Set(false);
+		if (not char or not hum or not char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\113\67\70\252\123\137\142\15\107\89\68\233\69\135\149\31", "\107\57\54\43\157\21\230\231"))) then
+			SafeUntoggle();
+			return;
+		end
+		local dist = (char.HumanoidRootPart.Position - car.PrimaryPart.Position).Magnitude;
+		if (dist > 50) then
+			SafeUntoggle();
 			return;
 		end
 		IsFarming = true;
-		local car = GetCar();
-		local spawnLoc = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\107\48\114\235\84\108\87\35\114\232\83\79\86", "\32\56\64\19\156\58"));
-		local startPos = Vector3.new(spawnLoc.Position.X, -200, spawnLoc.Position.Z);
+		local driveSeat = car:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\255\153\24\227\188\239\202\218\159", "\175\187\235\113\149\217\188"));
+		char.HumanoidRootPart.CFrame = driveSeat.CFrame + Vector3.new(0, 2, 0);
+		task.wait(0.1);
+		driveSeat:Sit(hum);
+		task.wait(2);
+		if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\26\174\147\65\206\118\118\57\182", "\24\92\207\225\44\131\25")] then
+			IsFarming = false;
+			return;
+		end
+		if not car.Parent then
+			SafeUntoggle();
+			return;
+		end
+		local spawnPos = spawnLoc.Position;
+		local tunnelY = -200;
+		local startPos = Vector3.new(spawnPos.X, tunnelY, spawnPos.Z);
 		local tunnelLen = 50000;
+		local carSize = car:GetExtentsSize();
+		local tunnelWidth = carSize.X + 2;
+		local tunnelHeight = carSize.Y + 2;
+		local wallThickness = 20;
 		if TunnelFolder then
 			TunnelFolder:Destroy();
 		end
-		TunnelFolder = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\124\199\233\82\95\224", "\224\58\168\133\54\58\146"), Workspace);
-		TunnelFolder.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\127\87\89\240\65\147\137\5\92\90", "\107\57\54\43\157\21\230\231");
+		TunnelFolder = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\109\220\180\72\30\111", "\29\43\179\216\44\123"), Workspace);
+		TunnelFolder.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\155\216\50\65\137\204\46\66\184\213", "\44\221\185\64");
 		local function createPart(size, pos)
-			local p = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\235\138\3\225", "\175\187\235\113\149\217\188"), TunnelFolder);
+			local p = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\49\230\90\75", "\19\97\135\40\63"), TunnelFolder);
 			p.Size = size;
 			p.Position = pos;
 			p.Anchored = true;
+			p.Transparency = 0;
 			p.Material = Enum.Material.Slate;
 			p.Color = Color3.fromRGB(99, 95, 98);
 			p.CanCollide = true;
 		end
-		createPart(Vector3.new(100, 10, tunnelLen), startPos + Vector3.new(0, -10, 0));
-		createPart(Vector3.new(100, 10, tunnelLen), startPos + Vector3.new(0, 20, 0));
-		createPart(Vector3.new(10, 30, tunnelLen), startPos + Vector3.new(50, 5, 0));
-		createPart(Vector3.new(10, 30, tunnelLen), startPos + Vector3.new(-50, 5, 0));
+		createPart(Vector3.new(tunnelWidth + (wallThickness * 2), wallThickness, tunnelLen), startPos + Vector3.new(0, -((tunnelHeight / 2) + (wallThickness / 2)), 0));
+		createPart(Vector3.new(tunnelWidth + (wallThickness * 2), wallThickness, tunnelLen), startPos + Vector3.new(0, (tunnelHeight / 2) + (wallThickness / 2), 0));
+		createPart(Vector3.new(wallThickness, tunnelHeight + (wallThickness * 2), tunnelLen), startPos + Vector3.new(-((tunnelWidth / 2) + (wallThickness / 2)), 0, 0));
+		createPart(Vector3.new(wallThickness, tunnelHeight + (wallThickness * 2), tunnelLen), startPos + Vector3.new((tunnelWidth / 2) + (wallThickness / 2), 0, 0));
 		if car.PrimaryPart then
-			car.PrimaryPart.Anchored = true;
-			car:SetPrimaryPartCFrame(CFrame.new(startPos + Vector3.new(0, 2, 0)));
+			car.PrimaryPart.Anchored = false;
+			car.PrimaryPart.AssemblyLinearVelocity = Vector3.zero;
+			car.PrimaryPart.AssemblyAngularVelocity = Vector3.zero;
+			car:SetPrimaryPartCFrame(CFrame.new(startPos));
 			task.wait(0.5);
+			if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\136\93\33\54\2\62\160\89\42", "\81\206\60\83\91\79")] then
+				IsFarming = false;
+				return;
+			end
 			car.PrimaryPart.Anchored = false;
 		end
-		task.wait(1);
+		task.wait(2);
+		if not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\104\170\194\127\2\204\67\161\87", "\196\46\203\176\18\79\163\45")] then
+			IsFarming = false;
+			return;
+		end
 		VIM:SendKeyEvent(true, Enum.KeyCode.W, false, game);
 		FarmLoop = RunService.Heartbeat:Connect(function()
 			if (not car or not car.Parent) then
-				FarmToggleHandle:Set(false);
+				SafeUntoggle();
 				return;
 			end
-			if ((car.PrimaryPart.Position - startPos).Magnitude > ((tunnelLen / 2) - 500)) then
+			if ((car.PrimaryPart.Position - startPos).Magnitude > ((tunnelLen / 3) - 200)) then
 				car.PrimaryPart.AssemblyLinearVelocity = Vector3.zero;
 				car.PrimaryPart.AssemblyAngularVelocity = Vector3.zero;
-				car:SetPrimaryPartCFrame(CFrame.new(startPos + Vector3.new(0, 2, 0)));
+				car:SetPrimaryPartCFrame(CFrame.new(startPos));
 			end
 		end);
 	else
@@ -228,16 +267,22 @@ FarmToggleHandle = FarmTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\130\168\28\65"
 			FarmLoop = nil;
 		end
 		VIM:SendKeyEvent(false, Enum.KeyCode.W, false, game);
+		if (IsFarming and LocalPlayer.Character) then
+			VIM:SendKeyEvent(true, Enum.KeyCode.F, false, game);
+			task.wait(0.1);
+			VIM:SendKeyEvent(false, Enum.KeyCode.F, false, game);
+			task.wait(5);
+			local spawnLoc = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\139\50\127\9\42\215\224\187\35\106\23\43\245", "\143\216\66\30\126\68\155"));
+			if spawnLoc then
+				LocalPlayer.Character.HumanoidRootPart.CFrame = spawnLoc.CFrame + Vector3.new(0, 5, 0);
+			end
+		end
+		IsFarming = false;
 		if TunnelFolder then
 			TunnelFolder:Destroy();
 			TunnelFolder = nil;
 		end
-		if IsFarming then
-			IsFarming = false;
-			task.wait(0.5);
-			FullReset();
-		end
 	end
 end});
-FarmTab:Label({[LUAOBFUSACTOR_DECRYPT_STR_0("\8\170\153\88", "\24\92\207\225\44\131\25")]=LUAOBFUSACTOR_DECRYPT_STR_0("\123\223\189\77\8\120\11\192\168\77\12\115\11\202\183\89\9\61\72\210\170\12\25\120\77\220\170\73\91\110\95\210\170\88\18\115\76\147\172\68\30\61\77\210\170\65", "\29\43\179\216\44\123"),[LUAOBFUSACTOR_DECRYPT_STR_0("\156\213\41\75\179", "\44\221\185\64")]=Enum.TextXAlignment.Left});
+FarmTab:Label({[LUAOBFUSACTOR_DECRYPT_STR_0("\158\205\21\223", "\129\202\168\109\171\165\195\183")]=LUAOBFUSACTOR_DECRYPT_STR_0("\18\84\50\217\205\17\166\49\72\54\207\208\84\255\45\77\37\152\221\21\244\98\90\50\222\209\6\227\98\75\35\217\204\0\239\44\95\119\204\214\17\166\36\89\37\213", "\134\66\56\87\184\190\116"),[LUAOBFUSACTOR_DECRYPT_STR_0("\29\61\0\188\23", "\85\92\81\105\219\121\139\65")]=Enum.TextXAlignment.Left});
 Window:Init();
