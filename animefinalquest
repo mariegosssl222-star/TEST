@@ -102,17 +102,14 @@ local function GetMapIDFromSettings(selection)
 		return 4;
 	end
 	local lvl = GetPlayerLevel();
-	if ((lvl >= 0) and (lvl <= 6)) then
-		return 1;
-	end
-	if ((lvl >= 7) and (lvl <= 11)) then
-		return 2;
-	end
-	if ((lvl >= 12) and (lvl <= 14)) then
-		return 3;
-	end
 	if (lvl >= 15) then
 		return 4;
+	end
+	if (lvl >= 12) then
+		return 3;
+	end
+	if (lvl >= 7) then
+		return 2;
 	end
 	return 1;
 end
