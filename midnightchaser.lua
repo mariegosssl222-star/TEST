@@ -48,17 +48,17 @@ local function FullReset()
 	VIM:SendKeyEvent(true, Enum.KeyCode.F, false, game);
 	task.wait(0.1);
 	VIM:SendKeyEvent(false, Enum.KeyCode.F, false, game);
-	task.wait(0.5);
-	local car = GetCar();
-	if car then
-		car:Destroy();
-	end
-	task.wait(2);
+	task.wait(0.1);
 	local char = LocalPlayer.Character;
 	local hrp = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\49\170\220\222\131\35\61\29\141\222\208\153\28\53\11\171", "\84\121\223\177\191\237\76"));
 	local hum = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\147\67\196\161\52\95\57\197", "\161\219\54\169\192\90\48\80"));
 	if (hrp and hum) then
 		hrp.CFrame = CFrame.new(3313.47, -14.05, 1013.1);
+		task.wait(2);
+		local car = GetCar();
+		if car then
+			car:Destroy();
+		end
 		hrp.Anchored = false;
 		hum.PlatformStand = false;
 		hum.Sit = false;
