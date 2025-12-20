@@ -347,7 +347,7 @@ MiscTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\101\194\25\232", "\200\43\163\116
 		return;
 	end
 	for i = 1, 20 do
-		FireRemote({{i,"\022"}});
+		FireRemote({{i,"\023"}});
 		if ((i % 5) == 0) then
 			task.wait(0.1);
 		end
