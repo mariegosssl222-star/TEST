@@ -183,7 +183,7 @@ local function GetTargetMob()
 	end
 	local currentBossHP = GetBossCurrentHealth();
 	if currentBossHP then
-		if (currentBossHP <= 20000) then
+		if (currentBossHP <= 30000) then
 			local bossFolder = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\156\253\210\209", "\30\222\146\161\162\90\174\210"));
 			local statueBoss = bossFolder and bossFolder:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\199\65\99\25", "\106\133\46\16"));
 			if (statueBoss and statueBoss:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\112\53\126\253\84\79\81\36\65\243\85\84\104\33\97\232", "\32\56\64\19\156\58")) and statueBoss:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\114\221\232\87\84\253\137\94", "\224\58\168\133\54\58\146")) and (statueBoss.Humanoid.Health > 0)) then
