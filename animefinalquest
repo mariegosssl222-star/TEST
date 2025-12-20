@@ -689,7 +689,7 @@ RunService.Heartbeat:Connect(function()
 					floorY = rayResult.Position.Y;
 				end
 			end
-			local safePos = Vector3.new(hrp.Position.X, floorY + 75, hrp.Position.Z);
+			local safePos = Vector3.new(hrp.Position.X, floorY + 150, hrp.Position.Z);
 			hrp.CFrame = CFrame.new(safePos);
 			hrp.Velocity = Vector3.zero;
 			return;
@@ -752,7 +752,7 @@ RunService.Heartbeat:Connect(function()
 			if mobPart then
 				local newCFrame;
 				if (target.Parent and (target.Parent.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\167\236\252\202", "\198\229\131\143\185\99"))) then
-					newCFrame = mobPart.CFrame * CFrame.new(0, 90, 10);
+					newCFrame = mobPart.CFrame * CFrame.new(0, 75, 10);
 					newCFrame = CFrame.lookAt(newCFrame.Position, mobPart.Position);
 				else
 					local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\101\188\140\122\66\152", "\19\49\236\200")] or 10;
@@ -787,7 +787,7 @@ RunService.Heartbeat:Connect(function()
 			hasActiveTarget = false;
 			if wasTargetingMob then
 				wasTargetingMob = false;
-				hrp.CFrame = hrp.CFrame + Vector3.new(0, 20, 0);
+				hrp.CFrame = hrp.CFrame + Vector3.new(0, 150, 0);
 				hrp.Velocity = Vector3.zero;
 			end
 		end
