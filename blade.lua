@@ -637,6 +637,7 @@ task.spawn(function()
 				if not targetPortal then
 					targetPortal = portals[1];
 				end
+				task.wait(1);
 				while tpGui and tpGui.Enabled and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\241\110\67\225\149\223\114\89", "\223\176\27\55\142")] do
 					pcall(function()
 						teleportEvent:FireServer(targetPortal, 1, selectedDiff);
@@ -841,7 +842,7 @@ local function TweenMove(targetCFrame)
 	if not hrp then
 		return;
 	end
-	local Speed = 150;
+	local Speed = 50;
 	local Distance = (hrp.Position - targetCFrame.Position).Magnitude;
 	if (Distance < 10) then
 		hrp.CFrame = targetCFrame;
@@ -901,8 +902,8 @@ RunService.Heartbeat:Connect(function()
 	if human.Sit then
 		human.Sit = false;
 	end
-	if hrp.Anchored then
-		hrp.Anchored = false;
+	if not hrp.Anchored then
+		hrp.Anchored = true;
 	end
 	if (not currentTarget or not currentTarget.Parent or (currentTarget:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\44\190\191\61\86\6\212\0", "\189\100\203\210\92\56\105")) and (currentTarget.Humanoid.Health <= 0))) then
 		local bestTarget = nil;
@@ -953,12 +954,11 @@ RunService.Heartbeat:Connect(function()
 			finalPosition = tHrp.Position + offset;
 		end
 		if (mode ~= LUAOBFUSACTOR_DECRYPT_STR_0("\232\43\246\84\204", "\34\169\73\153")) then
-			finalPosition = Vector3.new(finalPosition.X, tHrp.Position.Y + 2, finalPosition.Z);
+			finalPosition = Vector3.new(finalPosition.X, tHrp.Position.Y + 5, finalPosition.Z);
 		end
 		TweenMove(CFrame.lookAt(finalPosition, tHrp.Position));
 	else
-		human.WalkSpeed = DEFAULT_WALKSPEED;
-		human.AutoRotate = true;
+		hrp.Velocity = Vector3.zero;
 	end
 end);
 task.spawn(function()
