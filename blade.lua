@@ -637,6 +637,7 @@ task.spawn(function()
 				if not targetPortal then
 					targetPortal = portals[1];
 				end
+				task.wait(1);
 				while tpGui and tpGui.Enabled and Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\241\110\67\225\149\223\114\89", "\223\176\27\55\142")] do
 					pcall(function()
 						teleportEvent:FireServer(targetPortal, 1, selectedDiff);
