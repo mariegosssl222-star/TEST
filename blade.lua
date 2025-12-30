@@ -837,133 +837,169 @@ task.spawn(function()
 		end
 	end
 end);
-local AlignPart, AlignPos, AlignOri;
-local function setupAlign()
+local function WarpTo(targetCFrame)
+	local hrp = getHRP();
+	if hrp then
+		hrp.CFrame = targetCFrame;
+		hrp.Velocity = Vector3.zero;
+		hrp.RotVelocity = Vector3.zero;
+	end
+end
+local function TweenMove(targetCFrame)
 	local hrp = getHRP();
 	if not hrp then
 		return;
 	end
-	if AlignPart then
-		AlignPart:Destroy();
+	local Speed = 50;
+	local Distance = (hrp.Position - targetCFrame.Position).Magnitude;
+	if (Distance < 10) then
+		hrp.CFrame = targetCFrame;
+		hrp.Velocity = Vector3.zero;
+		return;
 	end
-	AlignPart = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\202\66\178\27", "\134\154\35\192\111\127\21\25"));
-	AlignPart.Size = Vector3.new(1, 1, 1);
-	AlignPart.Transparency = 1;
-	AlignPart.CanCollide = false;
-	AlignPart.Anchored = true;
-	AlignPart.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\153\42\0\13\46\230\185\52\14\15\52", "\178\216\70\105\106\64");
-	AlignPart.Parent = workspace;
-	AlignPos = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\30\39\115\241\199\229\219\147\54\63\115\249\199", "\224\95\75\26\150\169\181\180"));
-	AlignPos.MaxForce = math.huge;
-	AlignPos.Responsiveness = 200;
-	AlignPos.RigidityEnabled = true;
-	AlignPos.Mode = Enum.PositionAlignmentMode.OneAttachment;
-	AlignPos.Attachment0 = hrp:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\57\213\215\60\101\184\98\10\217\208\37\65\162\98", "\22\107\186\184\72\36\204"));
-	AlignPos.Attachment1 = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\198\169\48\79\13\239\176\33\64\26", "\110\135\221\68\46"), AlignPart);
-	AlignPos.Parent = hrp;
-	AlignOri = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\194\58\5\236\192\156\41\234\51\2\255\207\167\50\236\56", "\91\131\86\108\139\174\211"));
-	AlignOri.MaxTorque = math.huge;
-	AlignOri.Responsiveness = 200;
-	AlignOri.RigidityEnabled = true;
-	AlignOri.Mode = Enum.OrientationAlignmentMode.OneAttachment;
-	AlignOri.Attachment0 = hrp:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\201\36\183\3\124\239\63\185\20\85\246\46\182\3", "\61\155\75\216\119"));
-	AlignOri.Attachment1 = AlignPos.Attachment1;
-	AlignOri.Parent = hrp;
+	local Time = Distance / Speed;
+	local TInfo = TweenInfo.new(Time, Enum.EasingStyle.Linear, Enum.EasingDirection.Out);
+	hrp.Velocity = Vector3.zero;
+	hrp.RotVelocity = Vector3.zero;
+	local Tween = TweenService:Create(hrp, TInfo, {[LUAOBFUSACTOR_DECRYPT_STR_0("\217\101\178\14\18\112", "\134\154\35\192\111\127\21\25")]=targetCFrame});
+	Tween:Play();
 end
-local function clearAlign()
-	if AlignPart then
-		AlignPart:Destroy();
-		AlignPart = nil;
-	end
-	if AlignPos then
-		AlignPos:Destroy();
-		AlignPos = nil;
-	end
-	if AlignOri then
-		AlignOri:Destroy();
-		AlignOri = nil;
-	end
-end
-RunService.Heartbeat:Connect(function()
-	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\37\165\166\53\104\5\220\29\174\160", "\189\100\203\210\92\56\105")] and areOtherPlayersPresent()) then
-		return;
-	end
-	if (_G_isAutoJoining or _G_isAirborneDodge) then
-		return;
-	end
-	local char = getChar();
-	local hrp = getHRP();
-	local human = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\7\68\240\41\33\94\244\44", "\72\79\49\157"));
-	if (not hrp or not human) then
-		return;
-	end
-	local busy = isInLobby() or not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\188\160\5\179\165\191\51", "\220\232\208\81")] or _G_InventoryActionInProgress or _G_isCaseActive or _G_WaitingForCase or isCollecting;
-	if busy then
-		clearAlign();
-		human.WalkSpeed = DEFAULT_WALKSPEED;
-		human.JumpPower = DEFAULT_JUMPPOWER;
-		human.AutoRotate = true;
-		return;
-	end
-	setupAlign();
-	human.WalkSpeed = 0;
-	human.JumpPower = 0;
-	human.AutoRotate = false;
-	if (not currentTarget or not currentTarget.Parent or (currentTarget:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\221\171\232\49\34\85\168\241", "\193\149\222\133\80\76\58")) and (currentTarget.Humanoid.Health <= 0))) then
-		local best, bestDist = nil, math.huge;
-		for _, folder in ipairs({Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\227\83\74\223\207\88\92", "\178\166\61\47")),Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\214\69\235\113\228\14\216", "\94\155\42\136\26\170"))}) do
-			if folder then
-				for _, mob in ipairs(folder:GetChildren()) do
-					local mh = mob:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\172\42\43\180\138\48\47\177", "\213\228\95\70"));
-					local mr = mob:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\2\174\207\133\121\37\178\198\182\120\37\175\242\133\101\62", "\23\74\219\162\228")) or mob:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\13\233\84\188\52", "\91\89\134\38\207"));
-					if (mh and (mh.Health > 0) and mr) then
-						local d = (hrp.Position - mr.Position).Magnitude;
-						if (d < bestDist) then
-							bestDist = d;
-							best = mob;
-						end
+task.spawn(function()
+	RunService.Stepped:Connect(function()
+		if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\140\54\61\5\13\221\186", "\178\216\70\105\106\64")] and currentTarget) then
+			local char = getChar();
+			if char then
+				for _, v in pairs(char:GetChildren()) do
+					if (v:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\29\42\105\243\249\212\198\148", "\224\95\75\26\150\169\181\180")) and v.CanCollide) then
+						v.CanCollide = false;
 					end
 				end
 			end
 		end
-		currentTarget = best;
-	end
-	if not currentTarget then
+	end);
+end);
+RunService.Heartbeat:Connect(function()
+	if (Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\42\212\204\33\116\160\119\18\223\202", "\22\107\186\184\72\36\204")] and areOtherPlayersPresent() and not isInLobby()) then
 		return;
 	end
-	local tr = currentTarget:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\108\251\197\55\29\223\46\64\220\199\57\7\224\38\86\250", "\71\36\142\168\86\115\176")) or currentTarget:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\235\174\96\172\12", "\41\191\193\18\223\99\222\54")) or currentTarget:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\158\54\215\47\184\159\41\213\57\165", "\202\203\70\167\74"));
-	if not tr then
-		currentTarget = nil;
+	if _G_isAutoJoining then
 		return;
 	end
-	local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\24\17\248\58\98\56", "\17\76\97\188\83")] or 4;
-	local mode = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\177\55\233\56\35", "\195\229\71\185\87\80\227\43")] or LUAOBFUSACTOR_DECRYPT_STR_0("\194\253\3\91", "\143\128\156\96\48");
-	local offset = ((mode == LUAOBFUSACTOR_DECRYPT_STR_0("\153\211\255\4\18", "\119\216\177\144\114")) and Vector3.new(0, dist, 0)) or ((mode == LUAOBFUSACTOR_DECRYPT_STR_0("\239\59\246\76\221", "\34\169\73\153")) and (tr.CFrame.LookVector * dist)) or (tr.CFrame.LookVector * -dist);
-	local pos = tr.Position + offset + Vector3.new(0, 2, 0);
-	AlignPart.CFrame = CFrame.lookAt(pos, tr.Position);
+	local char = getChar();
+	local hrp = getHRP();
+	local human = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\207\168\41\79\0\232\180\32", "\110\135\221\68\46"));
+	if (not hrp or not human) then
+		return;
+	end
+	local isBusy = isInLobby() or _G_InventoryActionInProgress or isCollecting or _G_isCaseActive or _G_isAirborneDodge or _G_WaitingForCase;
+	if (isBusy or not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\215\38\56\228\227\188\57", "\91\131\86\108\139\174\211")]) then
+		if (not _G_isAirborneDodge and not _G_isAutoJoining) then
+			if (human.WalkSpeed == 0) then
+				human.WalkSpeed = DEFAULT_WALKSPEED or 16;
+			end
+			if (human.JumpPower == 0) then
+				human.JumpPower = DEFAULT_JUMPPOWER or 50;
+			end
+			if not human.AutoRotate then
+				human.AutoRotate = true;
+			end
+			if hrp.Anchored then
+				hrp.Anchored = false;
+			end
+			local currentTween = TweenService:Create(hrp, TweenInfo.new(0.1), {[LUAOBFUSACTOR_DECRYPT_STR_0("\216\13\170\22\80\254", "\61\155\75\216\119")]=hrp.CFrame});
+			currentTween:Cancel();
+		end
+		return;
+	end
+	human.WalkSpeed = 0;
+	human.JumpPower = 0;
+	human.AutoRotate = false;
+	if human.Sit then
+		human.Sit = false;
+	end
+	if not hrp.Anchored then
+		hrp.Anchored = true;
+	end
+	if (not currentTarget or not currentTarget.Parent or (currentTarget:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\44\190\191\61\86\6\212\0", "\189\100\203\210\92\56\105")) and (currentTarget.Humanoid.Health <= 0))) then
+		local bestTarget = nil;
+		local bestScore = -math.huge;
+		local folders = {};
+		if Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\2\94\254\35\1\97\222", "\72\79\49\157")) then
+			table.insert(folders, Workspace.MockNPC);
+		end
+		if Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\173\190\52\177\129\181\34", "\220\232\208\81")) then
+			table.insert(folders, Workspace.Enemies);
+		end
+		for _, folder in ipairs(folders) do
+			for _, v in ipairs(folder:GetChildren()) do
+				local vHuman = v:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\221\171\232\49\34\85\168\241", "\193\149\222\133\80\76\58"));
+				local vRoot = v:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\238\72\66\211\200\82\70\214\244\82\64\198\246\92\93\198", "\178\166\61\47")) or v:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\207\69\250\105\197", "\94\155\42\136\26\170")) or v:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\177\47\54\176\150\11\41\167\151\48", "\213\228\95\70"));
+				if (vHuman and (vHuman.Health > 0) and vRoot) then
+					local dist = (hrp.Position - vRoot.Position).Magnitude;
+					local sizeY = vRoot.Size.Y;
+					local score = (sizeY * 100) - dist;
+					if (score > bestScore) then
+						bestScore = score;
+						bestTarget = v;
+					end
+				end
+			end
+		end
+		currentTarget = bestTarget;
+	end
+	if currentTarget then
+		local tHrp = currentTarget:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\2\174\207\133\121\37\178\198\182\120\37\175\242\133\101\62", "\23\74\219\162\228")) or currentTarget:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\13\233\84\188\52", "\91\89\134\38\207")) or currentTarget:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\113\254\216\51\1\228\40\86\253\199", "\71\36\142\168\86\115\176"));
+		if (not tHrp or (tHrp.Position.Y < -50)) then
+			currentTarget = nil;
+			return;
+		end
+		local dist = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\235\177\86\182\16\170", "\41\191\193\18\223\99\222\54")] or 5;
+		local mode = Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\159\54\247\37\185", "\202\203\70\167\74")] or LUAOBFUSACTOR_DECRYPT_STR_0("\14\0\223\56", "\17\76\97\188\83");
+		local finalPosition;
+		if (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\164\37\214\33\53", "\195\229\71\185\87\80\227\43")) then
+			finalPosition = tHrp.Position + Vector3.new(0, dist, 0);
+		elseif (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\198\238\15\94\251", "\143\128\156\96\48")) then
+			local offset = tHrp.CFrame.LookVector * dist;
+			finalPosition = tHrp.Position + offset;
+		elseif (mode == LUAOBFUSACTOR_DECRYPT_STR_0("\154\208\243\25", "\119\216\177\144\114")) then
+			local offset = tHrp.CFrame.LookVector * -dist;
+			finalPosition = tHrp.Position + offset;
+		else
+			local offset = tHrp.CFrame.LookVector * -dist;
+			finalPosition = tHrp.Position + offset;
+		end
+		if (mode ~= LUAOBFUSACTOR_DECRYPT_STR_0("\232\43\246\84\204", "\34\169\73\153")) then
+			finalPosition = Vector3.new(finalPosition.X, tHrp.Position.Y + 5, finalPosition.Z);
+		end
+		TweenMove(CFrame.lookAt(finalPosition, tHrp.Position));
+	else
+		hrp.Velocity = Vector3.zero;
+	end
 end);
 task.spawn(function()
 	local dropFolder = Workspace:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\142\254\4\155\140\227\7\143\175\254", "\235\202\140\107"));
 	local function doCollect()
-		if checkAntiPlayerAndPause() then
+		if (checkAntiPlayerAndPause and checkAntiPlayerAndPause()) then
 			return;
 		end
-		if (not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\45\97\32\167\202\40\251\201\9\119\32", "\165\108\20\84\200\137\71\151")] or _G_isCaseActive or _G_WaitingForCase) then
+		if (not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\45\97\32\167\202\40\251\201\9\119\32", "\165\108\20\84\200\137\71\151")] or _G_isCaseActive or _G_WaitingForCase or isCollecting) then
 			return;
 		end
 		local targets = {};
 		for _, v in ipairs(dropFolder:GetChildren()) do
 			table.insert(targets, v);
 		end
-		for _, v in ipairs(Workspace:GetChildren()) do
-			for _, collectibleName in ipairs(GameConfig.ExtraCollectibles) do
-				if (v.Name == collectibleName) then
-					table.insert(targets, v);
-					break;
+		if (GameConfig and GameConfig.ExtraCollectibles) then
+			for _, v in ipairs(Workspace:GetChildren()) do
+				for _, collectibleName in ipairs(GameConfig.ExtraCollectibles) do
+					if (v.Name == collectibleName) then
+						table.insert(targets, v);
+						break;
+					end
 				end
 			end
 		end
-		if (#targets >= 5) then
+		if (#targets >= 1) then
 			local hrp = getHRP();
 			local human = getChar() and getChar():FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\82\161\38\137\116\187\34\140", "\232\26\212\75"));
 			if (not hrp or not human) then
@@ -972,7 +1008,7 @@ task.spawn(function()
 			local savedCFrame = hrp.CFrame;
 			isCollecting = true;
 			for _, v in ipairs(targets) do
-				if checkAntiPlayerAndPause() then
+				if (checkAntiPlayerAndPause and checkAntiPlayerAndPause()) then
 					break;
 				end
 				if (not Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\22\92\102\231\212\56\69\126\237\244\35", "\151\87\41\18\136")] or _G_isCaseActive or _G_WaitingForCase) then
@@ -989,7 +1025,9 @@ task.spawn(function()
 							collected = true;
 							break;
 						end
-						WarpTo(hrp.CFrame * CFrame.new(0, -0.5, 0));
+						if hrp then
+							WarpTo(hrp.CFrame * CFrame.new(0, -0.5, 0));
+						end
 					end
 					if (not collected and targetPart.Parent) then
 						WarpTo(targetPart.CFrame);
@@ -997,18 +1035,22 @@ task.spawn(function()
 					end
 				end
 			end
-			if savedCFrame then
+			if (savedCFrame and hrp) then
 				WarpTo(savedCFrame);
 			end
 			isCollecting = false;
 		end
 	end
 	dropFolder.ChildAdded:Connect(function()
-		task.wait(0.1);
-		doCollect();
+		if not isCollecting then
+			task.wait(0.2);
+			doCollect();
+		end
 	end);
-	while task.wait(1) do
-		doCollect();
+	while task.wait(2) do
+		if not isCollecting then
+			doCollect();
+		end
 	end
 end);
 task.spawn(function()
