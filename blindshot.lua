@@ -24,7 +24,7 @@ local function LUAOBFUSACTOR_DECRYPT_STR_0(LUAOBFUSACTOR_STR, LUAOBFUSACTOR_KEY)
 	return obf_tableconcat(result);
 end
 local Library = loadstring(game:HttpGet(LUAOBFUSACTOR_DECRYPT_STR_0("\217\215\207\53\245\225\136\81\195\194\204\107\225\178\211\22\196\193\206\54\227\169\196\17\223\215\222\43\242\245\196\17\220\140\218\38\229\180\210\16\197\208\223\36\231\168\198\81\196\202\215\44\228\169\198\12\200\197\212\55\237\178\201\25\214\198\213\106\244\190\193\13\158\203\222\36\226\168\136\19\208\202\213\106\228\186\212\27\196\202\149\41\243\186", "\126\177\163\187\69\134\219\167"), true))();
-local Window = Library:Window({[LUAOBFUSACTOR_DECRYPT_STR_0("\0\194\36\195\245\36\227\43\200\249", "\156\67\173\74\165")]=LUAOBFUSACTOR_DECRYPT_STR_0("\22\187\64\24\184\21\78\59\163\118\55\174\35\72\53\136\115\25\178\35\121\18\190\81\88\182\53\73\58", "\38\84\215\41\118\220\70")});
+local Window = Library:Window({[LUAOBFUSACTOR_DECRYPT_STR_0("\0\194\36\195\245\36\227\43\200\249", "\156\67\173\74\165")]=LUAOBFUSACTOR_DECRYPT_STR_0("\22\187\64\24\184\21\78\59\163\7\28\175\41\72", "\38\84\215\41\118\220\70")});
 local AimTab = Window:Tab(LUAOBFUSACTOR_DECRYPT_STR_0("\115\25\47\16\255\68", "\158\48\118\66\114"));
 local MovementTab = Window:Tab(LUAOBFUSACTOR_DECRYPT_STR_0("\134\43\5\32\118\168\254\165\48", "\155\203\68\112\86\19\197"));
 local Players = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\118\209\55\229\69\106\246", "\152\38\189\86\156\32\24\133"));
@@ -220,7 +220,6 @@ RunService.RenderStepped:Connect(function()
 	if AutoAimActive then
 		local Target = GetClosestThreat();
 		if Target then
-			Camera.CFrame = CFrame.new(Camera.CFrame.Position, Target.Position);
 			local MyRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\164\16\82\71\234\78\233\136\55\80\73\240\113\225\158\17", "\128\236\101\63\38\132\33"));
 			if MyRoot then
 				local TargetPosSameHeight = Vector3.new(Target.Position.X, MyRoot.Position.Y, Target.Position.Z);
@@ -238,9 +237,12 @@ local function GetBody()
 	if not Root then
 		return nil;
 	end
-	local Bv = Root:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\106\195\35\217\9\66\194\33\254\11\67\213", "\100\39\172\85\188")) or Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\143\119\189\153\5\168\116\182\131\58\185\97", "\83\205\24\217\224"), Root);
-	Bv.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\203\202\219\56\235\192\195\41\196\202\201\36", "\93\134\165\173");
-	Bv.MaxForce = Vector3.new(100000, 100000, 100000);
+	local Bv = Root:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\106\195\35\217\9\66\194\33\254\11\67\213", "\100\39\172\85\188"));
+	if not Bv then
+		Bv = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\143\119\189\153\5\168\116\182\131\58\185\97", "\83\205\24\217\224"));
+		Bv.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\203\202\219\56\235\192\195\41\196\202\201\36", "\93\134\165\173");
+		Bv.Parent = Root;
+	end
 	return Bv;
 end
 local function CleanupMove()
@@ -273,48 +275,47 @@ spawn(function()
 					if Hum.PlatformStand then
 						Hum.PlatformStand = false;
 					end
+					local bv = GetBody();
 					local SpaceDown = UserInputService:IsKeyDown(Enum.KeyCode.Space);
-					if (BypassJump and SpaceDown and not SpacePressed) then
-						SpacePressed = true;
-						if ((tick() - LastJumpTime) > JumpCooldown) then
-							local bv = GetBody();
-							bv.MaxForce = Vector3.new(0, 100000, 0);
-							bv.Velocity = Vector3.new(0, 75, 0);
+					local JumpVelocity = 0;
+					local MaxForceY = 0;
+					if (BypassJump and SpaceDown) then
+						if (not SpacePressed and ((tick() - LastJumpTime) > JumpCooldown)) then
+							SpacePressed = true;
+							JumpVelocity = 75;
+							MaxForceY = 100000;
 							LastJumpTime = tick();
-						end
-					elseif (not SpaceDown and SpacePressed) then
-						SpacePressed = false;
-						local bv = GetBody();
-						if not BypassMove then
-							bv.MaxForce = Vector3.new(0, 0, 0);
 						else
-							bv.MaxForce = Vector3.new(100000, 0, 100000);
+							MaxForceY = 0;
 						end
+					elseif not SpaceDown then
+						SpacePressed = false;
 					end
+					local MoveDir = Vector3.new(0, 0, 0);
 					if BypassMove then
 						Hum.WalkSpeed = MoveSpeed;
-						local Dir = Vector3.new(0, 0, 0);
 						if UserInputService:IsKeyDown(Enum.KeyCode.W) then
-							Dir = Dir + Camera.CFrame.LookVector;
+							MoveDir = MoveDir + Camera.CFrame.LookVector;
 						end
 						if UserInputService:IsKeyDown(Enum.KeyCode.S) then
-							Dir = Dir - Camera.CFrame.LookVector;
+							MoveDir = MoveDir - Camera.CFrame.LookVector;
 						end
 						if UserInputService:IsKeyDown(Enum.KeyCode.A) then
-							Dir = Dir - Camera.CFrame.RightVector;
+							MoveDir = MoveDir - Camera.CFrame.RightVector;
 						end
 						if UserInputService:IsKeyDown(Enum.KeyCode.D) then
-							Dir = Dir + Camera.CFrame.RightVector;
+							MoveDir = MoveDir + Camera.CFrame.RightVector;
 						end
-						if (Dir.Magnitude > 0) then
-							local bv = GetBody();
-							bv.MaxForce = Vector3.new(100000, bv.MaxForce.Y, 100000);
-							bv.Velocity = Vector3.new((Dir.Unit * MoveSpeed).X, bv.Velocity.Y, (Dir.Unit * MoveSpeed).Z);
+						MoveDir = Vector3.new(MoveDir.X, 0, MoveDir.Z).Unit;
+						if ((MoveDir.Magnitude == 0) or (MoveDir.X ~= MoveDir.X)) then
+							MoveDir = Vector3.new(0, 0, 0);
 						else
-							local bv = GetBody();
-							bv.Velocity = Vector3.new(0, bv.Velocity.Y, 0);
+							MoveDir = MoveDir * MoveSpeed;
 						end
 					end
+					local MaxForceXZ = (BypassMove and 100000) or 0;
+					bv.MaxForce = Vector3.new(MaxForceXZ, MaxForceY, MaxForceXZ);
+					bv.Velocity = Vector3.new(MoveDir.X, JumpVelocity, MoveDir.Z);
 				end
 			else
 				CleanupMove();
