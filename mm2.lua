@@ -351,10 +351,8 @@ local function UpdateESP()
 end
 task.spawn(function()
 	while true do
-		if (State.ShowPlayers or State.ShowCoins or State.ShowGunDrops) then
-			if IsGameActive() then
-				UpdateESP();
-			end
+		if IsGameActive() then
+			UpdateESP();
 		end
 		task.wait(1);
 	end
