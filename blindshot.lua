@@ -41,8 +41,8 @@ local BypassMove = false;
 local MoveSpeed = 16;
 local LastJumpTime = 0;
 local JumpCooldown = 0.1;
-local AimOffsetCorrection = 1.8;
-local GunLookOffset = 2.5;
+local AimOffsetCorrection = 0;
+local GunLookOffset = 0;
 local function ManageVisibility(Character)
 	if not Character then
 		return;
