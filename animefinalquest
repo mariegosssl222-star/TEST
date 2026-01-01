@@ -353,7 +353,7 @@ MainTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\244\222\174\130", "\179\186\191\1
 			else
 				local mapID = GetMapIDFromSettings(selectedMap);
 				local diffID = GetDifficultyID(Library.Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\111\202\18\235\28\173\71\198\23\249", "\200\43\163\116\141\79")]);
-				local potentialKeys = {"\030","\062","\061","\060","\057","\056","\055","\054","\053","\052","\051","\050","\047","\046","\045","\044","\043","\042","\041","\040","\037","\036","\035","\034","\033","\032","\031","\027","\026","\025","\024","\023","\022","\021","\020","\017","\016","\015","\014","\013","\012","\011","\010","\007","\006","\005","\004","\003","\002","\001"};
+				local potentialKeys = {"\032","\031","\027","\030","\028"};
 				for _, key in ipairs(potentialKeys) do
 					local args = {{{LUAOBFUSACTOR_DECRYPT_STR_0("\143\58\60\154", "\131\223\86\93\227\208\148"),1,LUAOBFUSACTOR_DECRYPT_STR_0("\199\64\176\183\8\185\247", "\213\131\37\214\214\125"),mapID,diffID,true},key}};
 					FireRemote(args);
