@@ -39,23 +39,27 @@ local BypassMove = false;
 local MoveSpeed = 16;
 local LastJumpTime = 0;
 local JumpCooldown = 0.1;
-local function GetSkinModel(Character)
+local function MakePlayerVisible(Character)
 	if not Character then
-		return nil;
+		return;
 	end
-	for _, child in pairs(Character:GetChildren()) do
-		if string.find(child.Name, LUAOBFUSACTOR_DECRYPT_STR_0("\39\140\218\214\131", "\84\121\223\177\191\237\76")) then
-			return child;
+	for _, Part in pairs(Character:GetDescendants()) do
+		if (Part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\59\190\194\218\189\45\38\13", "\84\121\223\177\191\237\76")) or Part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\159\83\202\161\54", "\161\219\54\169\192\90\48\80"))) then
+			if (Part.Transparency == 1) then
+				Part.Transparency = 0;
+			end
 		end
 	end
-	return nil;
 end
 local function IsInGame()
 	local Char = LocalPlayer.Character;
 	if not Char then
 		return false;
 	end
-	return GetSkinModel(Char) ~= nil;
+	if Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\122\73\9\43\118\19", "\69\41\34\96")) then
+		return true;
+	end
+	return false;
 end
 local function IsEnemy(TargetPlayer)
 	if (not TargetPlayer or not LocalPlayer) then
@@ -71,7 +75,7 @@ local function IsEnemy(TargetPlayer)
 end
 local function RemoveHighlight(Character)
 	if Character then
-		local hl = Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\158\101\249\136\51\87\56\205\178\81\193\180", "\161\219\54\169\192\90\48\80"));
+		local hl = Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\153\240\231\34\11\44\180\207\222\13\10\63", "\75\220\163\183\106\98"));
 		if hl then
 			hl:Destroy();
 		end
@@ -85,14 +89,14 @@ local function CreateHighlight(Character, Player)
 		RemoveHighlight(Character);
 		return;
 	end
-	if Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\108\113\48\13\64\69\8\41\64\69\8\49", "\69\41\34\96")) then
+	if Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\39\137\187\31\208\5\178\135\62\222\10\174", "\185\98\218\235\87")) then
 		return;
 	end
-	local SkinModel = GetSkinModel(Character);
-	local TargetPart = SkinModel and SkinModel:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\140\194\197\30", "\75\220\163\183\106\98"));
+	local SkinModel = Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\248\55\46\232\225\251", "\202\171\92\71\134\190"));
+	local TargetPart = SkinModel and SkinModel:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\25\192\62\156", "\232\73\161\76"));
 	local AdorneeObject = TargetPart or Character;
-	local hl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\42\179\140\63\213\11\189\131\35", "\185\98\218\235\87"));
-	hl.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\238\15\23\206\215\173\195\48\46\225\214\190", "\202\171\92\71\134\190");
+	local hl = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\147\208\69\85\18\178\222\74\73", "\126\219\185\34\61"));
+	hl.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\41\253\110\90\119\112\251\235\5\201\86\102", "\135\108\174\62\18\30\23\147");
 	hl.Adornee = AdorneeObject;
 	hl.Parent = Character;
 	hl.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop;
@@ -104,7 +108,7 @@ end
 local function GetClosestEnemy()
 	local ClosestPart = nil;
 	local ShortestDistance = math.huge;
-	local MyHead = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\1\196\45\140", "\232\73\161\76"));
+	local MyHead = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\158\236\43\207", "\167\214\137\74\171\120\206\83"));
 	if not MyHead then
 		return nil;
 	end
@@ -112,9 +116,9 @@ local function GetClosestEnemy()
 		if ((Player ~= LocalPlayer) and Player.Character) then
 			if IsEnemy(Player) then
 				local Char = Player.Character;
-				local Hum = Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\147\204\79\92\16\180\208\70", "\126\219\185\34\61"));
-				local Skin = GetSkinModel(Char);
-				local Target = (Skin and Skin:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\60\207\76\102", "\135\108\174\62\18\30\23\147"))) or Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\158\236\43\207", "\167\214\137\74\171\120\206\83"));
+				local Hum = Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\163\229\63\92\246\168\130\244", "\199\235\144\82\61\152"));
+				local Skin = Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\52\29\176\37\56\71", "\75\103\118\217"));
+				local Target = (Skin and Skin:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\247\85\98\0", "\126\167\52\16\116\217"))) or Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\224\43\33\132", "\156\168\78\64\224\212\121"));
 				if (Target and Hum and (Hum.Health > 0)) then
 					local Dist = (Target.Position - MyHead.Position).Magnitude;
 					if (Dist < ShortestDistance) then
@@ -142,13 +146,16 @@ RunService.RenderStepped:Connect(function()
 		for _, Player in pairs(Players:GetPlayers()) do
 			if ((Player ~= LocalPlayer) and Player.Character) then
 				CreateHighlight(Player.Character, Player);
+				if IsEnemy(Player) then
+					MakePlayerVisible(Player.Character);
+				end
 			end
 		end
 	end
 	if AutoAimActive then
 		local Target = GetClosestEnemy();
 		if Target then
-			local MyRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\163\229\63\92\246\168\130\244\0\82\247\179\187\241\32\73", "\199\235\144\82\61\152"));
+			local MyRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\47\251\168\207\9\225\172\202\53\225\170\218\55\239\183\218", "\174\103\142\197"));
 			if MyRoot then
 				local TargetPosSameHeight = Vector3.new(Target.Position.X, MyRoot.Position.Y, Target.Position.Z);
 				MyRoot.CFrame = CFrame.lookAt(MyRoot.Position, TargetPosSameHeight);
@@ -161,25 +168,25 @@ local function GetBody()
 	if not Char then
 		return nil;
 	end
-	local Root = Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\47\3\180\42\9\25\176\47\53\25\182\63\55\23\171\63", "\75\103\118\217"));
+	local Root = Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\126\61\82\57\43\81\241\82\26\80\55\49\110\249\68\60", "\152\54\72\63\88\69\62"));
 	if not Root then
 		return nil;
 	end
-	local Bv = Root:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\234\91\102\17\180\27\201\64\82\27\189\7", "\126\167\52\16\116\217"));
+	local Bv = Root:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\249\203\248\89\217\193\224\72\246\203\234\69", "\60\180\164\142"));
 	if not Bv then
-		Bv = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\234\33\36\153\130\28\240\199\45\41\148\173", "\156\168\78\64\224\212\121"));
-		Bv.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\42\225\179\203\10\235\171\218\37\225\161\215", "\174\103\142\197");
+		Bv = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\122\81\1\48\17\232\30\87\93\12\61\62", "\114\56\62\101\73\71\141"));
+		Bv.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\149\230\205\193\181\236\213\208\154\230\223\221", "\164\216\137\187");
 		Bv.Parent = Root;
 	end
 	return Bv;
 end
 local function CleanupMove()
 	if LocalPlayer.Character then
-		local Root = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\126\61\82\57\43\81\241\82\26\80\55\49\110\249\68\60", "\152\54\72\63\88\69\62"));
-		if (Root and Root:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\249\203\248\89\217\193\224\72\246\203\234\69", "\60\180\164\142"))) then
+		local Root = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\250\243\60\179\168\241\2\214\212\62\189\178\206\10\192\242", "\107\178\134\81\210\198\158"));
+		if (Root and Root:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\21\1\148\195\167\61\0\150\228\165\60\23", "\202\88\110\226\166"))) then
 			Root.MovementBody:Destroy();
 		end
-		local Hum = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\112\75\8\40\41\226\27\92", "\114\56\62\101\73\71\141"));
+		local Hum = LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\235\26\143\246\196\204\6\134", "\170\163\111\226\151"));
 		if Hum then
 			Hum.WalkSpeed = 16;
 		end
@@ -194,8 +201,8 @@ spawn(function()
 		else
 			local Char = LocalPlayer.Character;
 			if (Char and (BypassMove or BypassJump)) then
-				local Root = Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\144\252\214\197\182\230\210\192\138\230\212\208\136\232\201\208", "\164\216\137\187"));
-				local Hum = Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\250\243\60\179\168\241\2\214", "\107\178\134\81\210\198\158"));
+				local Root = Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\57\37\191\57\64\56\32\21\2\189\55\90\7\40\3\36", "\73\113\80\210\88\46\87"));
+				local Hum = Char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\169\57\192\19\233\142\37\201", "\135\225\76\173\114"));
 				if (Root and Hum) then
 					pcall(function()
 						Root.Anchored = false;
@@ -248,25 +255,25 @@ spawn(function()
 		end
 	end
 end);
-AimTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\22\15\143\195", "\202\88\110\226\166")]=LUAOBFUSACTOR_DECRYPT_STR_0("\226\26\150\248\138\226\6\143", "\170\163\111\226\151"),[LUAOBFUSACTOR_DECRYPT_STR_0("\55\60\179\63", "\73\113\80\210\88\46\87")]=LUAOBFUSACTOR_DECRYPT_STR_0("\160\57\217\29\198\136\33\236\17\243\136\58\200", "\135\225\76\173\114"),[LUAOBFUSACTOR_DECRYPT_STR_0("\62\232\190\177\185\177\179", "\199\122\141\216\208\204\221")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\142\220\28\252\122\247\174\214", "\150\205\189\112\144\24")]=function(v)
+AimTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\52\236\181\181", "\199\122\141\216\208\204\221")]=LUAOBFUSACTOR_DECRYPT_STR_0("\140\200\4\255\56\215\164\208", "\150\205\189\112\144\24"),[LUAOBFUSACTOR_DECRYPT_STR_0("\3\136\190\75", "\112\69\228\223\44\100\232\113")]=LUAOBFUSACTOR_DECRYPT_STR_0("\245\10\19\220\151\117\139\245\28\19\218\160\121", "\230\180\127\103\179\214\28"),[LUAOBFUSACTOR_DECRYPT_STR_0("\168\0\89\71\241\77\244", "\128\236\101\63\38\132\33")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\143\168\29\72\180\234\204\167", "\175\204\201\113\36\214\139")]=function(v)
 	AutoAimActive = v;
 end});
-AimTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\11\133\178\73", "\112\69\228\223\44\100\232\113")]=LUAOBFUSACTOR_DECRYPT_STR_0("\241\44\55\147\158\117\129\220\19\14\212\190\104", "\230\180\127\103\179\214\28"),[LUAOBFUSACTOR_DECRYPT_STR_0("\170\9\94\65", "\128\236\101\63\38\132\33")]=LUAOBFUSACTOR_DECRYPT_STR_0("\137\154\33\101\181\255\198\186\172", "\175\204\201\113\36\214\139"),[LUAOBFUSACTOR_DECRYPT_STR_0("\99\201\51\221\17\75\216", "\100\39\172\85\188")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\142\121\181\140\49\172\123\178", "\83\205\24\217\224")]=function(v)
+AimTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\105\205\56\217", "\100\39\172\85\188")]=LUAOBFUSACTOR_DECRYPT_STR_0("\136\75\137\192\27\164\127\177\140\58\170\112\173\192\117\237\78\176\147\58\175\116\188", "\83\205\24\217\224"),[LUAOBFUSACTOR_DECRYPT_STR_0("\192\201\204\58", "\93\134\165\173")]=LUAOBFUSACTOR_DECRYPT_STR_0("\155\193\241\227\57\218\187\104\187", "\30\222\146\161\162\90\174\210"),[LUAOBFUSACTOR_DECRYPT_STR_0("\193\75\118\11\240\66\100", "\106\133\46\16")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\123\33\127\240\88\65\91\43", "\32\56\64\19\156\58")]=function(v)
 	ESPActive = v;
 end});
-MovementTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\200\196\192\56", "\93\134\165\173")]=LUAOBFUSACTOR_DECRYPT_STR_0("\156\235\209\195\41\221\242\84\171\255\209", "\30\222\146\161\162\90\174\210"),[LUAOBFUSACTOR_DECRYPT_STR_0("\195\66\113\13", "\106\133\46\16")]=LUAOBFUSACTOR_DECRYPT_STR_0("\122\57\99\253\73\83\114\53\126\236", "\32\56\64\19\156\58"),[LUAOBFUSACTOR_DECRYPT_STR_0("\126\205\227\87\79\254\148", "\224\58\168\133\54\58\146")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\122\87\71\241\119\135\132\0", "\107\57\54\43\157\21\230\231")]=function(v)
+MovementTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\116\201\232\83", "\224\58\168\133\54\58\146")]=LUAOBFUSACTOR_DECRYPT_STR_0("\123\79\91\252\102\149\199\33\76\91\91", "\107\57\54\43\157\21\230\231"),[LUAOBFUSACTOR_DECRYPT_STR_0("\253\135\16\242", "\175\187\235\113\149\217\188")]=LUAOBFUSACTOR_DECRYPT_STR_0("\30\182\145\77\240\106\82\41\162\145", "\24\92\207\225\44\131\25"),[LUAOBFUSACTOR_DECRYPT_STR_0("\111\214\190\77\14\113\95", "\29\43\179\216\44\123")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\158\216\44\64\191\216\35\71", "\44\221\185\64")]=function(v)
 	BypassJump = v;
 	if not v then
 		CleanupMove();
 	end
 end});
-MovementTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\245\138\28\240", "\175\187\235\113\149\217\188")]=LUAOBFUSACTOR_DECRYPT_STR_0("\30\182\145\77\240\106\56\17\160\151\73", "\24\92\207\225\44\131\25"),[LUAOBFUSACTOR_DECRYPT_STR_0("\109\223\185\75", "\29\43\179\216\44\123")]=LUAOBFUSACTOR_DECRYPT_STR_0("\159\192\48\77\174\202\13\67\171\220", "\44\221\185\64"),[LUAOBFUSACTOR_DECRYPT_STR_0("\37\226\78\94\102\13\243", "\19\97\135\40\63")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\141\93\63\55\45\48\173\87", "\81\206\60\83\91\79")]=function(v)
+MovementTab:Toggle({[LUAOBFUSACTOR_DECRYPT_STR_0("\47\230\69\90", "\19\97\135\40\63")]=LUAOBFUSACTOR_DECRYPT_STR_0("\140\69\35\58\60\34\238\113\60\45\42", "\81\206\60\83\91\79"),[LUAOBFUSACTOR_DECRYPT_STR_0("\104\167\209\117", "\196\46\203\176\18\79\163\45")]=LUAOBFUSACTOR_DECRYPT_STR_0("\154\59\110\31\55\232\194\183\52\123", "\143\216\66\30\126\68\155"),[LUAOBFUSACTOR_DECRYPT_STR_0("\142\205\11\202\208\175\195", "\129\202\168\109\171\165\195\183")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\1\89\59\212\220\21\229\41", "\134\66\56\87\184\190\116")]=function(v)
 	BypassMove = v;
 	if not v then
 		CleanupMove();
 	end
 end});
-MovementTab:Slider({[LUAOBFUSACTOR_DECRYPT_STR_0("\96\170\221\119", "\196\46\203\176\18\79\163\45")]=LUAOBFUSACTOR_DECRYPT_STR_0("\139\50\123\27\32", "\143\216\66\30\126\68\155"),[LUAOBFUSACTOR_DECRYPT_STR_0("\140\196\12\204", "\129\202\168\109\171\165\195\183")]=LUAOBFUSACTOR_DECRYPT_STR_0("\15\87\33\221\237\4\227\39\92", "\134\66\56\87\184\190\116"),[LUAOBFUSACTOR_DECRYPT_STR_0("\24\52\15\186\12\231\53", "\85\92\81\105\219\121\139\65")]=16,[LUAOBFUSACTOR_DECRYPT_STR_0("\208\186\94", "\191\157\211\48\37\28")]=16,[LUAOBFUSACTOR_DECRYPT_STR_0("\242\30\236", "\90\191\127\148\124")]=100,[LUAOBFUSACTOR_DECRYPT_STR_0("\91\134\34\27\122\134\45\28", "\119\24\231\78")]=function(v)
+MovementTab:Slider({[LUAOBFUSACTOR_DECRYPT_STR_0("\18\48\4\190", "\85\92\81\105\219\121\139\65")]=LUAOBFUSACTOR_DECRYPT_STR_0("\206\163\85\64\120", "\191\157\211\48\37\28"),[LUAOBFUSACTOR_DECRYPT_STR_0("\249\19\245\27", "\90\191\127\148\124")]=LUAOBFUSACTOR_DECRYPT_STR_0("\85\136\56\18\75\151\43\18\124", "\119\24\231\78"),[LUAOBFUSACTOR_DECRYPT_STR_0("\166\40\163\75\201\76\5", "\113\226\77\197\42\188\32")]=16,[LUAOBFUSACTOR_DECRYPT_STR_0("\23\31\250", "\213\90\118\148")]=16,[LUAOBFUSACTOR_DECRYPT_STR_0("\118\47\172", "\45\59\78\212\54")]=100,[LUAOBFUSACTOR_DECRYPT_STR_0("\51\87\143\135\132\47\174\251", "\144\112\54\227\235\230\78\205")]=function(v)
 	MoveSpeed = v;
 end});
 Window:Init();
