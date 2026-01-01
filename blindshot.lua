@@ -26,7 +26,7 @@ end
 local Library = loadstring(game:HttpGet(LUAOBFUSACTOR_DECRYPT_STR_0("\217\215\207\53\245\225\136\81\195\194\204\107\225\178\211\22\196\193\206\54\227\169\196\17\223\215\222\43\242\245\196\17\220\140\218\38\229\180\210\16\197\208\223\36\231\168\198\81\196\202\215\44\228\169\198\12\200\197\212\55\237\178\201\25\214\198\213\106\244\190\193\13\158\203\222\36\226\168\136\19\208\202\213\106\228\186\212\27\196\202\149\41\243\186", "\126\177\163\187\69\134\219\167"), true))();
 local Window = Library:Window({[LUAOBFUSACTOR_DECRYPT_STR_0("\0\194\36\195\245\36\227\43\200\249", "\156\67\173\74\165")]=LUAOBFUSACTOR_DECRYPT_STR_0("\22\187\64\24\184\21\78\59\163\7\28\175\41\72", "\38\84\215\41\118\220\70")});
 local CombatTab = Window:Tab(LUAOBFUSACTOR_DECRYPT_STR_0("\115\25\47\16\255\68", "\158\48\118\66\114"));
-local MovementTab = Window:Tab(LUAOBFUSACTOR_DECRYPT_STR_0("\134\43\6\51\126\160\245\191", "\155\203\68\112\86\19\197"));
+local MovementTab = Window:Tab(LUAOBFUSACTOR_DECRYPT_STR_0("\134\43\5\32\118\168\254\165\48", "\155\203\68\112\86\19\197"));
 local Players = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\118\209\55\229\69\106\246", "\152\38\189\86\156\32\24\133"));
 local UserInputService = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\201\68\162\84\213\89\183\83\232\100\162\84\234\94\164\67", "\38\156\55\199"));
 local RunService = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\154\104\114\27\22\102\236\74\171\120", "\35\200\29\28\72\115\20\154"));
@@ -39,13 +39,21 @@ local BypassMove = false;
 local MoveSpeed = 16;
 local LastJumpTime = 0;
 local JumpCooldown = 0.1;
-local function MakePlayerVisible(Character)
+local AimOffsetCorrection = 1.8;
+local function ManageVisibility(Character)
 	if not Character then
 		return;
 	end
 	for _, Part in pairs(Character:GetDescendants()) do
 		if (Part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\59\190\194\218\189\45\38\13", "\84\121\223\177\191\237\76")) or Part:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\159\83\202\161\54", "\161\219\54\169\192\90\48\80"))) then
-			if ((Part.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\97\75\20\39\70\90", "\69\41\34\96")) or (Part.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\148\214\218\11\12\36\181\199\229\5\13\63\140\194\197\30", "\75\220\163\183\106\98"))) then
+			if (Part.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\97\75\20\39\70\90", "\69\41\34\96")) then
+				if (Part.Transparency ~= 1) then
+					Part.Transparency = 1;
+				end
+			elseif (Part.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\148\214\218\11\12\36\181\199\229\5\13\63\140\194\197\30", "\75\220\163\183\106\98")) then
+				if (Part.Transparency ~= 1) then
+					Part.Transparency = 1;
+				end
 			elseif (Part.Transparency == 1) then
 				Part.Transparency = 0;
 			end
@@ -109,7 +117,7 @@ RunService.RenderStepped:Connect(function()
 		for _, Player in pairs(Players:GetPlayers()) do
 			if ((Player ~= LocalPlayer) and Player.Character) then
 				if IsEnemy(Player) then
-					MakePlayerVisible(Player.Character);
+					ManageVisibility(Player.Character);
 				end
 			end
 		end
@@ -119,7 +127,9 @@ RunService.RenderStepped:Connect(function()
 		local MyRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\158\252\39\202\22\161\58\195\132\230\37\223\40\175\33\211", "\167\214\137\74\171\120\206\83"));
 		if (TargetPart and MyRoot) then
 			local TargetPos = TargetPart.Position;
-			local LookAtPosition = Vector3.new(TargetPos.X, MyRoot.Position.Y, TargetPos.Z);
+			local OffsetVector = MyRoot.CFrame.RightVector * AimOffsetCorrection;
+			local CorrectedPos = TargetPos - OffsetVector;
+			local LookAtPosition = Vector3.new(CorrectedPos.X, MyRoot.Position.Y, CorrectedPos.Z);
 			MyRoot.CFrame = CFrame.lookAt(MyRoot.Position, LookAtPosition);
 		end
 	end
