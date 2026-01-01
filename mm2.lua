@@ -106,61 +106,103 @@ UserInputService.JumpRequest:Connect(function()
 		end
 	end
 end);
+local function GetAccessibleCoin(hrp)
+	local container = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\121\199\236\88\121\253\142\78\201\236\88\95\224", "\224\58\168\133\54\58\146"), true);
+	if not container then
+		return nil;
+	end
+	local targetCoin = nil;
+	local minDst = math.huge;
+	for _, coin in ipairs(container:GetChildren()) do
+		if (coin.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\122\89\66\243\74\181\130\25\79\83\89", "\107\57\54\43\157\21\230\231")) then
+			local vis = coin:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\248\132\24\251\143\213\220\206\138\29", "\175\187\235\113\149\217\188")) or coin;
+			local dist = (hrp.Position - vis.Position).Magnitude;
+			local yDiff = math.abs(hrp.Position.Y - vis.Position.Y);
+			if ((dist < 100) and (yDiff < 15) and coin.Parent) then
+				if (dist < minDst) then
+					targetCoin = vis;
+					minDst = dist;
+				end
+			end
+		end
+	end
+	return targetCoin;
+end
 local function ToggleFarmCoin(val)
 	State.FarmCoin = val;
 	if val then
 		task.spawn(function()
 			while State.FarmCoin do
-				if not IsGameActive() then
-					task.wait(1);
-				else
-					local container = Workspace:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\121\199\236\88\121\253\142\78\201\236\88\95\224", "\224\58\168\133\54\58\146"), true);
-					local char = LocalPlayer.Character;
-					local hrp = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\113\67\70\252\123\137\142\15\107\89\68\233\69\135\149\31", "\107\57\54\43\157\21\230\231"));
-					local hum = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\243\158\28\244\183\211\198\223", "\175\187\235\113\149\217\188"));
-					if (container and hrp and hum and (hum.Health > 0)) then
-						local coins = container:GetChildren();
-						local targetCoin = nil;
-						local minDst = math.huge;
-						for _, coin in ipairs(coins) do
-							if (coin.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\31\160\136\66\220\74\125\46\185\132\94", "\24\92\207\225\44\131\25")) then
-								local vis = coin:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\104\220\177\66\45\116\88\198\185\64", "\29\43\179\216\44\123")) or coin;
-								local dist = (hrp.Position - vis.Position).Magnitude;
-								local yDiff = math.abs(hrp.Position.Y - vis.Position.Y);
-								if ((dist < minDst) and (yDiff < 12) and coin.Parent) then
-									targetCoin = vis;
-									minDst = dist;
-								end
-							end
-						end
-						if targetCoin then
-							local path = PathfindingService:CreatePath({[LUAOBFUSACTOR_DECRYPT_STR_0("\156\222\37\66\169\235\33\72\180\204\51", "\44\221\185\64")]=2,[LUAOBFUSACTOR_DECRYPT_STR_0("\32\224\77\81\103\41\226\65\88\123\21", "\19\97\135\40\63")]=5,[LUAOBFUSACTOR_DECRYPT_STR_0("\143\91\54\53\59\18\175\82\25\46\34\33", "\81\206\60\83\91\79")]=true,[LUAOBFUSACTOR_DECRYPT_STR_0("\111\172\213\124\59\233\88\169\94\131\213\123\40\203\89", "\196\46\203\176\18\79\163\45")]=10});
-							local success, errorMessage = pcall(function()
+				local status, err = pcall(function()
+					if not IsGameActive() then
+						task.wait(1);
+					else
+						local char = LocalPlayer.Character;
+						local hrp = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\20\186\140\77\237\118\113\56\157\142\67\247\73\121\46\187", "\24\92\207\225\44\131\25"));
+						local hum = char and char:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\99\198\181\77\21\114\66\215", "\29\43\179\216\44\123"));
+						if (hrp and hum and (hum.Health > 0)) then
+							local targetCoin = GetAccessibleCoin(hrp);
+							if targetCoin then
+								local path = PathfindingService:CreatePath({[LUAOBFUSACTOR_DECRYPT_STR_0("\156\222\37\66\169\235\33\72\180\204\51", "\44\221\185\64")]=2,[LUAOBFUSACTOR_DECRYPT_STR_0("\32\224\77\81\103\34\230\70\117\102\12\247", "\19\97\135\40\63")]=true});
 								path:ComputeAsync(hrp.Position, targetCoin.Position);
-							end);
-							if (success and (path.Status == Enum.PathStatus.Success)) then
-								local waypoints = path:GetWaypoints();
-								for i, waypoint in ipairs(waypoints) do
-									if not State.FarmCoin then
-										break;
+								if (path.Status == Enum.PathStatus.Success) then
+									local waypoints = path:GetWaypoints();
+									for _, waypoint in ipairs(waypoints) do
+										if (not State.FarmCoin or not targetCoin.Parent) then
+											break;
+										end
+										if (waypoint.Action == Enum.PathWaypointAction.Jump) then
+											hum.Jump = true;
+										end
+										hum:MoveTo(waypoint.Position);
+										local timeOut = 0;
+										while ((hrp.Position - waypoint.Position).Magnitude > 3) and (timeOut < 20) do
+											if not State.FarmCoin then
+												break;
+											end
+											task.wait(0.05);
+											timeOut = timeOut + 1;
+										end
 									end
-									if not targetCoin.Parent then
-										break;
-									end
-									if (waypoint.Action == Enum.PathWaypointAction.Jump) then
-										hum.Jump = true;
-									end
-									hum:MoveTo(waypoint.Position);
-									local finished = hum.MoveToFinished:Wait();
+								else
+									hum:MoveTo(targetCoin.Position);
+									hum.Jump = true;
+									task.wait(0.5);
 								end
 							else
-								hum:MoveTo(targetCoin.Position);
-								hum.MoveToFinished:Wait();
+								local randomX = math.random(-40, 40);
+								local randomZ = math.random(-40, 40);
+								local wanderTarget = hrp.Position + Vector3.new(randomX, 0, randomZ);
+								local path = PathfindingService:CreatePath({[LUAOBFUSACTOR_DECRYPT_STR_0("\143\91\54\53\59\3\175\88\58\46\60", "\81\206\60\83\91\79")]=2,[LUAOBFUSACTOR_DECRYPT_STR_0("\111\172\213\124\59\224\76\170\100\190\221\98", "\196\46\203\176\18\79\163\45")]=true});
+								path:ComputeAsync(hrp.Position, wanderTarget);
+								if (path.Status == Enum.PathStatus.Success) then
+									local waypoints = path:GetWaypoints();
+									for _, waypoint in ipairs(waypoints) do
+										if not State.FarmCoin then
+											break;
+										end
+										if GetAccessibleCoin(hrp) then
+											break;
+										end
+										if (waypoint.Action == Enum.PathWaypointAction.Jump) then
+											hum.Jump = true;
+										end
+										hum:MoveTo(waypoint.Position);
+										local timeOut = 0;
+										while ((hrp.Position - waypoint.Position).Magnitude > 3) and (timeOut < 20) do
+											task.wait(0.05);
+											timeOut = timeOut + 1;
+										end
+									end
+								else
+									task.wait(0.2);
+								end
 							end
-						else
-							task.wait(0.5);
 						end
 					end
+				end);
+				if not status then
+					task.wait(1);
 				end
 				task.wait();
 			end
