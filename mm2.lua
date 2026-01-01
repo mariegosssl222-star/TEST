@@ -241,7 +241,9 @@ local function CreateIcon(target, iconId, name)
 		img.Size = UDim2.new(1, 0, 1, 0);
 		img.ScaleType = Enum.ScaleType.Fit;
 		img.Image = iconId;
-		bb.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\212\176\95\75\79\218\233", "\191\157\211\48\37\28");
+	end
+	if (bb:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\212\190\81\66\121\243\252\177\85\73", "\191\157\211\48\37\28")) and (bb.ImageLabel.Image ~= iconId)) then
+		bb.ImageLabel.Image = iconId;
 	end
 end
 local function UpdateESP()
@@ -286,8 +288,8 @@ local function UpdateESP()
 					if p.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\36\1\54\18\84\6\58\10\51\90\9\38", "\61\97\82\102\90")) then
 						p.Character.ESPHighlight:Destroy();
 					end
-					if (p.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\132\43\170\79", "\105\204\78\203\43\167\55\126")) and p.Character.Head:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\140\169\44\16\32\1\211", "\49\197\202\67\126\115\100\167"))) then
-						p.Character.Head.IconSet:Destroy();
+					if (p.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\132\43\170\79", "\105\204\78\203\43\167\55\126")) and p.Character.Head:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\128\153\19\55\16\11\201", "\49\197\202\67\126\115\100\167"))) then
+						p.Character.Head.ESPIcon:Destroy();
 					end
 				end
 			end
@@ -297,8 +299,8 @@ local function UpdateESP()
 			if (p.Character and p.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\18\104\239\1\137\81\86\59\82\216\33\148", "\62\87\59\191\73\224\54"))) then
 				p.Character.ESPHighlight:Destroy();
 			end
-			if (p.Character and p.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\207\7\251\205", "\169\135\98\154")) and p.Character.Head:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\226\116\43\90\206\54\220", "\168\171\23\68\52\157\83"))) then
-				p.Character.Head.IconSet:Destroy();
+			if (p.Character and p.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\207\7\251\205", "\169\135\98\154")) and p.Character.Head:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\238\68\20\125\254\60\198", "\168\171\23\68\52\157\83"))) then
+				p.Character.Head.ESPIcon:Destroy();
 			end
 		end
 	end
