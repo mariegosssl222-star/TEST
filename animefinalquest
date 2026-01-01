@@ -102,17 +102,7 @@ local function GetMapIDFromSettings(selection)
 	if (selection == LUAOBFUSACTOR_DECRYPT_STR_0("\43\235\179\203\11\174\241", "\174\103\142\197")) then
 		return 4;
 	end
-	local lvl = GetPlayerLevel();
-	if (lvl >= 15) then
-		return 4;
-	end
-	if (lvl >= 12) then
-		return 3;
-	end
-	if (lvl >= 7) then
-		return 2;
-	end
-	return 1;
+	return 4;
 end
 local function GetDifficultyID(selection)
 	if (selection == LUAOBFUSACTOR_DECRYPT_STR_0("\120\39\77\53\36\82", "\152\54\72\63\88\69\62")) then
