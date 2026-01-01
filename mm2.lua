@@ -487,7 +487,7 @@ TeleportTab:Button({[LUAOBFUSACTOR_DECRYPT_STR_0("\168\124\32\18", "\178\230\29\
 	if State.SelectedTP then
 		local p = Players:FindFirstChild(State.SelectedTP);
 		if (p and p.Character and p.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\103\64\121\9\65\90\125\12\125\90\123\28\127\84\102\28", "\104\47\53\20"))) then
-			TweenTo(p.Character.HumanoidRootPart.CFrame);
+			LocalPlayer.Character.HumanoidRootPart.CFrame = p.Character.HumanoidRootPart.CFrame;
 		end
 	end
 end});
