@@ -85,8 +85,14 @@ local function MoveToTarget(targetCFrame)
 	local HRP = LocalPlayer.Character.HumanoidRootPart;
 	local dist = Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\181\28\233\27\244\149\45\195\17\226", "\135\225\76\173\114")] or 5;
 	local dir = Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\46\221\156\185\190\184\164\14\228\183\190", "\199\122\141\216\208\204\221")] or LUAOBFUSACTOR_DECRYPT_STR_0("\143\220\19\251", "\150\205\189\112\144\24");
-	local currentTarget = Config.Target;
-	if (potentialTarget and (potentialTarget.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\6\140\182\79\15\141\31", "\112\69\228\223\44\100\232\113"))) then
+	local targetName = "";
+	for _, mob in pairs(Workspace.Enemies:GetChildren()) do
+		if (GetMobRoot(mob) and (GetMobRoot(mob).CFrame == targetCFrame)) then
+			targetName = mob.Name;
+			break;
+		end
+	end
+	if (targetName == LUAOBFUSACTOR_DECRYPT_STR_0("\6\140\182\79\15\141\31", "\112\69\228\223\44\100\232\113")) then
 		if (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\246\30\4\216", "\230\180\127\103\179\214\28")) then
 			dir = LUAOBFUSACTOR_DECRYPT_STR_0("\170\23\80\72\240", "\128\236\101\63\38\132\33");
 		elseif (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\138\187\30\74\162", "\175\204\201\113\36\214\139")) then
@@ -366,7 +372,7 @@ RunService.Heartbeat:Connect(function()
 	if potentialTarget then
 		local root = GetMobRoot(potentialTarget);
 		if root then
-			MoveToTarget(root.CFrame, potentialTarget);
+			MoveToTarget(root.CFrame);
 			if ((HRP.Position - root.Position).Magnitude <= (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\15\151\4\71\42\209\10\138\3\82", "\186\78\227\112\38\73")] or 10)) then
 				local userIsInactive = (tick() - Config.LastMouseMove) > 0.2;
 				if Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\221\66\233\90\114\110\232\86\254\94", "\26\156\55\157\53\51")] then
@@ -486,17 +492,22 @@ task.spawn(function()
 	end
 end);
 RunService.Stepped:Connect(function()
-	if (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\208\172\202\123\93\238\142\198\115\81", "\52\158\195\169\23")] and LocalPlayer.Character) then
-		for _, v in pairs(LocalPlayer.Character:GetDescendants()) do
-			if v:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\88\189\33\113\182\52\105\159", "\235\26\220\82\20\230\85\27")) then
-				v.CanCollide = false;
+	if LocalPlayer.Character then
+		if (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\208\172\202\123\93\238\142\198\115\81", "\52\158\195\169\23")] or Config.CurrentTween) then
+			for _, v in pairs(LocalPlayer.Character:GetDescendants()) do
+				if v:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\88\189\33\113\182\52\105\159", "\235\26\220\82\20\230\85\27")) then
+					v.CanCollide = false;
+				end
+			end
+			if LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\160\180\228\195\122\135\168\237\240\123\135\181\217\195\102\156", "\20\232\193\137\162")) then
+				LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0);
 			end
 		end
 	end
 end);
 UserInputService.JumpRequest:Connect(function()
-	if (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\161\175\239\232\97\133\177", "\20\232\193\137\162")] and LocalPlayer.Character) then
-		LocalPlayer.Character:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\10\202\200\167\233\131\30\117", "\17\66\191\165\198\135\236\119")):ChangeState(Enum.HumanoidStateType.Jumping);
+	if (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\11\209\195\140\242\129\7", "\17\66\191\165\198\135\236\119")] and LocalPlayer.Character) then
+		LocalPlayer.Character:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\39\186\163\18\241\231\229\213", "\177\111\207\206\115\159\136\140")):ChangeState(Enum.HumanoidStateType.Jumping);
 	end
 end);
 Window:Init();
