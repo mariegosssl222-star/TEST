@@ -86,7 +86,6 @@ local function MoveToTarget(targetCFrame)
 	local dist = Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\181\28\233\27\244\149\45\195\17\226", "\135\225\76\173\114")] or 5;
 	local dir = Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\46\221\156\185\190\184\164\14\228\183\190", "\199\122\141\216\208\204\221")] or LUAOBFUSACTOR_DECRYPT_STR_0("\143\220\19\251", "\150\205\189\112\144\24");
 	local targetName = "";
-	local yOffset = 0;
 	for _, mob in pairs(Workspace.Enemies:GetChildren()) do
 		local root = GetMobRoot(mob);
 		if (root and ((root.CFrame.Position - targetCFrame.Position).Magnitude < 1)) then
@@ -94,23 +93,34 @@ local function MoveToTarget(targetCFrame)
 			break;
 		end
 	end
+	local finalPos;
 	if (targetName == LUAOBFUSACTOR_DECRYPT_STR_0("\17\140\186\12\47\154\16\29\53\145\172", "\112\69\228\223\44\100\232\113")) then
-		yOffset = -10;
-	elseif (targetName == LUAOBFUSACTOR_DECRYPT_STR_0("\247\23\14\208\189\121\136", "\230\180\127\103\179\214\28")) then
-		if (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\174\4\92\77", "\128\236\101\63\38\132\33")) then
-			dir = LUAOBFUSACTOR_DECRYPT_STR_0("\138\187\30\74\162", "\175\204\201\113\36\214\139");
-		elseif (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\97\222\58\210\16", "\100\39\172\85\188")) then
-			dir = LUAOBFUSACTOR_DECRYPT_STR_0("\143\121\186\139", "\83\205\24\217\224");
+		local raycastParams = RaycastParams.new();
+		raycastParams.FilterDescendantsInstances = {Workspace.Enemies,LocalPlayer.Character};
+		raycastParams.FilterType = Enum.RaycastFilterType.Exclude;
+		local rayResult = Workspace:Raycast(targetCFrame.Position, Vector3.new(0, -50, 0), raycastParams);
+		local groundY = (rayResult and rayResult.Position.Y) or (targetCFrame.Position.Y - 15);
+		local lookDir = targetCFrame.LookVector;
+		local backPos = targetCFrame.Position - (lookDir * dist);
+		finalPos = CFrame.new(Vector3.new(backPos.X, groundY + 3.5, backPos.Z), targetCFrame.Position);
+	else
+		local yOffset = 0;
+		if (targetName == LUAOBFUSACTOR_DECRYPT_STR_0("\247\23\14\208\189\121\136", "\230\180\127\103\179\214\28")) then
+			if (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\174\4\92\77", "\128\236\101\63\38\132\33")) then
+				dir = LUAOBFUSACTOR_DECRYPT_STR_0("\138\187\30\74\162", "\175\204\201\113\36\214\139");
+			elseif (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\97\222\58\210\16", "\100\39\172\85\188")) then
+				dir = LUAOBFUSACTOR_DECRYPT_STR_0("\143\121\186\139", "\83\205\24\217\224");
+			end
 		end
+		local offset = CFrame.new(0, yOffset, 0);
+		if (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\196\196\206\54", "\93\134\165\173")) then
+			offset = offset * CFrame.new(0, 0, dist);
+		elseif (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\152\224\206\204\46", "\30\222\146\161\162\90\174\210")) then
+			offset = offset * CFrame.new(0, 0, -dist);
+		end
+		finalPos = targetCFrame * offset;
+		finalPos = CFrame.lookAt(finalPos.Position, targetCFrame.Position);
 	end
-	local offset = CFrame.new(0, yOffset, 0);
-	if (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\196\196\206\54", "\93\134\165\173")) then
-		offset = offset * CFrame.new(0, 0, dist);
-	elseif (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\152\224\206\204\46", "\30\222\146\161\162\90\174\210")) then
-		offset = offset * CFrame.new(0, 0, -dist);
-	end
-	local finalPos = targetCFrame * offset;
-	finalPos = CFrame.lookAt(finalPos.Position, targetCFrame.Position);
 	if Config.CurrentTween then
 		Config.CurrentTween:Cancel();
 	end
@@ -316,7 +326,7 @@ task.spawn(function()
 			if enemies then
 				local krampus = enemies:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\116\160\162\163\59\82\169\170\243\5\83", "\112\32\200\199\131"));
 				if (krampus and not krampusAlreadyAlerted) then
-					SendWebhook("🎄 KRAMPUS SPAWNED!", LUAOBFUSACTOR_DECRYPT_STR_0("\0\85\28\186\204\184\49\108\100\84\189\131\128\48\45\93\76\173\208\235\39\63\68\28\185\211\187\35\62\69\28\249", "\66\76\48\60\216\163\203"), 16711680, nil, true);
+					SendWebhook("🎄 KRAMPUS SPAWNED!", LUAOBFUSACTOR_DECRYPT_STR_0("\24\88\89\248\193\164\49\63\16\104\176\198\235\9\62\81\81\168\214\184\98\36\81\79\248\194\187\50\41\81\78\189\199\234", "\66\76\48\60\216\163\203"), 16711680, nil, true);
 					krampusAlreadyAlerted = true;
 				elseif not krampus then
 					krampusAlreadyAlerted = false;
