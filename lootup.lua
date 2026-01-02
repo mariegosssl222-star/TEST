@@ -39,6 +39,8 @@ end
 local Window = Library:Window({[LUAOBFUSACTOR_DECRYPT_STR_0("\152\89\199\166\51\87\30\192\182\83", "\161\219\54\169\192\90\48\80")]=LUAOBFUSACTOR_DECRYPT_STR_0("\101\77\15\49\124\82\19\107\67\81\15\43", "\69\41\34\96")});
 local Flags = Library.Flags;
 local Config = {[LUAOBFUSACTOR_DECRYPT_STR_0("\136\194\197\13\7\63", "\75\220\163\183\106\98")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\33\175\153\37\220\12\174\191\32\220\7\180", "\185\98\218\235\87")]=nil,[LUAOBFUSACTOR_DECRYPT_STR_0("\231\61\52\242\243\165\222\47\34\203\209\188\206", "\202\171\92\71\134\190")]=0,[LUAOBFUSACTOR_DECRYPT_STR_0("\0\210\1\135\60\210\41\165\38\215\37\134\46", "\232\73\161\76")]=false,[LUAOBFUSACTOR_DECRYPT_STR_0("\146\202\97\82\18\183\220\65\73\23\181\222", "\126\219\185\34\61")]=false};
+local currentSkillIndex = 1;
+local skillKeys = {Enum.KeyCode.One,Enum.KeyCode.Two,Enum.KeyCode.Three};
 local LootTimers = {};
 local TeleportLocations = {[LUAOBFUSACTOR_DECRYPT_STR_0("\42\199\76\97\106\55\210\245\9\207", "\135\108\174\62\18\30\23\147")]=Vector3.new(-142.273, -84.607, 241.086),[LUAOBFUSACTOR_DECRYPT_STR_0("\133\236\41\196\22\170\115\230\164\236\43", "\167\214\137\74\171\120\206\83")]=Vector3.new(-124.049, -95.562, -88.239),[LUAOBFUSACTOR_DECRYPT_STR_0("\173\249\60\92\244\231\170\226\55\92", "\199\235\144\82\61\152")]=Vector3.new(-126.65, -95.593, -846.301),[LUAOBFUSACTOR_DECRYPT_STR_0("\36\30\171\34\20\2\180\42\20\86\152\57\2\23", "\75\103\118\217")]=Vector3.new(-124.049, -95.562, -88.239)};
 local function GetEnemyList()
@@ -488,9 +490,15 @@ RunService.Heartbeat:Connect(function()
 					end
 				end
 				if (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\153\200\98\13\129\95\113\42\180", "\70\216\189\22\98\210\52\24")] and userIsInactive) then
-					VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.One, false, game);
+					local keyToPress = skillKeys[currentSkillIndex];
+					VirtualInputManager:SendKeyEvent(true, keyToPress, false, game);
 					task.wait(0.01);
-					VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.One, false, game);
+					VirtualInputManager:SendKeyEvent(false, keyToPress, false, game);
+					currentSkillIndex = currentSkillIndex + 1;
+					if (currentSkillIndex > #skillKeys) then
+						currentSkillIndex = 1;
+					end
+					task.wait(0.2);
 				end
 			end
 		end
