@@ -355,7 +355,7 @@ RunService.Heartbeat:Connect(function()
 									potentialTarget = mob;
 								end
 							end
-						elseif ((dist <= 60) and (diffY <= 50)) then
+						elseif ((dist <= 100) and (diffY <= 50)) then
 							if (dist < minDist) then
 								minDist = dist;
 								potentialTarget = mob;
@@ -446,7 +446,7 @@ RunService.RenderStepped:Connect(function()
 				if ((mob.Name == selectedMob) and (diffY <= 100)) then
 					showESP = true;
 				end
-			elseif ((dist <= 60) and (diffY <= 50)) then
+			elseif ((dist <= 100) and (diffY <= 50)) then
 				showESP = true;
 			end
 			if showESP then
