@@ -107,7 +107,7 @@ local function MoveToTarget(targetCFrame)
 		finalPos = CFrame.new(Vector3.new(backPos.X, groundY + 3.5, backPos.Z), targetCFrame.Position);
 	else
 		local yOffset = 0;
-		if ((targetName == LUAOBFUSACTOR_DECRYPT_STR_0("\247\23\14\208\189\121\136", "\230\180\127\103\179\214\28")) or (targetName == LUAOBFUSACTOR_DECRYPT_STR_0("\170\16\81\65\232\68\244", "\128\236\101\63\38\132\33")) or (targetName == LUAOBFUSACTOR_DECRYPT_STR_0("\137\165\21\65\164\171\252\164\166\30\73", "\175\204\201\113\36\214\139"))) then
+		if ((targetName == LUAOBFUSACTOR_DECRYPT_STR_0("\247\23\14\208\189\121\136", "\230\180\127\103\179\214\28")) or (targetName == LUAOBFUSACTOR_DECRYPT_STR_0("\170\16\81\65\232\68\244", "\128\236\101\63\38\132\33")) or (targetName == LUAOBFUSACTOR_DECRYPT_STR_0("\137\165\21\65\164\248\199\190\166\30\73", "\175\204\201\113\36\214\139"))) then
 			if (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\101\205\54\215", "\100\39\172\85\188")) then
 				dir = LUAOBFUSACTOR_DECRYPT_STR_0("\139\106\182\142\39", "\83\205\24\217\224");
 			elseif (dir == LUAOBFUSACTOR_DECRYPT_STR_0("\192\215\194\51\242", "\93\134\165\173")) then
