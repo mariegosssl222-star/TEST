@@ -98,8 +98,12 @@ local function MoveToTarget(targetCFrame)
 	end
 	local distance = (HRP.Position - finalPos.Position).Magnitude;
 	local speed = Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\184\53\108\86\225\68\228", "\128\236\101\63\38\132\33")] or 150;
+	_G.IsMoving = true;
 	local tweenInfo = TweenInfo.new(distance / speed, Enum.EasingStyle.Linear);
 	Config.CurrentTween = TweenService:Create(HRP, tweenInfo, {[LUAOBFUSACTOR_DECRYPT_STR_0("\143\143\3\69\187\238", "\175\204\201\113\36\214\139")]=finalPos});
+	Config.CurrentTween.Completed:Connect(function()
+		_G.IsMoving = false;
+	end);
 	Config.CurrentTween:Play();
 end
 local function SendWebhook(title, description, color, fields, forcePing)
@@ -479,9 +483,9 @@ task.spawn(function()
 	end
 end);
 RunService.Stepped:Connect(function()
-	if (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\166\174\234\206\125\152\140\230\198\113", "\20\232\193\137\162")] and LocalPlayer.Character) then
+	if ((Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\166\174\234\206\125\152\140\230\198\113", "\20\232\193\137\162")] or _G.IsMoving) and LocalPlayer.Character) then
 		for _, v in pairs(LocalPlayer.Character:GetDescendants()) do
-			if v:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\0\222\214\163\215\141\5\101", "\17\66\191\165\198\135\236\119")) then
+			if (v:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\0\222\214\163\215\141\5\101", "\17\66\191\165\198\135\236\119")) and (v.CanCollide == true)) then
 				v.CanCollide = false;
 			end
 		end
