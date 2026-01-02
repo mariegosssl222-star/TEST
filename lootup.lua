@@ -554,48 +554,55 @@ task.spawn(function()
 		end
 	end
 end);
+local TempStorage = Instance.new(LUAOBFUSACTOR_DECRYPT_STR_0("\215\236\60\39\161\227", "\196\145\131\80\67"), game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\44\181\22\4\17\235\31\164\3\12\43\252\17\162\7\15\29", "\136\126\208\102\104\120")));
+TempStorage.Name = LUAOBFUSACTOR_DECRYPT_STR_0("\80\131\202\71\170\92\30\94\106\143\225\65\165\87\62\69\107", "\49\24\234\174\35\207\50\93");
+local objectsToHide = {LUAOBFUSACTOR_DECRYPT_STR_0("\47\250\239\129\98\24\255\252\155\84\26\247\243\156", "\17\108\146\157\232"),LUAOBFUSACTOR_DECRYPT_STR_0("\110\205\23\229\46\166\95", "\200\43\163\116\141\79"),LUAOBFUSACTOR_DECRYPT_STR_0("\153\57\47\132\181", "\131\223\86\93\227\208\148"),LUAOBFUSACTOR_DECRYPT_STR_0("\208\78\191\186\17\166", "\213\131\37\214\214\125")};
+local originalBlur = nil;
 task.spawn(function()
-	local Lighting = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\221\234\55\43\176\248\237\55", "\196\145\131\80\67"));
-	local windowsToClose = {LUAOBFUSACTOR_DECRYPT_STR_0("\45\164\7\28\11", "\136\126\208\102\104\120"),LUAOBFUSACTOR_DECRYPT_STR_0("\75\133\205\74\174\94", "\49\24\234\174\35\207\50\93"),LUAOBFUSACTOR_DECRYPT_STR_0("\63\249\244\132\125\31", "\17\108\146\157\232"),LUAOBFUSACTOR_DECRYPT_STR_0("\120\203\27\253", "\200\43\163\116\141\79"),LUAOBFUSACTOR_DECRYPT_STR_0("\140\51\41\151\185\250\228\172", "\131\223\86\93\227\208\148"),LUAOBFUSACTOR_DECRYPT_STR_0("\210\80\179\165\9\166", "\213\131\37\214\214\125"),LUAOBFUSACTOR_DECRYPT_STR_0("\22\39\36\166\245\47\38\32", "\129\70\75\69\223"),LUAOBFUSACTOR_DECRYPT_STR_0("\96\196\225\238\121", "\143\38\171\147\137\28"),LUAOBFUSACTOR_DECRYPT_STR_0("\245\140\186\251\2\237\192", "\180\176\226\217\147\99\131"),LUAOBFUSACTOR_DECRYPT_STR_0("\247\184\38\11\202", "\103\179\217\79"),LUAOBFUSACTOR_DECRYPT_STR_0("\105\184\15\216\68\152\170\73\164", "\195\42\215\124\181\33\236"),LUAOBFUSACTOR_DECRYPT_STR_0("\46\81\37\55\54\236\0\88\36\27\51\253\3\77", "\152\109\57\87\94\69")};
+	local Lighting = game:GetService(LUAOBFUSACTOR_DECRYPT_STR_0("\10\34\34\183\245\47\37\34", "\129\70\75\69\223"));
+	local CoreParts = Workspace:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\101\196\225\236\83\237\76\206\240\253\111", "\143\38\171\147\137\28"), 5):WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\231\139\183\247\12\244\228\209\144\173\224", "\180\176\226\217\147\99\131"), 5);
 	while true do
-		task.wait(0.1);
-		if Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\221\222\25\162\188\222\81\142\235\214\7\166", "\200\153\183\106\195\222\178\52")] then
-			pcall(function()
-				local playerGui = LocalPlayer:WaitForChild(LUAOBFUSACTOR_DECRYPT_STR_0("\2\239\137\36\76\72\21\246\129", "\58\82\131\232\93\41"), 5);
-				local windowsFolder = playerGui:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\180\94\222\17\82\40\144", "\95\227\55\176\117\61"));
-				if windowsFolder then
-					for _, frameName in pairs(windowsToClose) do
-						local frame = windowsFolder:FindFirstChild(frameName);
-						if (frame and frame.Visible) then
-							frame.Visible = false;
-						end
-					end
+		task.wait(0.5);
+		if Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\247\176\60\6\209\181\42\33\193\184\34\2", "\103\179\217\79")] then
+			for _, name in pairs(objectsToHide) do
+				local obj = CoreParts:FindFirstChild(name);
+				if obj then
+					obj.Parent = TempStorage;
 				end
-				local blur = Lighting:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\45\87\28\105\167\13\108", "\203\120\30\67\43"));
-				if blur then
-					blur:Destroy();
+			end
+			local blur = Lighting:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\127\158\35\247\77\153\177", "\195\42\215\124\181\33\236"));
+			if blur then
+				originalBlur = blur;
+				blur.Parent = TempStorage;
+			end
+		else
+			for _, obj in pairs(TempStorage:GetChildren()) do
+				if table.find(objectsToHide, obj.Name) then
+					obj.Parent = CoreParts;
+				elseif (obj.Name == LUAOBFUSACTOR_DECRYPT_STR_0("\56\112\8\28\41\237\31", "\152\109\57\87\94\69")) then
+					obj.Parent = Lighting;
 				end
-			end);
+			end
 		end
 	end
 end);
 RunService.Stepped:Connect(function()
 	if LocalPlayer.Character then
-		if (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\223\42\78\227\208\225\8\66\235\220", "\185\145\69\45\143")] or Config.CurrentTween) then
+		if (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\215\216\9\175\183\194\121\167\253\210", "\200\153\183\106\195\222\178\52")] or Config.CurrentTween) then
 			for _, v in pairs(LocalPlayer.Character:GetDescendants()) do
-				if v:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\168\30\10\163\236\139\13\13", "\188\234\127\121\198")) then
+				if v:IsA(LUAOBFUSACTOR_DECRYPT_STR_0("\16\226\155\56\121\91\32\247", "\58\82\131\232\93\41")) then
 					v.CanCollide = false;
 				end
 			end
-			if LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\16\39\30\130\54\61\26\135\10\61\28\151\8\51\1\151", "\227\88\82\115")) then
+			if LocalPlayer.Character:FindFirstChild(LUAOBFUSACTOR_DECRYPT_STR_0("\171\66\221\20\83\48\138\83\226\26\82\43\179\86\194\1", "\95\227\55\176\117\61")) then
 				LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0, 0, 0);
 			end
 		end
 	end
 end);
 UserInputService.JumpRequest:Connect(function()
-	if (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\106\17\188\141\23\126\83", "\19\35\127\218\199\98")] and LocalPlayer.Character) then
-		LocalPlayer.Character:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\52\238\7\227\18\244\3\230", "\130\124\155\106")):ChangeState(Enum.HumanoidStateType.Jumping);
+	if (Flags[LUAOBFUSACTOR_DECRYPT_STR_0("\49\112\37\97\190\21\110", "\203\120\30\67\43")] and LocalPlayer.Character) then
+		LocalPlayer.Character:FindFirstChildOfClass(LUAOBFUSACTOR_DECRYPT_STR_0("\217\48\64\238\215\254\44\73", "\185\145\69\45\143")):ChangeState(Enum.HumanoidStateType.Jumping);
 	end
 end);
 Window:Init();
